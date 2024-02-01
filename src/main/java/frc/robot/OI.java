@@ -1,8 +1,14 @@
 package frc.robot;
 
+import java.util.HashMap;
+
+import frc.subsystems.Drivetrain;
+
 import edu.wpi.first.wpilibj.XboxController;
 
 public class OI {
+
+    public final Drivetrain drivetrain = new Drivetrain();
 
 
     public XboxController driveController, manipController;
