@@ -67,7 +67,7 @@ public class SwerveModule extends SubsystemBase{
         drivePidController.setFeedbackDevice(driveEncoder);
         turnPidController.setFeedbackDevice(turnEncoder);
 
-        turnPidController.setP(ModuleConstants.P_TURNING);
+        //turnPidControvller.setP(ModuleConstants.P_TURNING);
         // turnPidController.setI(ModuleConstants.I_TURNING);
         turnPidController.setD(ModuleConstants.D_TURNING);
 
