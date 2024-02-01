@@ -1,14 +1,14 @@
-
 //This was hard coppied from 2023 needs to be fixed as of 2/1/2024 
 
 package frc.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
-import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkAbsoluteEncoder.Type;
+import com.revrobotics.SparkPIDController;
+import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -26,8 +26,8 @@ public class SwerveModule extends SubsystemBase{
 
     private final AbsoluteEncoder turnEncoder;
 
-    private final SparkMaxPIDController drivePidController;
-    private final SparkMaxPIDController turnPidController;
+    private final SparkPIDController drivePidController;
+    private final SparkPIDController turnPidController;
 
     private final boolean absoluteEncoderReversed;
 

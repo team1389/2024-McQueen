@@ -97,4 +97,8 @@ public class RobotMap {
         public static final double MAX_ANGULAR_ACCEL = 23; // rad/s/s
 
     }
+
+    public static final int SHOOT_TOP = 0; // change
+    public static final int SHOOT_BOTTOM = 0; // change
+    public static final int SHOOT_ARM = 0; // change
 }
