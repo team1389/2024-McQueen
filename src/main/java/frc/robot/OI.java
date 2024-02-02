@@ -2,12 +2,12 @@ package frc.robot;
 
 import java.util.HashMap;
 
-import frc.command.RunIntake;
+import frc.command.*;
 import frc.robot.util.DPadButton;
 import frc.robot.util.DPadButton.Direction;
 
-import frc.subsystems.Drivetrain;
-import frc.subsystems.Intake;
+import frc.subsystems.*;
+import frc.subsystems.Indexer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -51,11 +51,15 @@ public class OI {
     private Trigger manipRight;
     
     public final Drivetrain drivetrain = new Drivetrain();
+    
+    public final Indexer larry = new Indexer();
+
     public final Intake intake = new Intake();
     public OI() {
         
         initControllers();
         manipAButton.whileTrue(new RunIntake(intake));
+        manipBButton.onTrue(new RunIndexer(larry));
 
     }
 
