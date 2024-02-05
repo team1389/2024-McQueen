@@ -80,24 +80,6 @@ public class OI {
         // Press A button -> zero gyro heading
         driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
-        // Cool new way to make a drive command by passing in Suppliers for the
-        // joysticks
-        drivetrain.setDefaultCommand(new TeleOpDrive(
-                drivetrain,
-                () -> getDriveLeftY(),
-                () -> getDriveLeftX(),
-                () -> getDriveRightX(),
-                () -> getDriveRightY(),
-                () -> getDriveLeftBumper(), // By default be in field oriented
-                () -> !getDriveRightBumper(), // Slow function
-                () -> driveXButton.getAsBoolean(), // Hold x position
-                () -> driveRightTrigger.getAsBoolean(),
-                () -> driveController.getRawAxis(5)) // flip
-        );
-
-        // Press A button -> zero gyro heading
-        driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
-
     }
 
     /**
