@@ -98,8 +98,9 @@ public class RobotMap {
     public static final int SHOOT_TOP = 0; // change
     public static final int SHOOT_BOTTOM = 0; // change
     public static final int SHOOT_ARM = 0; // change
-    public static final int INDEXER_MOTOR = 0;
+    public static final int INDEXER_MOTOR = 0; //change
     public static final int INTAKE_MOTOR = 0;//change
+    public static final int ARM_MOTOR = 0; //change
 
     public static final int PIGEON = 0;
 }
