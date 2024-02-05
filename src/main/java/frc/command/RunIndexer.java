@@ -13,7 +13,7 @@ public class RunIndexer extends Command{
 
     @Override
     public void execute(){
-        indexer.moveToShoot();        
+        indexer.moveToAmp();        
     }
 
     @Override

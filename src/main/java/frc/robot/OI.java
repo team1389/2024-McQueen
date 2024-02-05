@@ -56,11 +56,14 @@ public class OI {
     public final Indexer larry = new Indexer();
 
     public final Intake intake = new Intake();
+
+    public final Shooter shooter = new Shooter();
     public OI() {
         
         initControllers();
         manipAButton.whileTrue(new RunIntake(intake));
-        manipBButton.onTrue(new RunIndexer(larry));
+        manipBButton.whileTrue(new RunIndexer(larry));
+        manipBButton.whileTrue(new Shoot(shooter, larry, intake));
 
         // Cool new way to make a drive command by passing in Suppliers for the
         // joysticks
