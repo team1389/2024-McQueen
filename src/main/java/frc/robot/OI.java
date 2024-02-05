@@ -2,14 +2,16 @@ package frc.robot;
 
 import java.util.HashMap;
 
+import frc.command.*;
 import frc.command.TeleOpDrive;
-import frc.subsystems.Drivetrain;
+import frc.subsystems.*;
+import frc.subsystems.Indexer;
 import frc.util.DPadButton;
 import frc.util.DPadButton.Direction;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class OI {
@@ -50,11 +52,33 @@ public class OI {
     private Trigger manipRight;
     
     public final Drivetrain drivetrain = new Drivetrain();
+    
+    public final Indexer larry = new Indexer();
 
-
-
+    public final Intake intake = new Intake();
     public OI() {
+        
         initControllers();
+        manipAButton.whileTrue(new RunIntake(intake));
+        manipBButton.onTrue(new RunIndexer(larry));
+
+        // Cool new way to make a drive command by passing in Suppliers for the
+        // joysticks
+        drivetrain.setDefaultCommand(new TeleOpDrive(
+                drivetrain,
+                () -> getDriveLeftY(),
+                () -> getDriveLeftX(),
+                () -> getDriveRightX(),
+                () -> getDriveRightY(),
+                () -> getDriveLeftBumper(), // By default be in field oriented
+                () -> !getDriveRightBumper(), // Slow function
+                () -> driveXButton.getAsBoolean(), // Hold x position
+                () -> driveRightTrigger.getAsBoolean(),
+                () -> driveController.getRawAxis(5)) // flip
+        );
+
+        // Press A button -> zero gyro heading
+        driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
         // Cool new way to make a drive command by passing in Suppliers for the
         // joysticks
@@ -82,6 +106,9 @@ public class OI {
     private void initControllers() {
         driveController = new XboxController(0);
         manipController = new XboxController(1);
+        manipAButton = new JoystickButton(manipController,0);//change
+        
+
 
         driveAButton = new JoystickButton(driveController, 1);
 
