@@ -1,5 +1,5 @@
 //Hard copied from 2023
-package frc.robot.util;
+package frc.util;
 
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;

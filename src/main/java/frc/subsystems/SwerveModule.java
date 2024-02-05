@@ -23,7 +23,6 @@ public class SwerveModule extends SubsystemBase{
     private final CANSparkMax turnMotor;
 
     private final RelativeEncoder driveEncoder;
-
     private final AbsoluteEncoder turnEncoder;
 
     private final SparkPIDController drivePidController;

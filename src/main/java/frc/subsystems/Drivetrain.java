@@ -2,6 +2,10 @@ package frc.subsystems;
 
 
 
+import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.Pigeon2Configuration;
+import com.ctre.phoenix6.hardware.Pigeon2;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
 //import frc.robot.RobotMap.AutoConstants;
 import frc.robot.RobotMap.DriveConstants;
 import frc.robot.RobotMap.ModuleConstants;;
@@ -58,41 +63,44 @@ public class Drivetrain extends SubsystemBase {
         ModuleConstants.BR_ANGLE_OFFSET);
 
     
-    // //private final AHRS gyro = new AHRS(SPI.Port.kMXP);
-    // public final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(DriveConstants.driveKinematics,
-    //         new Rotation2d(0), getModulePositions(), new Pose2d());
+   // private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+    private final Pigeon2  pigeon = new Pigeon2(RobotMap.PIGEON, "rio");
+
+    public final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(DriveConstants.driveKinematics,
+            new Rotation2d(0), getModulePositions(), new Pose2d());
     
-    // private final Field2d m_field = new Field2d();
+    private final Field2d m_field = new Field2d();
 
 
-    // // We want to reset gyro on boot, but the gyro takes a bit to start, so wait one sec then do it (in seperate thread)
-    // public Drivetrain() {
-    //     new Thread(() -> {
-    //         try {
-    //             Thread.sleep(1000);
-    //             zeroHeading();
-    //         } catch (Exception e) {
-    //         }
-    //     }).start();
+    // Pigeon Stuff
+    public void zeroHeading() {
+        pigeon.reset();
+     //   pigeon.setAngleAdjustment(0);
+    }
 
-    //     // SmartDashboard.putData("Field", m_field);
-    // }
-    // //Gyro Stuff
-    // // public void zeroHeading() {
-    // //     gyro.reset();
-    // //     gyro.setAngleAdjustment(0);
-    // // }
+    public void PigeonConfig(){
+        Pigeon2Configuration configs = new Pigeon2Configuration();
+        // mount X-up
+        configs.MountPose.MountPoseYaw = 0;
+        configs.MountPose.MountPosePitch = 90;
+        configs.MountPose.MountPoseRoll = 0;
+        configs.Pigeon2Features.DisableNoMotionCalibration = false;
+        configs.Pigeon2Features.DisableTemperatureCompensation = false;
+        configs.Pigeon2Features.EnableCompass = false;
+        pigeon.setYaw(0);
+        pigeon.getConfigurator().apply(configs);
+    }
 
     // public void setAngleAdjustment(double angle) {
-    //     gyro.setAngleAdjustment(angle);   
+    //     pigeon.setAngleAdjustment(angle);   
     // }
 
 
 
-    // // Returns degrees from -180 to 180
-    // public double getHeading() {
-    //     return Math.IEEEremainder(gyro.getAngle(), 360);
-    // }
+    // Returns degrees from -180 to 180
+    public double getHeading() {
+        return Math.IEEEremainder(pigeon.getAngle(), 360);
+    }
 
     // public double getPitch(){
     //     return Math.IEEEremainder(gyro.getPitch(), 360);
@@ -102,26 +110,26 @@ public class Drivetrain extends SubsystemBase {
     //     return Math.IEEEremainder(gyro.getRoll(), 360);
     // }
 
-    // public Rotation2d getRotation2d() {
-    //     return Rotation2d.fromDegrees(getHeading());
-    // }
+    public Rotation2d getRotation2d() {
+        return Rotation2d.fromDegrees(getHeading());
+    }
 
-    // // Position of the robot
-    // public Pose2d getPose() {
-    //     return poseEstimator.getEstimatedPosition();
-    // }
+    // Position of the robot
+    public Pose2d getPose() {
+        return poseEstimator.getEstimatedPosition();
+    }
 
     // public void resetOdometry(Pose2d pose) {
     //     poseEstimator.resetPosition(getRotation2d(), getModulePositions(), pose);
     // }
 
-    // // To stop sliding
-    // public void setX() {
-    //     frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false);
-    //     frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false);
-    //     backLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false);
-    //     backRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false);
-    // }
+    // To stop sliding
+    public void setX() {
+        frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false);
+        frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false);
+        backLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)), false);
+        backRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)), false);
+    }
 
     // //Use with vision
     // public void updateOdometryLatency(Pose2d measuredPose, double timestamp) {
@@ -135,19 +143,19 @@ public class Drivetrain extends SubsystemBase {
     //     } 
     // }
 
-    // public void updateFieldPose() {
-    //     m_field.setRobotPose(getPose());
+    public void updateFieldPose() {
+        m_field.setRobotPose(getPose());
 
-    // }
+    }
 
-    // @Override
-    // public void periodic() {
-    //     poseEstimator.updateWithTime(Timer.getFPGATimestamp(), getRotation2d(), getModulePositions());
-    //     updateFieldPose();
+    @Override
+    public void periodic() {
+        poseEstimator.updateWithTime(Timer.getFPGATimestamp(), getRotation2d(), getModulePositions());
+        updateFieldPose();
 
-    //     // SmartDashboard.putNumber("Robot Heading", getHeading());
-    //     // SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
-    // }
+        SmartDashboard.putNumber("Robot Heading", getHeading());
+         SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+    }
 
     public void stopModules() {
         frontLeft.stop();
