@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import frc.command.*;
 import frc.subsystems.*;
-import frc.subsystems.Indexer;
 import frc.util.DPadButton;
 import frc.util.DPadButton.Direction;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -83,6 +82,8 @@ public class OI {
                 () -> driveController.getRawAxis(5)) // flip
         );
 
+        shooter.setDefaultCommand(new ManualWrist(shooter, getManipLeftY()));
+
         // Press A button -> zero gyro heading
         driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
@@ -102,6 +103,10 @@ public class OI {
 
         driveAButton = new JoystickButton(driveController, 1);
 
+    }
+
+    private double getManipLeftY() {
+        return -manipController.getRawAxis(1);
     }
 
     private double getDriveLeftX() {
