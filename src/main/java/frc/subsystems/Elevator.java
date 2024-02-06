@@ -31,5 +31,4 @@ public class Elevator extends SubsystemBase{
     public void stop(){
         elevatorMotor.set(0.0);
     }
-    
 }
