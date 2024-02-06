@@ -10,7 +10,7 @@ public class Shoot extends Command{
      private Indexer indexer;
      private Intake intake;
 
-    public Shoot(Shooter shooter, Indexer indexer,Intake intake){
+    public Shoot(Shooter shooter, Indexer indexer, Intake intake){
         this.shooter = shooter;
         this.indexer = indexer;
         this.intake = intake;
