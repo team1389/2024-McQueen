@@ -6,15 +6,18 @@ import frc.subsystems.Elevator;
 
 public class RunElevatorUp extends Command{
     private Elevator elevator;
-    double timeout = -1;
     Timer timer = new Timer();
-    double time;
+    double time = 15;
     
- 
-    public RunElevatorUp(Elevator theelevator,double thetime){
-        this.elevator = theelevator;
+    public RunElevatorUp(Elevator elevator){
+        this.elevator = elevator;
         addRequirements(elevator); 
-        time = thetime;
+    }
+
+    public RunElevatorUp(Elevator elevator, double time){
+        this.elevator = elevator;
+        addRequirements(elevator); 
+        this.time = time;
     }
 
     @Override

@@ -3,7 +3,6 @@ package frc.robot;
 import java.util.HashMap;
 
 import frc.command.*;
-import frc.command.TeleOpDrive;
 import frc.subsystems.*;
 import frc.subsystems.Indexer;
 import frc.util.DPadButton;
@@ -53,17 +52,21 @@ public class OI {
     
     public final Drivetrain drivetrain = new Drivetrain();
     
-    public final Indexer larry = new Indexer();
+    public final Indexer indexer = new Indexer();
 
     public final Intake intake = new Intake();
 
     public final Shooter shooter = new Shooter();
+    public final Elevator elevator = new Elevator();
+
     public OI() {
         
         initControllers();
         manipAButton.whileTrue(new RunIntake(intake));
-        manipBButton.whileTrue(new RunIndexer(larry));
-        manipBButton.whileTrue(new Shoot(shooter, larry, intake));
+        manipBButton.whileTrue(new RunIndexer(indexer));
+        manipBButton.whileTrue(new Shoot(shooter, indexer, intake));
+        manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
+
 
         // Cool new way to make a drive command by passing in Suppliers for the
         // joysticks
@@ -92,6 +95,8 @@ public class OI {
         driveController = new XboxController(0);
         manipController = new XboxController(1);
         manipAButton = new JoystickButton(manipController,0);//change
+        manipBButton = new JoystickButton(manipController, 0); //change
+        manipXButton = new JoystickButton(manipController, 0); //change
         
 
 

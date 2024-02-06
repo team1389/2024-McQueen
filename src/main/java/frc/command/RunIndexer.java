@@ -5,15 +5,26 @@ import frc.subsystems.Indexer;
 
 public class RunIndexer extends Command{
     private Indexer indexer;
+    boolean isShoot = true;
+
 
     public RunIndexer(Indexer indexer){
         this.indexer = indexer;
         addRequirements(indexer);
     }
 
+    public RunIndexer(Indexer indexer, boolean isShoot){
+        this.indexer = indexer;
+        addRequirements(indexer);
+    }
+
     @Override
     public void execute(){
-        indexer.moveToAmp();        
+        if(isShoot){
+            indexer.moveToShoot();
+        } else{
+            indexer.moveToAmp();
+        }
     }
 
     @Override
