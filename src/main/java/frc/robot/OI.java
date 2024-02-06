@@ -3,9 +3,7 @@ package frc.robot;
 import java.util.HashMap;
 
 import frc.command.*;
-import frc.command.TeleOpDrive;
 import frc.subsystems.*;
-import frc.subsystems.Indexer;
 import frc.util.DPadButton;
 import frc.util.DPadButton.Direction;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -53,6 +51,7 @@ public class OI {
     
     public final Drivetrain drivetrain = new Drivetrain();
     
+    //larry
     public final Indexer larry = new Indexer();
 
     public final Intake intake = new Intake();
@@ -80,6 +79,8 @@ public class OI {
                 () -> driveController.getRawAxis(5)) // flip
         );
 
+        shooter.setDefaultCommand(new ManualWrist(shooter, getManipLeftY()));
+
         // Press A button -> zero gyro heading
         driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
@@ -97,6 +98,10 @@ public class OI {
 
         driveAButton = new JoystickButton(driveController, 1);
 
+    }
+
+    private double getManipLeftY() {
+        return -manipController.getRawAxis(1);
     }
 
     private double getDriveLeftX() {
