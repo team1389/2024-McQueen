@@ -11,10 +11,10 @@ public class RunElevatorDown extends Command{
     double time;
     
  
-    public RunElevatorDown(Elevator theelevator,double thetime){
+    public RunElevatorDown(Elevator theelevator){
         this.elevator = theelevator;
         addRequirements(elevator); 
-        time = thetime;
+        time = 10;
     }
 
     @Override
