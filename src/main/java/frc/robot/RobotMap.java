@@ -35,6 +35,8 @@ public class RobotMap {
         public static final double BL_ANGLE_OFFSET = 0;
         public static final double BR_ANGLE_OFFSET = -Math.PI / 2;
 
+        public static final double CAMERA_ANGLE = 0;
+        public static final double SPEAKER_TAG_HEIGHT = 0;
     }
     // Not Updated
     // All the overall constants for the drivetrain

@@ -22,6 +22,9 @@ public class Elevator extends SubsystemBase{
         elevatorMotor.burnFlash();
         elevatorMotor.setIdleMode(IdleMode.kBrake);
     }
+    public void moveElevator(double power){
+        elevatorMotor.set(power);
+    }
     public void moveToTop(){
         elevatorMotor.set(speed);
     }

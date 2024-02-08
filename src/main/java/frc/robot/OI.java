@@ -83,6 +83,8 @@ public class OI {
         );
 
         shooter.setDefaultCommand(new ManualWrist(shooter, getManipLeftY()));
+        elevator.setDefaultCommand(new ManualElevator(elevator, getManipRightY()));
+
 
         // Press A button -> zero gyro heading
         driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
@@ -107,6 +109,10 @@ public class OI {
 
     private double getManipLeftY() {
         return -manipController.getRawAxis(1);
+    }
+    
+    private double getManipRightY() {
+        return -manipController.getRawAxis(4);
     }
 
     private double getDriveLeftX() {
