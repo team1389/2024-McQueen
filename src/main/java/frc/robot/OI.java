@@ -54,14 +54,14 @@ public class OI {
     public final Indexer indexer = new Indexer();
 
     public final Intake intake = new Intake();
-
+    public final Lights light = new Lights();
     public final Shooter shooter = new Shooter();
     public final Elevator elevator = new Elevator();
 
     public OI() {
         
         initControllers();
-        manipAButton.whileTrue(new RunIntake(intake));
+        manipAButton.whileTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
         manipBButton.whileTrue(new RunIndexer(indexer));
         manipBButton.whileTrue(new Shoot(shooter, indexer, intake));
         manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
@@ -89,6 +89,9 @@ public class OI {
         // Press A button -> zero gyro heading
         driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
+        driveYButton.onTrue(new InstantCommand(() -> {light.isRainbowing = true;}));
+
+
     }
 
     /**
@@ -97,13 +100,18 @@ public class OI {
     private void initControllers() {
         driveController = new XboxController(0);
         manipController = new XboxController(1);
+
         manipAButton = new JoystickButton(manipController,0);//change
         manipBButton = new JoystickButton(manipController, 0); //change
         manipXButton = new JoystickButton(manipController, 0); //change
-        
+        manipYButton = new JoystickButton(manipController, 0); //change
 
 
         driveAButton = new JoystickButton(driveController, 1);
+        driveBButton = new JoystickButton(driveController, 0); //change
+        driveXButton = new JoystickButton(driveController, 0); //change
+        driveYButton = new JoystickButton(driveController, 0); //change
+
 
     }
 

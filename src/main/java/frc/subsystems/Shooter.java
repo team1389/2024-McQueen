@@ -21,9 +21,6 @@ public class Shooter extends SubsystemBase{
 
     private AbsoluteEncoder wristEncoder;
 
- 
-
-
     public Shooter(){
         shootTop = new CANSparkMax(RobotMap.SHOOT_TOP, MotorType.kBrushless);
         shootBottom = new CANSparkMax(RobotMap.SHOOT_BOTTOM, MotorType.kBrushless);

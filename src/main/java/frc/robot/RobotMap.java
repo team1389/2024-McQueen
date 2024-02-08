@@ -105,4 +105,11 @@ public class RobotMap {
     public static final int WRIST_MOTOR = 0; //change
 
     public static final int PIGEON = 0;
+
+    public static final class LightConstants {
+        public static final int LED_PORT = 7;
+        public static final int COUNT = 60;
+
+    }
+
 }
