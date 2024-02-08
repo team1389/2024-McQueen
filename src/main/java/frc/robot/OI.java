@@ -63,8 +63,10 @@ public class OI {
         initControllers();
         manipAButton.whileTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
         manipBButton.whileTrue(new RunIndexer(indexer));
-        manipBButton.whileTrue(new Shoot(shooter, indexer, intake));
+        manipYButton.whileTrue(new Shoot(shooter, indexer, intake));
         manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
+        manipLeftTrigger.whileTrue(new RunElevatorDown(elevator));
+        manipRightTrigger.whileTrue(new RunElevatorUp(elevator));
 
 
         // Cool new way to make a drive command by passing in Suppliers for the
@@ -101,16 +103,26 @@ public class OI {
         driveController = new XboxController(0);
         manipController = new XboxController(1);
 
-        manipAButton = new JoystickButton(manipController,0);//change
-        manipBButton = new JoystickButton(manipController, 0); //change
-        manipXButton = new JoystickButton(manipController, 0); //change
-        manipYButton = new JoystickButton(manipController, 0); //change
+        manipAButton = new JoystickButton(manipController,1);
+        manipBButton = new JoystickButton(manipController, 2); 
+        manipXButton = new JoystickButton(manipController, 3);
+        manipYButton = new JoystickButton(manipController, 4);
+
+        manipRightBumper = new JoystickButton(manipController, 6);
+        manipRightTrigger = new JoystickButton(manipController, 12);
+        manipLeftTrigger = new JoystickButton(manipController, 13);
+        manipLeftBumper = new JoystickButton(manipController, 5);
+
+        driveRightBumper = new JoystickButton(driveController, 6);
+        driveRightTrigger = new JoystickButton(driveController, 12);
+        driveLeftTrigger = new JoystickButton(driveController, 13);
+        driveLeftBumper = new JoystickButton(driveController, 5);
 
 
         driveAButton = new JoystickButton(driveController, 1);
-        driveBButton = new JoystickButton(driveController, 0); //change
-        driveXButton = new JoystickButton(driveController, 0); //change
-        driveYButton = new JoystickButton(driveController, 0); //change
+        driveBButton = new JoystickButton(driveController, 2); 
+        driveXButton = new JoystickButton(driveController, 3); 
+        driveYButton = new JoystickButton(driveController, 4); 
 
 
     }
