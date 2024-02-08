@@ -22,6 +22,8 @@ public class AutoAlign extends Command{
         addRequirements(drivetrain, limeLightVision);
     }
 
+
+    ///connect to limelight to proceed, thrid link;
 //https://www.chiefdelphi.com/t/introducing-limelight-lib/425660/66
 //https://docs.limelightvision.io/docs/docs-limelight/tutorials/tutorial-getting-in-range
 //https://docs.limelightvision.io/docs/docs-limelight/pipeline-apriltag/apriltag-3d#point-of-interest-tracking
