@@ -12,23 +12,23 @@ import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase{
     private final double shootSpeed = 1;
-    private CANSparkMax shootTop;
-    private CANSparkMax shootBottom;
+    private CANSparkMax shootLeft;
+    private CANSparkMax shootRight;
     private CANSparkMax wrist;
     public boolean controllerInterrupt = false;
     private PIDController pidWrist;
     public double wristTarget;
 
     private AbsoluteEncoder wristEncoder;
-
+// two motors the spin opposite for the both sets of shooter wheels
     public Shooter(){
-        shootTop = new CANSparkMax(RobotMap.SHOOT_TOP, MotorType.kBrushless);
-        shootBottom = new CANSparkMax(RobotMap.SHOOT_BOTTOM, MotorType.kBrushless);
+        shootLeft = new CANSparkMax(RobotMap.SHOOT_LEFT, MotorType.kBrushless);
+        shootRight = new CANSparkMax(RobotMap.SHOOT_RIGHT, MotorType.kBrushless);
         wrist = new CANSparkMax(RobotMap.WRIST_MOTOR, MotorType.kBrushless);
-        shootTop.setSmartCurrentLimit(40);
-        shootTop.burnFlash();
-        shootBottom.setSmartCurrentLimit(40);
-        shootBottom.burnFlash();
+        shootLeft.setSmartCurrentLimit(40);
+        shootLeft.burnFlash();
+        shootRight.setSmartCurrentLimit(40);
+        shootRight.burnFlash();
         wrist.setSmartCurrentLimit(40);
         wrist.burnFlash();
 
@@ -49,13 +49,13 @@ public class Shooter extends SubsystemBase{
     }
 
     public void runShoot() {
-        shootTop.set(shootSpeed);
-        shootBottom.set(-shootSpeed);
+        shootLeft.set(shootSpeed);
+        shootRight.set(-shootSpeed); //inverse the direction in rev
     }
 
     public void stop(){
-        shootTop.set(0);
-        shootBottom.set(0);
+        shootLeft.set(0);
+        shootRight.set(0);
     }
 
     public double getWristPos() {
