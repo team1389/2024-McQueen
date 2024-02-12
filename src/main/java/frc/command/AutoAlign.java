@@ -36,7 +36,7 @@ public class AutoAlign extends Command{
         var robotPose = rrResults.getTargetPose_RobotSpace();
         var tz = robotPose.getZ();
         tx = LimelightHelpers.getTX("");
-
+        
         
         double speed = 0.1;
 

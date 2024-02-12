@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 //import frc.robot.RobotMap.AutoConstants;
 import frc.robot.RobotMap.DriveConstants;
-import frc.robot.RobotMap.ModuleConstants;;
+import frc.robot.RobotMap.ModuleConstants;
 
 
 public class Drivetrain extends SubsystemBase {
