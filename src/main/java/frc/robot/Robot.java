@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().run();
         double voltage = pdh.getVoltage();
         SmartDashboard.putNumber("Voltage", voltage);
+
     }
 
 
@@ -73,6 +74,17 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+        SmartDashboard.putNumber("FL angle", Math.toDegrees(frontLeftTelemetry.getTargetAngle()));
+        SmartDashboard.putNumber("FL speed", frontLeftTelemetry.getSpeed());
+
+        SmartDashboard.putNumber("BL angle", Math.toDegrees(backLeftTelemetry.getTargetAngle()));
+        SmartDashboard.putNumber("BL speed", backLeftTelemetry.getSpeed());
+
+        SmartDashboard.putNumber("FR angle", Math.toDegrees(frontRightTelemetry.getTargetAngle()));
+        SmartDashboard.putNumber("FR speed", frontRightTelemetry.getSpeed());
+
+        SmartDashboard.putNumber("BR angle", Math.toDegrees(backRightTelemetry.getTargetAngle()));
+        SmartDashboard.putNumber("BR speed", backRightTelemetry.getSpeed());
     }
 
     /**

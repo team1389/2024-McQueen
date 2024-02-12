@@ -31,6 +31,7 @@ public class Shooter extends SubsystemBase{
         shootRight.burnFlash();
         wrist.setSmartCurrentLimit(40);
         wrist.burnFlash();
+    //    wristEncoder = new AbsoluteEncoder(RobotMap.) 
 
         //decide pid values later, P, I, D
         pidWrist = new PIDController(0.5, 0, 0);
@@ -58,9 +59,9 @@ public class Shooter extends SubsystemBase{
         shootRight.set(0);
     }
 
-    public double getWristPos() {
-        return wristEncoder.getPosition();
-    }
+    // public double getWristPos() {
+    //     return wristEncoder.getPosition();
+    // }
 
     // public void resetEnconders(){
     //     wristEncoder.setPosition(0);
@@ -68,11 +69,11 @@ public class Shooter extends SubsystemBase{
     
     @Override
     public void periodic(){
-        wristTarget = SmartDashboard.getNumber("Wrist target", getWristPos());
+     //   wristTarget = SmartDashboard.getNumber("Wrist target", getWristPos());
         double wristPower = 0;
-        if (!controllerInterrupt) {      
-            wristPower = pidWrist.calculate(getWristPos(), wristTarget);
-            moveWrist(wristPower);       
-        }
+        // if (!controllerInterrupt) {      
+        //     wristPower = pidWrist.calculate(getWristPos(), wristTarget);
+        //     moveWrist(wristPower);       
+        // }
     }
 }
