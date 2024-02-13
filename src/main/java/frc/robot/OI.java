@@ -114,6 +114,8 @@ public class OI {
         manipLeftTrigger = new JoystickButton(manipController, 13);
         manipLeftBumper = new JoystickButton(manipController, 5);
 
+        manipMenuButton = new JoystickButton(manipController, 10);
+
         driveRightBumper = new JoystickButton(driveController, 6);
         driveRightTrigger = new JoystickButton(driveController, 12);
         driveLeftTrigger = new JoystickButton(driveController, 13);
