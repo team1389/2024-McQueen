@@ -27,6 +27,10 @@ public class Intake extends SubsystemBase{
         intakeMotor.set(intakeSpeed);
     }
 
+    public void runOuttake(){
+        intakeMotor.set(-intakeSpeed);
+    }
+
     public boolean hitSensor(){
         SmartDashboard.putNumber("Distance Sensor", pot.get());
         return distanceWONode - pot.get() > 5;

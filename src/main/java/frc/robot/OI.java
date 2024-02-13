@@ -67,6 +67,7 @@ public class OI {
         manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
         manipLeftTrigger.whileTrue(new RunElevatorDown(elevator));
         manipRightTrigger.whileTrue(new RunElevatorUp(elevator));
+        manipMenuButton.whileTrue(new InstantCommand(() -> intake.runOuttake()));
 
 
         // Cool new way to make a drive command by passing in Suppliers for the
