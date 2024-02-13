@@ -11,7 +11,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase{
-    private final double shootSpeed = 1;
+    private final double shootSpeed = -1;
+    private final double wristSpeed = .4;
     private CANSparkMax shootLeft;
     private CANSparkMax shootRight;
     private CANSparkMax wrist;
@@ -51,8 +52,20 @@ public class Shooter extends SubsystemBase{
 
     public void runShoot() {
         shootLeft.set(shootSpeed);
-        shootRight.set(-shootSpeed); //inverse the direction in rev
+        shootRight.set(shootSpeed); //inverse the direction in rev
     }
+
+    // public void runWristUp(){
+    //     wrist.set(wristSpeed);
+    // }
+
+    // public void runWristDown(){
+    //     wrist.set(-wristSpeed);
+    // } 
+
+    // public void stopWrist(){
+    //     wrist.set(0);
+    // }
 
     public void stop(){
         shootLeft.set(0);

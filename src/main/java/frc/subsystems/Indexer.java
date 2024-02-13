@@ -19,11 +19,11 @@ public class Indexer extends SubsystemBase{
     }
 
     public void moveToShoot() {
-        indexerMotor.set(speed);
+        indexerMotor.set(-speed);
     }
 
     public void moveToAmp(){
-        indexerMotor.set(-speed);
+        indexerMotor.set(speed);
     }
 
     public void stop(){

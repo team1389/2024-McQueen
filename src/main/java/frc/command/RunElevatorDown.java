@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.Elevator;
 
+//change so its automatic, currently it runs when the user holds it
 public class RunElevatorDown extends Command{
     private Elevator elevator;
     Timer timer = new Timer();

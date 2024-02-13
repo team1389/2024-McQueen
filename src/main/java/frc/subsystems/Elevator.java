@@ -26,10 +26,10 @@ public class Elevator extends SubsystemBase{
         elevatorMotor.set(power);
     }
     public void moveToTop(){
-        elevatorMotor.set(speed);
+        elevatorMotor.set(-speed);
     }
     public void moveToBottom(){
-        elevatorMotor.set(-speed);
+        elevatorMotor.set(speed);
     }
     public void stop(){
         elevatorMotor.set(0.0);

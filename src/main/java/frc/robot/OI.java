@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class OI {
@@ -63,8 +64,10 @@ public class OI {
         initControllers();
         manipAButton.whileTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
         manipBButton.whileTrue(new RunIndexer(indexer));
-        manipYButton.whileTrue(new Shoot(shooter, indexer, intake));
-        manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
+      //  manipFullscreen.whileTrue(new Shoot(shooter).andThen(new WaitCommand(5).andThen()));
+        manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
+        manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
+        manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, true)));
         manipLeftTrigger.whileTrue(new RunElevatorDown(elevator));
         manipRightTrigger.whileTrue(new RunElevatorUp(elevator));
         manipMenuButton.whileTrue(new RunOuttake(intake));
