@@ -58,6 +58,7 @@ public class OI {
     public final Lights light = new Lights();
     public final Shooter shooter = new Shooter();
     public final Elevator elevator = new Elevator();
+    public final Rizzt rizzt = new Rizzt();
 
     public OI() {
         
@@ -71,7 +72,7 @@ public class OI {
         manipLeftTrigger.whileTrue(new RunElevatorDown(elevator));
         manipRightTrigger.whileTrue(new RunElevatorUp(elevator));
         manipMenuButton.whileTrue(new RunOuttake(intake));
-
+        manipYButton.whileTrue(new RizztUp(rizzt));
 
         // Cool new way to make a drive command by passing in Suppliers for the
         // joysticks
