@@ -16,7 +16,7 @@ public class ManualWrist extends Command{
     
     @Override
     public void execute() {
-        shooter.controllerInterrupt = true;
+        // shooter.controllerInterrupt = true;
         shooter.moveWrist(power);
     }
 

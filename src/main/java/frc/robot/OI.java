@@ -65,7 +65,7 @@ public class OI {
         manipAButton.whileTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
         manipBButton.whileTrue(new RunIndexer(indexer));
       //  manipFullscreen.whileTrue(new Shoot(shooter).andThen(new WaitCommand(5).andThen()));
-        manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
+        // manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
         manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
         manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, true)));
         manipLeftTrigger.whileTrue(new RunElevatorDown(elevator));
