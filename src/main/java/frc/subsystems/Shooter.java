@@ -2,6 +2,7 @@ package frc.subsystems;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.math.MathUtil;
@@ -13,8 +14,8 @@ import frc.robot.RobotMap;
 public class Shooter extends SubsystemBase{
     private final double shootSpeed = -1;
     private final double wristSpeed = .4;
-    private CANSparkMax shootLeft;
-    private CANSparkMax shootRight;
+    private CANSparkFlex shootLeft;
+    private CANSparkFlex shootRight;
     private CANSparkMax wrist;
     public boolean controllerInterrupt = false;
     private PIDController pidWrist;
@@ -23,8 +24,8 @@ public class Shooter extends SubsystemBase{
     private AbsoluteEncoder wristEncoder;
 // two motors the spin opposite for the both sets of shooter wheels
     public Shooter(){
-        shootLeft = new CANSparkMax(RobotMap.SHOOT_LEFT, MotorType.kBrushless);
-        shootRight = new CANSparkMax(RobotMap.SHOOT_RIGHT, MotorType.kBrushless);
+        shootLeft = new CANSparkFlex(RobotMap.SHOOT_LEFT, MotorType.kBrushless);
+        shootRight = new CANSparkFlex(RobotMap.SHOOT_RIGHT, MotorType.kBrushless);
         wrist = new CANSparkMax(RobotMap.WRIST_MOTOR, MotorType.kBrushless);
         shootLeft.setSmartCurrentLimit(40);
         shootLeft.burnFlash();

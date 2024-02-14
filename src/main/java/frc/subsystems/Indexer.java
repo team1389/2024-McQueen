@@ -4,16 +4,17 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 
 import frc.robot.RobotMap;
 
 public class Indexer extends SubsystemBase{
     double speed = 0.4;
-    private CANSparkMax indexerMotor;
+    private CANSparkFlex indexerMotor;
 
     public Indexer(){
-        indexerMotor = new CANSparkMax(RobotMap.INDEXER_MOTOR, MotorType.kBrushless);
+        indexerMotor = new CANSparkFlex(RobotMap.INDEXER_MOTOR, MotorType.kBrushless);
         indexerMotor.setSmartCurrentLimit(40);
         indexerMotor.burnFlash();
     }

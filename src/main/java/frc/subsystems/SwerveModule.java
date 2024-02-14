@@ -3,6 +3,7 @@
 package frc.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
@@ -19,7 +20,7 @@ import frc.robot.RobotMap.ModuleConstants;
 
 public class SwerveModule extends SubsystemBase{
 
-    public final CANSparkMax driveMotor;
+    public final CANSparkFlex driveMotor;
     private final CANSparkMax turnMotor;
 
     private final RelativeEncoder driveEncoder;
@@ -41,7 +42,7 @@ public class SwerveModule extends SubsystemBase{
         this.angularOffset = anglularOffset;
         this.absoluteEncoderReversed = absoluteEncoderReversed;
 
-        driveMotor = new CANSparkMax(driveMotorId, MotorType.kBrushless);
+        driveMotor = new CANSparkFlex(driveMotorId, MotorType.kBrushless);
         turnMotor = new CANSparkMax(turningMotorId, MotorType.kBrushless);
 
         driveMotor.setInverted(driveMotorReversed);
