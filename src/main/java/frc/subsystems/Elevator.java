@@ -5,6 +5,7 @@
 package frc.subsystems;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 
@@ -14,10 +15,10 @@ import frc.robot.RobotMap;
 /** Add your docs here. */
 public class Elevator extends SubsystemBase{
     double speed = 0.4;
-    private CANSparkMax elevatorMotor;
+    private CANSparkFlex elevatorMotor;
 
     public Elevator(){
-        elevatorMotor = new CANSparkMax(RobotMap.ELEVATOR_MOTOR, MotorType.kBrushless);
+        elevatorMotor = new CANSparkFlex(RobotMap.ELEVATOR_MOTOR, MotorType.kBrushless);
         elevatorMotor.setSmartCurrentLimit(40);
         elevatorMotor.burnFlash();
         elevatorMotor.setIdleMode(IdleMode.kBrake);

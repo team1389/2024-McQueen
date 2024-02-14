@@ -30,10 +30,10 @@ public class RobotMap {
         public static final int DRIVE_CURRENT_LIMIT = 50; // amps
         public static final int TURN_CURRENT_LIMIT = 20;
 
-        public static final double FL_ANGLE_OFFSET = Math.PI / 2; // CORRECT
-        public static final double FR_ANGLE_OFFSET = Math.PI; // CORRECt
+        public static final double FL_ANGLE_OFFSET = Math.PI / 2; //
+        public static final double FR_ANGLE_OFFSET = Math.PI; //
         public static final double BL_ANGLE_OFFSET = 0;
-        public static final double BR_ANGLE_OFFSET = -Math.PI / 2;
+        public static final double BR_ANGLE_OFFSET = -Math.PI / 2; //
 
         public static final double CAMERA_ANGLE = 0;
         public static final double SPEAKER_TAG_HEIGHT = 0;
