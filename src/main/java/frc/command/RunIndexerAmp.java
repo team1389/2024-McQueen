@@ -5,7 +5,6 @@ import frc.subsystems.Indexer;
 
 public class RunIndexerAmp extends Command{
     private Indexer indexer;
-    boolean isShoot = true;
 
 
     public RunIndexerAmp(Indexer indexer){
@@ -20,11 +19,7 @@ public class RunIndexerAmp extends Command{
 
     @Override
     public void execute(){
-        if(isShoot){
-            indexer.moveToShoot();
-        } else{
-            indexer.moveToAmp();
-        }
+        indexer.moveToAmp();
     }
 
     @Override

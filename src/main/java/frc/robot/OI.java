@@ -58,21 +58,22 @@ public class OI {
     public final Lights light = new Lights();
     public final Shooter shooter = new Shooter();
     public final Elevator elevator = new Elevator();
-    public final Rizzt rizzt = new Rizzt();
+    // public final Rizzt rizzt = new Rizzt();
 
     public OI() {
         
         initControllers();
         manipAButton.whileTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
-        manipBButton.whileTrue(new RunIndexer(indexer));
+        manipBButton.whileTrue(new RunIndexerAmp(indexer));
       //  manipFullscreen.whileTrue(new Shoot(shooter).andThen(new WaitCommand(5).andThen()));
-        // manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
+        manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
         manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
         manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, true)));
         manipLeftTrigger.whileTrue(new RunElevatorDown(elevator));
         manipRightTrigger.whileTrue(new RunElevatorUp(elevator));
         manipMenuButton.whileTrue(new RunOuttake(intake));
-        manipYButton.whileTrue(new RizztUp(rizzt));
+        // manuel shoot needed
+        // manipGoogle.whileTrue(new RizztUp(rizzt));
 
         // Cool new way to make a drive command by passing in Suppliers for the
         // joysticks
@@ -119,6 +120,9 @@ public class OI {
         manipLeftBumper = new JoystickButton(manipController, 5);
 
         manipMenuButton = new JoystickButton(manipController, 10);
+        manipFullscreen = new JoystickButton(manipController, 15);
+        manipGoogle = new JoystickButton(manipController, 14);
+        manipEllipsisButton = new JoystickButton(manipController, 9);
 
         driveRightBumper = new JoystickButton(driveController, 6);
         driveRightTrigger = new JoystickButton(driveController, 12);

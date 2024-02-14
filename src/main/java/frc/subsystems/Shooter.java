@@ -55,17 +55,17 @@ public class Shooter extends SubsystemBase{
         shootRight.set(shootSpeed); //inverse the direction in rev
     }
 
-    // public void runWristUp(){
-    //     wrist.set(wristSpeed);
-    // }
+    public void runWristUp(){
+        wrist.set(-wristSpeed);
+    }
 
-    // public void runWristDown(){
-    //     wrist.set(-wristSpeed);
-    // } 
+    public void runWristDown(){
+        wrist.set(wristSpeed);
+    } 
 
-    // public void stopWrist(){
-    //     wrist.set(0);
-    // }
+    public void stopWrist(){
+        wrist.set(0);
+    }
 
     public void stop(){
         shootLeft.set(0);
