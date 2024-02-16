@@ -67,14 +67,14 @@ public class SwerveModule extends SubsystemBase{
         drivePidController.setFeedbackDevice(driveEncoder);
         turnPidController.setFeedbackDevice(turnEncoder);
 
-        //turnPidControvller.setP(ModuleConstants.P_TURNING);
-        // turnPidController.setI(ModuleConstants.I_TURNING);
+        turnPidController.setP(ModuleConstants.P_TURNING);
+        turnPidController.setI(ModuleConstants.I_TURNING);
         turnPidController.setD(ModuleConstants.D_TURNING);
 
         //Uncomment to tune pid from SmartDashboard
-        // SmartDashboard.putNumber("Turning P", ModuleConstants.P_TURNING);
-        // SmartDashboard.putNumber("Turning I", ModuleConstants.I_TURNING);
-        // SmartDashboard.putNumber("Turning D", ModuleConstants.D_TURNING);
+        SmartDashboard.putNumber("Turning P", ModuleConstants.P_TURNING);
+        SmartDashboard.putNumber("Turning I", ModuleConstants.I_TURNING);
+        SmartDashboard.putNumber("Turning D", ModuleConstants.D_TURNING);
 
 
         drivePidController.setP(ModuleConstants.P_DRIVE);
@@ -159,9 +159,9 @@ public class SwerveModule extends SubsystemBase{
     @Override
     public void periodic() {
         //Uncomment to tune pid from SmartDashboard
-        // turnPidController.setP(SmartDashboard.getNumber("Turning P", 0.01));
-        // turnPidController.setI(SmartDashboard.getNumber("Turning I", 0.00001));
-        // turnPidController.setD(SmartDashboard.getNumber("Turning D", 0.0005));
+        turnPidController.setP(SmartDashboard.getNumber("Turning P", 0.01));
+        turnPidController.setI(SmartDashboard.getNumber("Turning I", 0.00001));
+        turnPidController.setD(SmartDashboard.getNumber("Turning D", 0.0005));
 
     }
 }

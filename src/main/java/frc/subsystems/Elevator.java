@@ -14,7 +14,7 @@ import frc.robot.RobotMap;
 
 /** Add your docs here. */
 public class Elevator extends SubsystemBase{
-    double speed = 0.4;
+    double speed = 0.2;
     private CANSparkFlex elevatorMotor;
 
     public Elevator(){

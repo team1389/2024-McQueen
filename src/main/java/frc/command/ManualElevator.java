@@ -2,7 +2,6 @@ package frc.command;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.Elevator;
-import frc.subsystems.Shooter;
 
 public class ManualElevator extends Command{
     Elevator elevator;

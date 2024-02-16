@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -13,13 +14,15 @@ import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase{
     private final double shootSpeed = -1;
-    private final double wristSpeed = .4;
+    private final double wristSpeed = .15;
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;
     private CANSparkMax wrist;
     public boolean controllerInterrupt = false;
     private PIDController pidWrist;
     public double wristTarget;
+    
+
 
     private AbsoluteEncoder wristEncoder;
 // two motors the spin opposite for the both sets of shooter wheels
@@ -33,6 +36,7 @@ public class Shooter extends SubsystemBase{
         shootRight.burnFlash();
         wrist.setSmartCurrentLimit(40);
         wrist.burnFlash();
+        wrist.setIdleMode(IdleMode.kBrake);
     //    wristEncoder = new AbsoluteEncoder(RobotMap.) 
 
         //decide pid values later, P, I, D
