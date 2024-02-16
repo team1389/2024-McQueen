@@ -63,14 +63,17 @@ public class Drivetrain extends SubsystemBase {
         ModuleConstants.BR_ANGLE_OFFSET);
 
     
-   // private final AHRS gyro = new AHRS(SPI.Port.kMXP);
-    private final Pigeon2  pigeon = new Pigeon2(RobotMap.PIGEON, "rio");
+    // private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+    private final Pigeon2 pigeon = new Pigeon2(RobotMap.PIGEON, "rio");
 
     public final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(DriveConstants.driveKinematics,
             new Rotation2d(0), getModulePositions(), new Pose2d());
     
     private final Field2d m_field = new Field2d();
 
+    // public Drivetrain() {
+    //     PigeonConfig();
+    // }
 
     // Pigeon Stuff
     public void zeroHeading() {
@@ -154,7 +157,10 @@ public class Drivetrain extends SubsystemBase {
         updateFieldPose();
 
         SmartDashboard.putNumber("Robot Heading", getHeading());
-         SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+        SmartDashboard.putNumber("Pigeon yaw", pigeon.getYaw().getValueAsDouble());
+        SmartDashboard.putNumber("Pigeon pitch", pigeon.getPitch().getValueAsDouble());
+        SmartDashboard.putNumber("Pigeon roll", pigeon.getRoll().getValueAsDouble());
+        SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
     }
 
     public void stopModules() {

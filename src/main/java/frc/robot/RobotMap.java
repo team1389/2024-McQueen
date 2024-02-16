@@ -101,7 +101,7 @@ public class RobotMap {
     public static final int INTAKE_MOTOR = 14;
     public static final int ELEVATOR_MOTOR = 16;
 
-    public static final int PIGEON = 0;
+    public static final int PIGEON = 18;
 
     public static final class LightConstants {
         public static final int LED_PORT = 7;
