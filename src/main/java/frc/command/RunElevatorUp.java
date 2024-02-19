@@ -21,6 +21,11 @@ public class RunElevatorUp extends Command{
     }
 
     @Override
+    public void initialize(){
+        timer.start();
+    }
+
+    @Override
     public void execute(){
         elevator.moveToTop();
     }

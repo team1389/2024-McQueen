@@ -23,6 +23,11 @@ public class RunElevatorDown extends Command{
     }
 
     @Override
+    public void initialize(){
+        timer.start();
+    }
+
+    @Override
     public void execute(){
         elevator.moveToBottom();
     }
