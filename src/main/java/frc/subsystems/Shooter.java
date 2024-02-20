@@ -4,10 +4,13 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkAbsoluteEncoder;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -25,7 +28,7 @@ public class Shooter extends SubsystemBase{
     
 
 
-    private AbsoluteEncoder wristEncoder;
+    private DutyCycleEncoder wristEncoder;
 // two motors the spin opposite for the both sets of shooter wheels
     public Shooter(){
         shootLeft = new CANSparkFlex(RobotMap.SHOOT_LEFT, MotorType.kBrushless);
@@ -38,6 +41,8 @@ public class Shooter extends SubsystemBase{
         wrist.setSmartCurrentLimit(40);
         wrist.burnFlash();
         wrist.setIdleMode(IdleMode.kBrake);
+        //trial and error
+        wristEncoder = new DutyCycleEncoder(9);
     //    wristEncoder = new AbsoluteEncoder(RobotMap.) 
 
         //decide pid values later, P, I, D
@@ -79,7 +84,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public double getWristPos() {
-        return wristEncoder.getPosition();
+        return wristEncoder.getDistance();
     }
 
     @Override
