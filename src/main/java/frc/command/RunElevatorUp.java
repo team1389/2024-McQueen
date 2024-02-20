@@ -7,7 +7,7 @@ import frc.subsystems.Elevator;
 public class RunElevatorUp extends Command{
     private Elevator elevator;
     Timer timer = new Timer();
-    double time = 15;
+    double time = 6.5;
     
     public RunElevatorUp(Elevator elevator){
         this.elevator = elevator;
@@ -20,10 +20,10 @@ public class RunElevatorUp extends Command{
         this.time = time;
     }
 
-    @Override
-    public void initialize(){
-        timer.start();
-    }
+    // @Override
+    // public void initialize(){
+    //     timer.start();
+    // }
 
     @Override
     public void execute(){
@@ -34,9 +34,9 @@ public class RunElevatorUp extends Command{
     public void end(boolean interrupted){
         elevator.stop();
     }
-    @Override
-    public boolean isFinished(){
-        return timer.hasElapsed(time);
-    }
+    // @Override
+    // public boolean isFinished(){
+    //     return timer.hasElapsed(time);
+    // }
 
 }

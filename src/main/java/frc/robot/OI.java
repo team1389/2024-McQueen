@@ -67,9 +67,9 @@ public class OI {
         manipFullscreen.whileTrue(new Shoot(shooter));
          manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
         // manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
-        manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, true)));
-        manipLeftTrigger.onTrue(new RunElevatorDown(elevator));
-        manipRightTrigger.onTrue(new RunElevatorUp(elevator));
+        manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
+        manipLeftTrigger.whileTrue(new RunElevatorDown(elevator));
+        manipRightTrigger.whileTrue(new RunElevatorUp(elevator));
         manipMenuButton.whileTrue(new RunOuttake(intake));
         manipLeftBumper.whileTrue(new MoveShooter(shooter));
         manipRightBumper.whileTrue(new MoveShooterDown(shooter));
@@ -154,7 +154,7 @@ public class OI {
     }
     
     private double getDriveRightX() {
-        return driveController.getRawAxis(3); 
+        return -driveController.getRawAxis(3); 
     }
     
     private double getDriveRightY() {

@@ -71,9 +71,9 @@ public class Drivetrain extends SubsystemBase {
     
     private final Field2d m_field = new Field2d();
 
-    // public Drivetrain() {
-    //     PigeonConfig();
-    // }
+    public Drivetrain() {
+        PigeonConfig();
+    }
 
     // Pigeon Stuff
     public void zeroHeading() {
@@ -161,6 +161,7 @@ public class Drivetrain extends SubsystemBase {
         SmartDashboard.putNumber("Pigeon pitch", pigeon.getPitch().getValueAsDouble());
         SmartDashboard.putNumber("Pigeon roll", pigeon.getRoll().getValueAsDouble());
         SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+        
     }
 
     public void stopModules() {

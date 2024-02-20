@@ -22,10 +22,10 @@ public class RunElevatorDown extends Command{
         this.time = time;
     }
 
-    @Override
-    public void initialize(){
-        timer.start();
-    }
+    // @Override
+    // public void initialize(){
+    //     timer.start();
+    // }
 
     @Override
     public void execute(){
@@ -36,9 +36,9 @@ public class RunElevatorDown extends Command{
     public void end(boolean interrupted){
         elevator.stop();
     }
-    @Override
-    public boolean isFinished(){
-        return timer.hasElapsed(time);
-    }
+    // @Override
+    // public boolean isFinished(){
+    //     return timer.hasElapsed(time);
+    // }
 
 }
