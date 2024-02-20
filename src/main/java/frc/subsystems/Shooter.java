@@ -87,6 +87,10 @@ public class Shooter extends SubsystemBase{
         return wristEncoder.getDistance();
     }
 
+    public void resetWristPos() {
+        wristEncoder.reset();
+    }
+
     @Override
     public void periodic(){
         SmartDashboard.putNumber("Wrist Encoder Angle", getWristPos());
