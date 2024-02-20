@@ -1,16 +1,17 @@
 package frc.subsystems;
 
-import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.CANSparkFlex;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.RobotMap.ModuleConstants;
 
 public class Shooter extends SubsystemBase{
     private final double shootSpeed = -1;
@@ -77,16 +78,13 @@ public class Shooter extends SubsystemBase{
         shootRight.set(0);
     }
 
-    // public double getWristPos() {
-    //     return wristEncoder.getPosition();
-    // }
+    public double getWristPos() {
+        return wristEncoder.getPosition();
+    }
 
-    // public void resetEnconders(){
-    //     wristEncoder.setPosition(0);
-    // }
-    
     @Override
     public void periodic(){
+        SmartDashboard.putNumber("Wrist Encoder Angle", getWristPos());
      //   wristTarget = SmartDashboard.getNumber("Wrist target", getWristPos());
         double wristPower = 0;
         // if (!controllerInterrupt) {      
