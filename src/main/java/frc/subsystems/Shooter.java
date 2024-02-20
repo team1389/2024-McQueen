@@ -42,7 +42,7 @@ public class Shooter extends SubsystemBase{
         wrist.burnFlash();
         wrist.setIdleMode(IdleMode.kBrake);
         //trial and error
-        wristEncoder = new DutyCycleEncoder(9);
+        wristEncoder = new DutyCycleEncoder(8);
     //    wristEncoder = new AbsoluteEncoder(RobotMap.) 
 
         //decide pid values later, P, I, D
