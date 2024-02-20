@@ -25,7 +25,6 @@ public class Shooter extends SubsystemBase{
     public boolean controllerInterrupt = false;
     private PIDController pidWrist;
     public double wristTarget;
-    
 
 
     private DutyCycleEncoder wristEncoder;

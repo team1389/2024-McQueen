@@ -1,11 +1,11 @@
 package frc.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.util.LimelightHelpers;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.util.LimelightHelpers;
 
 
 public class LimelightVision extends SubsystemBase{
@@ -17,7 +17,7 @@ public class LimelightVision extends SubsystemBase{
     double tx = LimelightHelpers.getTX("");
     double ty = LimelightHelpers.getTY("");
     double ta = LimelightHelpers.getTA(""); //area
-
+    double dist = (ty) / (Math.tan(ty) * Math.cos(tx));
 
     public LimelightVision(){
         LimelightHelpers.setLEDMode_PipelineControl("");
@@ -49,6 +49,7 @@ public class LimelightVision extends SubsystemBase{
         SmartDashboard.putNumber("LimelightX1", x);
         SmartDashboard.putNumber("LimelightY2", y);
         SmartDashboard.putNumber("LimelightArea3", area);
+        SmartDashboard.putNumber("Distance From April Tag", dist);
         
         SmartDashboard.putNumber("LimelightX", LimelightHelpers.getTX(""));
         SmartDashboard.putString("InsideAutoAlign", "success");
