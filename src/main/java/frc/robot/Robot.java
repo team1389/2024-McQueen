@@ -70,6 +70,30 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() {
     }
 
+    @Override
+    public void teleopInit() {
+        SwerveTelemetry frontLeftTelemetry = new SwerveTelemetry(oi.drivetrain.frontLeft);
+        SwerveTelemetry backLeftTelemetry = new SwerveTelemetry(oi.drivetrain.backLeft);
+        SwerveTelemetry frontRightTelemetry = new SwerveTelemetry(oi.drivetrain.frontRight);
+        SwerveTelemetry backRightTelemetry = new SwerveTelemetry(oi.drivetrain.backRight);
+        //SendableRegistry.add(frontLeftTelemetry, "Swerve");
+
+        //SmartDashboard.putNumber("FL angular", frontLeftTelemetry.get);
+       
+        // SendableRegistry.addLW(frontLeftTelemetry, "FL Swerve");
+        // SendableRegistry.addLW(backLeftTelemetry, "BL Swerve");
+        // SendableRegistry.addLW(frontRightTelemetry, "FR Swerve");
+        // SendableRegistry.addLW(backRightTelemetry, "BR Swerve");
+
+
+        oi.drivetrain.frontLeft.resetEncoders();
+        oi.drivetrain.backLeft.resetEncoders();
+        oi.drivetrain.frontRight.resetEncoders();
+        oi.drivetrain.backRight.resetEncoders();
+       // oi.drivetrain.setAngleAdjustment(0);
+
+    }
+
     /**
      * This function is called periodically during operator control.
      */
