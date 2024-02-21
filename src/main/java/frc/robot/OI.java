@@ -58,6 +58,7 @@ public class OI {
     public final Lights light = new Lights();
     public final Shooter shooter = new Shooter();
     public final Elevator elevator = new Elevator();
+    public final LimelightVision limeLightVision = new LimelightVision();
 
     public OI() {
         
@@ -73,6 +74,7 @@ public class OI {
         manipMenuButton.whileTrue(new RunOuttake(intake));
         manipLeftBumper.whileTrue(new MoveShooter(shooter));
         manipRightBumper.whileTrue(new MoveShooterDown(shooter));
+        manipStadia.whileTrue(new AutoAlign(drivetrain, limeLightVision));
 
         // Cool new way to make a drive command by passing in Suppliers for the
         // joysticks
