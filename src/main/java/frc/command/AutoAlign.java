@@ -29,14 +29,14 @@ public class AutoAlign extends Command{
 //https://docs.limelightvision.io/docs/docs-limelight/pipeline-apriltag/apriltag-3d#point-of-interest-tracking
     @Override
     public void execute() {        
+        tx = LimelightHelpers.getTX("");
+        //needs to be fixed. Plug into limelight try and find the best way to find dist through robotPose type
         LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("");
         var rrResults = llresults.targetingResults.targets_Retro[0];
         var tx = rrResults.tx;
         var ty = rrResults.ty;
         var robotPose = rrResults.getTargetPose_RobotSpace();
-        var tz = robotPose.getZ();
-        tx = LimelightHelpers.getTX("");
-        
+        var tz = robotPose.getZ();        
         
         double speed = 0.1;
 

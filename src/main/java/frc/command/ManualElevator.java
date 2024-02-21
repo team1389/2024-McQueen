@@ -1,13 +1,16 @@
 package frc.command;
 
+import java.util.function.Supplier;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.Elevator;
 
 public class ManualElevator extends Command{
     Elevator elevator;
-    private double power;
+    private Supplier<Double> power;
 
-    public ManualElevator(Elevator elevator, double power) {
+    public ManualElevator(Elevator elevator, Supplier<Double> power) {
         this.elevator = elevator;
         this.power = power;
         
@@ -17,7 +20,7 @@ public class ManualElevator extends Command{
     @Override
     public void execute() {
         // elevator.controllerInterrupt = true;
-        elevator.moveElevator(power);
+        elevator.moveElevator(MathUtil.clamp(power.get(), -0.2, 0.2));
     }
 
     @Override

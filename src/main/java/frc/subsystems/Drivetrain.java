@@ -175,7 +175,6 @@ public class Drivetrain extends SubsystemBase {
 
     public void updateFieldPose() {
         m_field.setRobotPose(getPose());
-
     }
 
     @Override
