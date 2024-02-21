@@ -13,11 +13,14 @@ public class LimelightVision extends SubsystemBase{
     NetworkTableEntry tx1 = table.getEntry("tx");
     NetworkTableEntry ty1 = table.getEntry("ty");
     NetworkTableEntry ta1 = table.getEntry("ta");
+
+    final double LIMELIGHTHEIGHT = 24.5;
+    final double APRILTAGHEIGHT = 53.88;
     
     double tx = LimelightHelpers.getTX("");
     double ty = LimelightHelpers.getTY("");
     double ta = LimelightHelpers.getTA(""); //area
-    double dist = (ty) / (Math.tan(ty) * Math.cos(tx));
+    double dist = (APRILTAGHEIGHT-LIMELIGHTHEIGHT)/ (Math.tan(ty) * Math.cos(tx));
 
     public LimelightVision(){
         LimelightHelpers.setLEDMode_PipelineControl("");
