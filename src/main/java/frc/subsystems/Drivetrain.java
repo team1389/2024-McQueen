@@ -73,6 +73,7 @@ public class Drivetrain extends SubsystemBase {
     private final Field2d m_field = new Field2d();
 
     public Drivetrain() {
+            //PigeonConfig();
             AutoBuilder.configureHolonomic(
             this::getPose, // Robot pose supplier
             this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
@@ -97,6 +98,7 @@ public class Drivetrain extends SubsystemBase {
               return false;
             },
             this // Reference to this subsystem to set requirements
+
     );    }
 
     // Pigeon Stuff
@@ -228,8 +230,8 @@ public class Drivetrain extends SubsystemBase {
     public void driveRobotRelative(ChassisSpeeds speeds){
      ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
      //toSwerveModuleStates doesn't work for some reason
-     SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
-     SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, MAX_DRIVE_SPEED);
+  //   SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
+    // SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, MAX_DRIVE_SPEED);
 
     // Send setpoints to modules
     SwerveModuleState[] optimizedSetpointStates = new SwerveModuleState[4];
