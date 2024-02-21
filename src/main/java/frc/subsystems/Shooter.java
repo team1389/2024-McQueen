@@ -25,6 +25,7 @@ public class Shooter extends SubsystemBase{
     public boolean controllerInterrupt = false;
     private PIDController pidWrist;
     public double wristTarget;
+    private PIDController pid = new PIDController(.5, 0, 0);
     
 
 
@@ -96,7 +97,7 @@ public class Shooter extends SubsystemBase{
         SmartDashboard.putNumber("Wrist Encoder Angle", getWristPos());
      //   wristTarget = SmartDashboard.getNumber("Wrist target", getWristPos());
         double wristPower = 0;
-        // if (!controllerInterrupt) {      
+        // if (!controllerInterrupt) {     
         //     wristPower = pidWrist.calculate(getWristPos(), wristTarget);
         //     moveWrist(wristPower);       
         // }

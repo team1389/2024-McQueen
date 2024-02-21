@@ -35,6 +35,11 @@ public class RobotMap {
         public static final double BL_ANGLE_OFFSET = 0;
         public static final double BR_ANGLE_OFFSET = -Math.PI / 2; //
 
+        // public static final double FL_ANGLE_OFFSET = Math.PI / 2 - Math.PI/2;
+        // public static final double FR_ANGLE_OFFSET = Math.PI - Math.PI/2; //
+        // public static final double BL_ANGLE_OFFSET = 0 - Math.PI/2;
+        // public static final double BR_ANGLE_OFFSET = -Math.PI / 2 - Math.PI/2; //
+
         public static final double CAMERA_ANGLE = 0;
         public static final double SPEAKER_TAG_HEIGHT = 0;
     }
@@ -43,10 +48,9 @@ public class RobotMap {
     public static final class DriveConstants {
 
         // Distance between right and left wheels (meters)
-        public static final double ROBOT_WIDTH = 0.5588;
-
+        public static final double ROBOT_WIDTH = 0.498475;//19 5/8 in
         // Distance between front and back wheels (meters)
-        public static final double ROBOT_LENGTH = 0.5842;
+        public static final double ROBOT_LENGTH = 0.4953; //19.5 in
 
         // Note positive x is forward
         // Wheel order: FR, FL, BR, BL

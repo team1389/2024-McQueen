@@ -54,7 +54,7 @@ public class SwerveModule extends SubsystemBase{
 
         turnEncoder.setInverted(absoluteEncoderReversed);
 
-        // turnEncoder.setZeroOffset(angleOffset * ModuleConstants.DRIVE_ROTATIONS_TO_METERS);
+        // turnEncoder.setZeroOffset(Math.PI * ModuleConstants.DRIVE_ROTATIONS_TO_METERS);
 
         driveEncoder.setPositionConversionFactor(ModuleConstants.DRIVE_ROTATIONS_TO_METERS);
         driveEncoder.setVelocityConversionFactor(ModuleConstants.DRIVE_RPM_TO_METERS_PER_SEC);
