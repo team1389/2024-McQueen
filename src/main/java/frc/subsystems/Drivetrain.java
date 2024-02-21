@@ -12,21 +12,25 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.Kinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-//import frc.robot.RobotMap.AutoConstants;
+// import frc.robot.RobotMap.AutoConstants;
 import frc.robot.RobotMap.DriveConstants;
 import frc.robot.RobotMap.ModuleConstants;
 
 
 public class Drivetrain extends SubsystemBase {
+    private static final double MAX_DRIVE_SPEED = Units.feetToMeters(10);
     public final SwerveModule frontLeft = new SwerveModule(
         DriveConstants.FL_DRIVE_PORT,
         DriveConstants.FL_TURN_PORT,
@@ -68,32 +72,32 @@ public class Drivetrain extends SubsystemBase {
     
     private final Field2d m_field = new Field2d();
 
-    // public Drivetrain() {
-    //         AutoBuilder.configureHolonomic(
-    //         this::getPose, // Robot pose supplier
-    //         this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-    //         this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-    //         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-    //         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-    //                 new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-    //                 new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
-    //                 4.5, // Max module speed, in m/s
-    //                 0.4, // Drive base radius in meters. Distance from robot center to furthest module.
-    //                 new ReplanningConfig() // Default path replanning config. See the API for the options here
-    //         ),
-    //         () -> {
-    //           // Boolean supplier that controls when the path will be mirrored for the red alliance
-    //           // This will flip the path being followed to the red side of the field.
-    //           // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+    public Drivetrain() {
+            AutoBuilder.configureHolonomic(
+            this::getPose, // Robot pose supplier
+            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+            new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+                    4.5, // Max module speed, in m/s
+                    0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+                    new ReplanningConfig() // Default path replanning config. See the API for the options here
+            ),
+            () -> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-    //           var alliance = DriverStation.getAlliance();
-    //           if (alliance.isPresent()) {
-    //             return alliance.get() == DriverStation.Alliance.Red;
-    //           }
-    //           return false;
-    //         },
-    //         this // Reference to this subsystem to set requirements
-    // );    }
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );    }
 
     // Pigeon Stuff
     public void zeroHeading() {
@@ -146,9 +150,12 @@ public class Drivetrain extends SubsystemBase {
         poseEstimator.resetPosition(getRotation2d(), getModulePositions(), kms);
     }
 
-    // public double getRobotRelativeSpeeds(){
-    // }
-
+    public ChassisSpeeds getRobotRelativeSpeeds(){
+        return DriveConstants.driveKinematics.toChassisSpeeds(frontLeft.getState(),
+                                                               frontRight.getState(),
+                                                               backLeft.getState(),
+                                                               backRight.getState());
+    }
     // public void resetOdometry(Pose2d pose) {
     //     poseEstimator.resetPosition(getRotation2d(), getModulePositions(), pose);
     // }
@@ -175,7 +182,6 @@ public class Drivetrain extends SubsystemBase {
 
     public void updateFieldPose() {
         m_field.setRobotPose(getPose());
-
     }
 
     @Override
@@ -219,7 +225,15 @@ public class Drivetrain extends SubsystemBase {
         
     }
 
+    public void driveRobotRelative(ChassisSpeeds speeds){
+     ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
+     //toSwerveModuleStates doesn't work for some reason
+     SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
+     SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, MAX_DRIVE_SPEED);
 
+    // Send setpoints to modules
+    SwerveModuleState[] optimizedSetpointStates = new SwerveModuleState[4];
+    }
     // Return a command to follow given pathplannertrajectory
     
     // public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {

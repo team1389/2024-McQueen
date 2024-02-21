@@ -1,13 +1,16 @@
 package frc.command;
 
+import java.util.function.Supplier;
+
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.Shooter;
 
 public class ManualWrist extends Command{
     Shooter shooter;
-    private double power;
+    private final Supplier<Double> power;
 
-    public ManualWrist(Shooter shooter, double power) {
+    public ManualWrist(Shooter shooter, Supplier<Double> power) {
         this.shooter = shooter;
         this.power = power;
         
@@ -17,7 +20,7 @@ public class ManualWrist extends Command{
     @Override
     public void execute() {
         // shooter.controllerInterrupt = true;
-        shooter.moveWrist(power);
+        shooter.moveWrist(MathUtil.clamp(power.get(), -0.2, 0.2));
     }
 
     @Override

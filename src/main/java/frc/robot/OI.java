@@ -58,12 +58,13 @@ public class OI {
     public final Lights light = new Lights();
     public final Shooter shooter = new Shooter();
     public final Elevator elevator = new Elevator();
+    public final LimelightVision limeLightVision = new LimelightVision();
 
     public OI() {
         
         initControllers();
         manipAButton.whileTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
-        manipBButton.whileTrue(new RunIndexerAmp(indexer));
+        manipBButton.whileTrue(new RunIndexerAmp(indexer, true));
         manipFullscreen.whileTrue(new Shoot(shooter));
          manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
         // manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
@@ -73,6 +74,7 @@ public class OI {
         manipMenuButton.whileTrue(new RunOuttake(intake));
         manipLeftBumper.whileTrue(new MoveShooter(shooter));
         manipRightBumper.whileTrue(new MoveShooterDown(shooter));
+        // manipStadia.whileTrue(new AutoAlign(drivetrain, limeLightVision));
 
         // Cool new way to make a drive command by passing in Suppliers for the
         // joysticks
@@ -86,11 +88,13 @@ public class OI {
                 () -> !getDriveRightBumper(), // Slow function
                 () -> driveXButton.getAsBoolean(), // Hold x position
                 () -> driveRightTrigger.getAsBoolean(),
-                () -> driveController.getRawAxis(5)) // flip
+                () -> driveRightTrigger.getAsBoolean(),//auto alignment
+                () -> driveController.getRawAxis(5),
+                limeLightVision) // flip
         );
 
-        shooter.setDefaultCommand(new ManualWrist(shooter, getManipLeftY()));
-        elevator.setDefaultCommand(new ManualElevator(elevator, getManipRightY()));
+        shooter.setDefaultCommand(new ManualWrist(shooter, () -> getManipLeftY()));
+        elevator.setDefaultCommand(new ManualElevator(elevator, () -> getManipRightY()));
 
 
         // Press A button -> zero gyro heading

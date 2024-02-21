@@ -1,6 +1,7 @@
 package frc.command;
 
 import java.util.function.Supplier;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -9,21 +10,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotMap.DriveConstants;
 import frc.subsystems.Drivetrain;
+import frc.subsystems.LimelightVision;
+import frc.util.LimelightHelpers;
 
 public class TeleOpDrive extends Command {
 
     private final Drivetrain drivetrain;
     private final Supplier<Double> xSpdFunction, ySpdFunction, turningSpdFunction, flip;
-    private final Supplier<Boolean> fieldOrientedFunction, slowFunction, holdXFunction, BOOST;
+    private final Supplier<Boolean> fieldOrientedFunction, slowFunction, holdXFunction, BOOST, align;
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
+    LimelightVision limeLightVision;
     private double desiredAngle; // gyro value from getHeading() the robot wants to point at
     private boolean holdingX = false;
     private boolean lastHoldButton = false;
+    double tx;
 
     public TeleOpDrive(Drivetrain drivetrain,
             Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction,
             Supplier<Double> rightY,
-            Supplier<Boolean> fieldOrientedFunction, Supplier<Boolean> slowFunction, Supplier<Boolean> holdXFunction, Supplier<Boolean> BOOST,  Supplier<Double> flip) {
+            Supplier<Boolean> fieldOrientedFunction, Supplier<Boolean> slowFunction, Supplier<Boolean> holdXFunction, Supplier<Boolean> BOOST, Supplier<Boolean> align,  Supplier<Double> flip, LimelightVision limeLightVision)  {
         this.drivetrain = drivetrain;
         this.xSpdFunction = xSpdFunction;
         this.ySpdFunction = ySpdFunction;
@@ -31,8 +36,10 @@ public class TeleOpDrive extends Command {
         this.fieldOrientedFunction = fieldOrientedFunction;
         this.slowFunction = slowFunction;
         this.holdXFunction = holdXFunction;
+        this.limeLightVision = limeLightVision;
         this.BOOST = BOOST;
         this.flip = flip;
+        this.align = align;
 
         // A slew rate limiter caps the rate of change of the inputs, to make the robot
         // drive much smoother
@@ -42,7 +49,7 @@ public class TeleOpDrive extends Command {
 
         this.desiredAngle = drivetrain.getHeading();
 
-        addRequirements(drivetrain);
+        addRequirements(drivetrain,limeLightVision);
     }
 
     @Override
@@ -51,6 +58,8 @@ public class TeleOpDrive extends Command {
 
     @Override
     public void execute() {
+
+        tx = LimelightHelpers.getTX("");
         // 0. push desired angle to smart dashboard
         SmartDashboard.putNumber("Desired Angle", desiredAngle);
 
@@ -58,6 +67,7 @@ public class TeleOpDrive extends Command {
         double xSpeed = xSpdFunction.get();
         double ySpeed = ySpdFunction.get();
         double turningSpeed = turningSpdFunction.get();
+        boolean isAlign = align.get();
         boolean holdButton = holdXFunction.get();
 
         // 2. Apply deadband
@@ -85,6 +95,17 @@ public class TeleOpDrive extends Command {
             xSpeed *= 0.5;
             ySpeed *= 0.5;
             turningSpeed *= 0.5;
+        }
+
+        //4.5 auto aligning?
+        if(isAlign){
+            if (Math.abs(tx) < 0.5) {
+            turningSpeed = 0;
+            //rotAngle*speed
+        } else {
+            //You can tune 0.1
+            turningSpeed = tx * 0.1;
+        }
         }
 
         // 5. Construct desired chassis speeds
