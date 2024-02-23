@@ -111,17 +111,8 @@ public class TeleOpDrive extends Command {
         // 5. Construct desired chassis speeds
         ChassisSpeeds chassisSpeeds;
         if (fieldOrientedFunction.get()) {
-            // Relative to field
-            if (flip.get() < 0.05) {
                 chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                    //.5094 = 29.2
-                    //.52333 = 30
-
-                    xSpeed, ySpeed, turningSpeed, new Rotation2d(drivetrain.getRotation2d().getRadians()-0.5094));
-            } else {
-                chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                    xSpeed, ySpeed, turningSpeed, new Rotation2d(drivetrain.getRotation2d().getRadians() + Math.PI));
-            }
+                    xSpeed, ySpeed, turningSpeed, new Rotation2d(drivetrain.getRotation2d().getRadians()));
         } else {
             // Relative to robot
             chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);

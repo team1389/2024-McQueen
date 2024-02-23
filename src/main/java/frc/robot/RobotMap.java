@@ -91,7 +91,7 @@ public class RobotMap {
 
         // The physical max if motors go full speed
         public static final double MAX_METERS_PER_SEC = 15; // m/s earlier -> 10
-        public static final double MAX_RADIANS_PER_SEC = 20; // rad/s earlier -> 12
+        public static final double MAX_RADIANS_PER_SEC = 30; // rad/s earlier -> 12
 
         public static final double MAX_LINEAR_ACCEL = 20; // m/s/s  
         public static final double MAX_ANGULAR_ACCEL = 30; // rad/s/s earlier -> 23
