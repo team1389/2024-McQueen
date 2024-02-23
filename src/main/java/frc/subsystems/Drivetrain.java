@@ -8,7 +8,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
-
+import com.pathplanner.lib.util.PathPlannerLogging;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -17,6 +18,7 @@ import edu.wpi.first.math.kinematics.Kinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -69,15 +71,22 @@ public class Drivetrain extends SubsystemBase {
 
     public final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(DriveConstants.driveKinematics,
             new Rotation2d(0), getModulePositions(), new Pose2d());
+            
+    private static final double TRACK_WIDTH_X = Units.inchesToMeters(24.0);
+    
+    private static final double TRACK_WIDTH_Y = Units.inchesToMeters(24.0);
     
     private final Field2d m_field = new Field2d();
+    
+    private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(getModuleTranslations());
+    
+    private final SwerveModule[] modules = new SwerveModule[4]; // FL, FR, BL, BR
 
     public Drivetrain() {
-            //PigeonConfig();
             AutoBuilder.configureHolonomic(
             this::getPose, // Robot pose supplier
             this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            () -> kinematics.toChassisSpeeds(getModuleStates()), // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                     new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
@@ -98,7 +107,6 @@ public class Drivetrain extends SubsystemBase {
               return false;
             },
             this // Reference to this subsystem to set requirements
-
     );    }
 
     // Pigeon Stuff
@@ -152,12 +160,6 @@ public class Drivetrain extends SubsystemBase {
         poseEstimator.resetPosition(getRotation2d(), getModulePositions(), kms);
     }
 
-    public ChassisSpeeds getRobotRelativeSpeeds(){
-        return DriveConstants.driveKinematics.toChassisSpeeds(frontLeft.getState(),
-                                                               frontRight.getState(),
-                                                               backLeft.getState(),
-                                                               backRight.getState());
-    }
     // public void resetOdometry(Pose2d pose) {
     //     poseEstimator.resetPosition(getRotation2d(), getModulePositions(), pose);
     // }
@@ -184,6 +186,7 @@ public class Drivetrain extends SubsystemBase {
 
     public void updateFieldPose() {
         m_field.setRobotPose(getPose());
+
     }
 
     @Override
@@ -229,13 +232,30 @@ public class Drivetrain extends SubsystemBase {
 
     public void driveRobotRelative(ChassisSpeeds speeds){
      ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
-     //toSwerveModuleStates doesn't work for some reason
-  //   SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
-    // SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, MAX_DRIVE_SPEED);
+     SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
+     SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, MAX_DRIVE_SPEED);
 
     // Send setpoints to modules
     SwerveModuleState[] optimizedSetpointStates = new SwerveModuleState[4];
+
     }
+    
+    public static Translation2d[] getModuleTranslations() {
+        return new Translation2d[] {
+          new Translation2d(TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0),
+          new Translation2d(TRACK_WIDTH_X / 2.0, -TRACK_WIDTH_Y / 2.0),
+          new Translation2d(-TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0),
+          new Translation2d(-TRACK_WIDTH_X / 2.0, -TRACK_WIDTH_Y / 2.0)
+        };
+      }
+
+    private SwerveModuleState[] getModuleStates() {
+        SwerveModuleState[] states = new SwerveModuleState[4];
+        for (int i = 0; i < 4; i++) {
+          states[i] = modules[i].getState();
+        }
+        return states;
+      }  
     // Return a command to follow given pathplannertrajectory
     
     // public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
