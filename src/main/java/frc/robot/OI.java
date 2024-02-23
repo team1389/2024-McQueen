@@ -2,6 +2,8 @@ package frc.robot;
 
 import java.util.HashMap;
 
+import com.pathplanner.lib.auto.NamedCommands;
+
 import frc.command.*;
 import frc.subsystems.*;
 import frc.util.DPadButton;
@@ -103,6 +105,10 @@ public class OI {
 
         driveYButton.onTrue(new InstantCommand(() -> {light.isRainbowing = true;}));
 
+        NamedCommands.registerCommand("Shoot", new Shoot(shooter));
+        NamedCommands.registerCommand("IndexerToShooter", new RunIndexer(indexer, true));
+        NamedCommands.registerCommand("IndexerToAmp", new RunIndexer(indexer, false));
+        NamedCommands.registerCommand("RunIntake", new RunIntake(intake));
 
     }
 
