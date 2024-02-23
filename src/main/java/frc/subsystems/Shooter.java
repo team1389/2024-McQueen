@@ -19,7 +19,7 @@ import frc.robot.RobotMap;
 import frc.robot.RobotMap.ModuleConstants;
 
 public class Shooter extends SubsystemBase{
-    private final double shootSpeed = -1;
+    private final double shootSpeed = -.3;
     private final double wristSpeed = .15;
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;
@@ -30,13 +30,13 @@ public class Shooter extends SubsystemBase{
     private PIDController pid = new PIDController(.5, 0, 0);
 
 
-    private final TrapezoidProfile.Constraints backConstraints = new TrapezoidProfile.Constraints(90, 58);
+    private final TrapezoidProfile.Constraints backConstraints = new TrapezoidProfile.Constraints(10, 20);
     private final ProfiledPIDController pidWrist = new ProfiledPIDController(.5, 0, 0, backConstraints);
     
 
-
     private DutyCycleEncoder wristEncoder;
-// two motors the spin opposite for the both sets of shooter wheels
+
+
     public Shooter(){
         shootLeft = new CANSparkFlex(RobotMap.SHOOT_LEFT, MotorType.kBrushless);
         shootRight = new CANSparkFlex(RobotMap.SHOOT_RIGHT, MotorType.kBrushless);
@@ -64,7 +64,7 @@ public class Shooter extends SubsystemBase{
     }
 
      public void moveWrist(double power) {
-        power = MathUtil.clamp(power, -0.3, 0.3);
+        power = MathUtil.clamp(power, -0.05, 0.1);
         wrist.set(power);
     }
 
@@ -90,20 +90,29 @@ public class Shooter extends SubsystemBase{
         shootRight.set(0);
     }
 
-    public double getWristPos() {
+    public double getWristDis() {
         return wristEncoder.getDistance();
+    }
+
+    public double getWristPos(){
+        return wristEncoder.getAbsolutePosition() - wristEncoder.getPositionOffset();
     }
 
     public void resetWristPos() {
         wristEncoder.reset();
     }
-
+    double wristPower = 0;
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("Wrist Encoder Angle", getWristPos());
+        SmartDashboard.putNumber("Wrist Encoder Distance", getWristDis());
+        SmartDashboard.putNumber("encoder value in rotations", wristEncoder.get());
+        SmartDashboard.putNumber("Wrist Encoder Absolute Position", wristEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("Wrist Encoder Position", wristEncoder.getAbsolutePosition() - wristEncoder.getPositionOffset());
      //   wristTarget = SmartDashboard.getNumber("Wrist target", getWristPos());
-        double wristPower = 0;   
+      //  double wristPower = 0;
+      if(!controllerInterrupt){
             wristPower = pidWrist.calculate(getWristPos(), wristTarget);
             moveWrist(wristPower);
+      }
     }
 }
