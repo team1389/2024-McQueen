@@ -13,13 +13,16 @@ public class RobotMap {
         // Note: these are for the drive and turning motors
         public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(3);
         public static final double DRIVE_GEAR_RATIO = 1 / 4.71; // 14T pinion
-        public static final double TURN_GEAR_RATIO = 1 / (1); // this should be 1 this is correct
+        public static final double TURN_GEAR_RATIO = 1 / (1); // this should be 1 this is correct 
+        public static final double WRIST_GEAR_RATIO = 1 / 1; //TODO TBD 44.44 / 1 
 
         public static final double FREE_MOTOR_SPEED_RPS = 6784 / 60; // RPM/60 //confmried
         public static final double DRIVE_FREE_MAX_SPEED_MPS = (FREE_MOTOR_SPEED_RPS * WHEEL_DIAMETER_METERS * Math.PI)
                 / DRIVE_GEAR_RATIO;
         public static final double DRIVE_ROTATIONS_TO_METERS = DRIVE_GEAR_RATIO * Math.PI * WHEEL_DIAMETER_METERS;
         public static final double TURNING_ROTATIONS_TO_RAD = TURN_GEAR_RATIO * 2 * Math.PI;
+
+
         public static final double DRIVE_RPM_TO_METERS_PER_SEC = DRIVE_ROTATIONS_TO_METERS / 60;
         public static final double TURNING_RPM_TO_RAD_PER_SEC = TURNING_ROTATIONS_TO_RAD / 60;
         public static final double P_TURNING = 0.075; // PID constant
@@ -102,8 +105,8 @@ public class RobotMap {
 
     }
 
-    public static final int SHOOT_LEFT = 10; 
-    public static final int SHOOT_RIGHT = 11; 
+    public static final int SHOOT_LEFT = 11; 
+    public static final int SHOOT_RIGHT = 10; 
     public static final int WRIST_MOTOR = 12; 
     public static final int INDEXER_MOTOR = 13; 
     public static final int INTAKE_MOTOR = 14;

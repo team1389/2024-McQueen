@@ -72,7 +72,8 @@ public class OI {
         manipAButton.whileTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
         manipBButton.whileTrue(new RunIndexerAmp(indexer, false));
         manipFullscreen.whileTrue(new Shoot(shooter));
-         manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
+        manipYButton.whileTrue(new IndexAndShoot(indexer, intake));
+        // manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
         // manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
         manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
         manipLeftTrigger.whileTrue(new RunElevatorDown(elevator));
@@ -80,8 +81,9 @@ public class OI {
         manipMenuButton.whileTrue(new RunOuttake(intake));
         manipLeftBumper.whileTrue(new MoveShooter(shooter));
         manipRightBumper.whileTrue(new MoveShooterDown(shooter));
-        // manipEllipsisButton.whileTrue(new AlignShooter(shooter, shooter));
-        manipGoogle.whileTrue(new HoldPosition(shooter));
+        manipEllipsisButton.whileTrue(new AlignShooter(shooter, shooter));
+        manipGoogle.onTrue(new InstantCommand(() -> shooter.holdPosition()));
+
         // manipStadia.whileTrue(new AutoAlign(drivetrain, limeLightVision));
 
         // Cool new way to make a drive command by passing in Suppliers for the

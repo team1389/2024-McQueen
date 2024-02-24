@@ -14,7 +14,8 @@ public class HoldPosition extends Command {
 
     public void initialize() {
         shooter.controllerInterrupt = false;
-        shooter.setWrist(shooter.getWristPos());
+        
+        shooter.moveWrist(shooter.getWristPos());
     }
 
 

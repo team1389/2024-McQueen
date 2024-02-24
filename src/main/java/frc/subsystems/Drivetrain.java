@@ -83,6 +83,7 @@ public class Drivetrain extends SubsystemBase {
     private final SwerveModule[] modules = new SwerveModule[4]; // FL, FR, BL, BR
 
     public Drivetrain() {
+        PigeonConfig();
             AutoBuilder.configureHolonomic(
             this::getPose, // Robot pose supplier
             this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
@@ -235,8 +236,6 @@ public class Drivetrain extends SubsystemBase {
      SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
      SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, MAX_DRIVE_SPEED);
 
-    // Send setpoints to modules
-    SwerveModuleState[] optimizedSetpointStates = new SwerveModuleState[4];
 
     }
     
