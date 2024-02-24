@@ -1,20 +1,26 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 1.8865402036753083,
+      "y": 7.0
+    },
+    "rotation": 0
+  },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": null
+            "pathName": "2 Top Alliance Side 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "2 Top Alliance Side"
+            "pathName": "2 Top Alliance Side 2"
           }
         }
       ]
