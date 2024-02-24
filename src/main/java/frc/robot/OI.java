@@ -2,7 +2,10 @@ package frc.robot;
 
 import java.util.HashMap;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import frc.command.*;
 import frc.subsystems.*;
@@ -11,6 +14,7 @@ import frc.util.DPadButton.Direction;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -76,7 +80,7 @@ public class OI {
         manipMenuButton.whileTrue(new RunOuttake(intake));
         manipLeftBumper.whileTrue(new MoveShooter(shooter));
         manipRightBumper.whileTrue(new MoveShooterDown(shooter));
-        manipEllipsisButton.whileTrue(new AlignShooter(shooter, shooter));
+        // manipEllipsisButton.whileTrue(new AlignShooter(shooter, shooter));
         manipGoogle.whileTrue(new HoldPosition(shooter));
         // manipStadia.whileTrue(new AutoAlign(drivetrain, limeLightVision));
 
@@ -110,7 +114,10 @@ public class OI {
         NamedCommands.registerCommand("IndexerToShooter", new RunIndexer(indexer, true));
         NamedCommands.registerCommand("IndexerToAmp", new RunIndexer(indexer, false));
         NamedCommands.registerCommand("RunIntake", new RunIntake(intake));
+        
+        getAutonomousCommand();
 
+        // Create a path following command using AutoBuilder. This will also trigger event markers.
     }
 
     /**
@@ -180,6 +187,10 @@ public class OI {
     private boolean getDriveRightBumper() {
         return !driveController.getRawButton(6);
     }
+
+    public Command getAutonomousCommand() {
+    return new PathPlannerAuto("Top Drive Shoot");
+  }
 
 
 }

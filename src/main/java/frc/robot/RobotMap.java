@@ -15,7 +15,7 @@ public class RobotMap {
         public static final double DRIVE_GEAR_RATIO = 1 / 4.71; // 14T pinion
         public static final double TURN_GEAR_RATIO = 1 / (1); // this should be 1 this is correct
 
-        public static final double FREE_MOTOR_SPEED_RPS = 5676 / 60; // RPM/60
+        public static final double FREE_MOTOR_SPEED_RPS = 6784 / 60; // RPM/60 //confmried
         public static final double DRIVE_FREE_MAX_SPEED_MPS = (FREE_MOTOR_SPEED_RPS * WHEEL_DIAMETER_METERS * Math.PI)
                 / DRIVE_GEAR_RATIO;
         public static final double DRIVE_ROTATIONS_TO_METERS = DRIVE_GEAR_RATIO * Math.PI * WHEEL_DIAMETER_METERS;
@@ -26,6 +26,10 @@ public class RobotMap {
         public static final double I_TURNING = 0.000001; // PID Constant
         public static final double D_TURNING = 0.00025; // PID constant
         public static final double P_DRIVE = 0.25; // PID constant
+
+        public static final double P_WRIST = 0.075; // PID constant
+        public static final double I_WRIST = 0.000001; // PID Constant
+        public static final double D_WRIST = 0.00025; // PID constant
 
         public static final int DRIVE_CURRENT_LIMIT = 50; // amps
         public static final int TURN_CURRENT_LIMIT = 20;

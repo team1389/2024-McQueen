@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -19,7 +20,8 @@ public class Shooter extends SubsystemBase{
     private final double wristSpeed = .15;
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;
-    private CANSparkMax wrist;
+    private CANSparkFlex wrist;
+    private final SparkPIDController wristPidController;
     public boolean controllerInterrupt = false;
  //   private PIDController pidWrist;
     public double wristTarget;
@@ -36,27 +38,40 @@ public class Shooter extends SubsystemBase{
     public Shooter(){
         shootLeft = new CANSparkFlex(RobotMap.SHOOT_LEFT, MotorType.kBrushless);
         shootRight = new CANSparkFlex(RobotMap.SHOOT_RIGHT, MotorType.kBrushless);
-        wrist = new CANSparkMax(RobotMap.WRIST_MOTOR, MotorType.kBrushless);
+        wrist = new CANSparkFlex(RobotMap.WRIST_MOTOR, MotorType.kBrushless);
         shootLeft.setSmartCurrentLimit(40);
         shootLeft.burnFlash();
         shootRight.setSmartCurrentLimit(40);
         shootRight.burnFlash();
         wrist.setSmartCurrentLimit(40);
+                wrist.setIdleMode(IdleMode.kBrake);
         wrist.burnFlash();
-        wrist.setIdleMode(IdleMode.kBrake);
         //trial and error
+        wristPidController = wrist.getPIDController();
+        // wristPidController.setP(ModuleConstants.P_TURNING);
+        // wristPidController.setI(ModuleConstants.I_TURNING);
+        // wristPidController.setD(ModuleConstants.D_TURNING);
+
+        // SmartDashboard.putNumber("Turning P", ModuleConstants.P_WRIST);
+        // SmartDashboard.putNumber("Turning I", ModuleConstants.I_WRIST);
+        // SmartDashboard.putNumber("Turning D", ModuleConstants.D_WRIST);
+        
+
+        wristPidController.setOutputRange(-1, 1);
+
+        //through bore encoder
         wristEncoder = new DutyCycleEncoder(8);
     //    wristEncoder = new AbsoluteEncoder(RobotMap.) 
 
         //decide pid values later, P, I, D
     //    pidWrist = new PIDController(0.5, 0, 0);
+        SmartDashboard.putNumber("Wrist tuning pos", 1);
     }
 
     public double setWrist(double pos) {
-        var temp = wristTarget;
-        wristTarget = pos;
-        SmartDashboard.putNumber("Wrist target", wristTarget);
-        return temp;
+        // SmartDashboard.putNumber("Wrist target", pos);
+        wristPidController.setReference(pos, CANSparkMax.ControlType.kPosition);
+        return pos;
     }
 
      public void moveWrist(double power) {
@@ -78,7 +93,7 @@ public class Shooter extends SubsystemBase{
     } 
 
     public void stopWrist(){
-        wrist.set(0);
+        wrist.set(-.01);
     }
 
     public void stop(){
@@ -100,6 +115,8 @@ public class Shooter extends SubsystemBase{
     double wristPower = 0;
     @Override
     public void periodic(){
+        SmartDashboard.putNumber("Wrist Position", getWristPos());
+        // setWrist(SmartDashboard.getNumber("Wrist tuning pos", setWrist(getWristPos())));
         SmartDashboard.putNumber("Wrist Encoder Distance", getWristDis());
         SmartDashboard.putNumber("encoder value in rotations", wristEncoder.get());
         SmartDashboard.putNumber("Wrist Encoder Absolute Position", wristEncoder.getAbsolutePosition());
@@ -107,8 +124,7 @@ public class Shooter extends SubsystemBase{
      //   wristTarget = SmartDashboard.getNumber("Wrist target", getWristPos());
       //  double wristPower = 0;
       if(!controllerInterrupt){
-            wristPower = pidWrist.calculate(getWristPos(), wristTarget);
-            moveWrist(wristPower);
+            
       }
     }
 }
