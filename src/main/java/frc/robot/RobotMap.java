@@ -29,7 +29,7 @@ public class RobotMap {
 
         public static final double DRIVE_RPM_TO_METERS_PER_SEC = DRIVE_ROTATIONS_TO_METERS / 60;
         public static final double TURNING_RPM_TO_RAD_PER_SEC = TURNING_ROTATIONS_TO_RAD / 60;
-        public static final double P_TURNING = 0.075; // PID constant
+        public static final double P_TURNING = 0.75; // PID constant // previous .075 might need to change again
         public static final double I_TURNING = 0.000001; // PID Constant
         public static final double D_TURNING = 0.00025; // PID constant
         public static final double P_DRIVE = 0.25; // PID constant
@@ -101,11 +101,11 @@ public class RobotMap {
         public static final boolean BR_ABS_REVERSED = true;
 
         // The physical max if motors go full speed
-        public static final double MAX_METERS_PER_SEC = 15; // m/s earlier -> 10
-        public static final double MAX_RADIANS_PER_SEC = 30; // rad/s earlier -> 12
+        public static final double MAX_METERS_PER_SEC = 10; // m/s 
+        public static final double MAX_RADIANS_PER_SEC = 12; // rad/s 
 
         public static final double MAX_LINEAR_ACCEL = 20; // m/s/s  
-        public static final double MAX_ANGULAR_ACCEL = 30; // rad/s/s earlier -> 23
+        public static final double MAX_ANGULAR_ACCEL = 23; // rad/s/s
 
     }
 
