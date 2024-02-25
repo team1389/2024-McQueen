@@ -161,9 +161,9 @@ public class Drivetrain extends SubsystemBase {
         poseEstimator.resetPosition(getRotation2d(), getModulePositions(), kms);
     }
 
-    // public void resetOdometry(Pose2d pose) {
-    //     poseEstimator.resetPosition(getRotation2d(), getModulePositions(), pose);
-    // }
+    public void resetOdometry(Pose2d pose) {
+        poseEstimator.resetPosition(getRotation2d(), getModulePositions(), pose);
+    }
 
     // To stop sliding
     public void setX() {
