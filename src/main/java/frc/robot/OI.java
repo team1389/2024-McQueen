@@ -163,7 +163,7 @@ public class OI {
     }
     
     private double getManipRightY() {
-        return -manipController.getRawAxis(4);
+        return manipController.getRawAxis(4);
     }
 
     private double getDriveLeftX() {
