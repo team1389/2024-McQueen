@@ -127,7 +127,8 @@ public class Shooter extends SubsystemBase{
     }
 
     public void holdPosition(){
-        wrist.set(pidWrist.calculate(getWristPos(), getTargetAngle()));
+        // wrist.set(pidWrist.calculate(getWristPos(), getTargetAngle()));
+        wrist.set(pidWrist.calculate(getWristPos(), .84));
         SmartDashboard.putBoolean("Inside hold position", true);
     }
 

@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
+import com.revrobotics.CANSparkBase.IdleMode;
+
 public class OI {
 
 
@@ -82,7 +84,8 @@ public class OI {
         manipLeftBumper.whileTrue(new Shoot(shooter));
         manipRightBumper.whileTrue(new RunIntake(intake).alongWith(new RunIndexer(indexer, true)));
         manipEllipsisButton.whileTrue(new AlignShooter(shooter, shooter));
-        manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
+       // manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
+        manipGoogle.onTrue(new InstantCommand(() -> shooter.holdPosition()));
 
         // manipStadia.whileTrue(new AutoAlign(drivetrain, limeLightVision));
 
@@ -108,7 +111,7 @@ public class OI {
 
 
         // Press A button -> zero gyro heading
-        driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
+      //  driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
         driveYButton.onTrue(new InstantCommand(() -> {light.isRainbowing = true;}));
 
