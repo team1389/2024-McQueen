@@ -8,15 +8,20 @@ public class HoldPosition extends Command {
 
     public HoldPosition(Shooter shooter) {
         this.shooter = shooter;
-        
+        shooter.setTargetAngle(shooter.getWristPos());
         addRequirements(shooter);
     }
 
-    public void initialize() {
-        shooter.controllerInterrupt = false;
-        
-        shooter.moveWrist(shooter.getWristPos());
+    @Override
+    public void execute(){
+        shooter.holdPosition();
     }
+
+    // public void initialize() {
+    //     shooter.controllerInterrupt = false;
+        
+    //     shooter.moveWrist(shooter.getWristPos());
+    // }
 
 
     public boolean isFinished() {
