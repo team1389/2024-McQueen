@@ -85,7 +85,7 @@ public class Drivetrain extends SubsystemBase {
     private final SwerveModule[] modules = new SwerveModule[4]; // FL, FR, BL, BR
 
     public Drivetrain() {
-        PigeonConfig();
+       PigeonConfig();
             AutoBuilder.configureHolonomic(
             this::getPose, // Robot pose supplier
             this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
@@ -110,7 +110,8 @@ public class Drivetrain extends SubsystemBase {
               return false;
             },
             this // Reference to this subsystem to set requirements
-    ); }
+    ); 
+}
 
     // Pigeon Stuff
     public void zeroHeading() {
