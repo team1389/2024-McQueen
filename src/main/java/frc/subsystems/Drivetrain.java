@@ -139,7 +139,8 @@ public class Drivetrain extends SubsystemBase {
 
     // Returns degrees from -180 to 180
     public double getHeading() {
-        return Math.IEEEremainder(pigeon.getAngle(), 360);
+        // return Math.IEEEremainder(pigeon.getAngle(), 360);
+        return pigeon.getYaw().getValueAsDouble() % 360.0;
     }
 
     // public double getPitch(){
