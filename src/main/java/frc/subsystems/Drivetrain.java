@@ -67,7 +67,7 @@ public class Drivetrain extends SubsystemBase {
 
     
     // private final AHRS gyro = new AHRS(SPI.Port.kMXP);
-    private final Pigeon2 pigeon = new Pigeon2(RobotMap.PIGEON, "rio");
+    private final Pigeon2 pigeon = new Pigeon2(RobotMap.MotorPorts.PIGEON, "rio");
 
     public final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(DriveConstants.driveKinematics,
             new Rotation2d(0), getModulePositions(), new Pose2d());
@@ -161,9 +161,9 @@ public class Drivetrain extends SubsystemBase {
         poseEstimator.resetPosition(getRotation2d(), getModulePositions(), kms);
     }
 
-    // public void resetOdometry(Pose2d pose) {
-    //     poseEstimator.resetPosition(getRotation2d(), getModulePositions(), pose);
-    // }
+    public void resetOdometry(Pose2d pose) {
+        poseEstimator.resetPosition(getRotation2d(), getModulePositions(), pose);
+    }
 
     // To stop sliding
     public void setX() {

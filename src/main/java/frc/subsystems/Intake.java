@@ -18,7 +18,7 @@ public class Intake extends SubsystemBase{
     private final double distanceWONode = 0; //change
 
     public Intake(){
-    intakeMotor = new CANSparkFlex(RobotMap.INTAKE_MOTOR,MotorType.kBrushless);
+    intakeMotor = new CANSparkFlex(RobotMap.MotorPorts.INTAKE_MOTOR,MotorType.kBrushless);
     intakeMotor.setSmartCurrentLimit(40);
     intakeMotor.burnFlash();
     pot = new AnalogPotentiometer(0, 100, 30); //change parameters

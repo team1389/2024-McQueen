@@ -54,7 +54,7 @@ public class SwerveModule extends SubsystemBase{
 
         turnEncoder.setInverted(absoluteEncoderReversed);
 
-        // turnEncoder.setZeroOffset(Math.PI * ModuleConstants.DRIVE_ROTATIONS_TO_METERS);
+        turnEncoder.setZeroOffset(Math.PI * ModuleConstants.DRIVE_ROTATIONS_TO_METERS);
 
         driveEncoder.setPositionConversionFactor(ModuleConstants.DRIVE_ROTATIONS_TO_METERS);
         driveEncoder.setVelocityConversionFactor(ModuleConstants.DRIVE_RPM_TO_METERS_PER_SEC);
@@ -159,9 +159,9 @@ public class SwerveModule extends SubsystemBase{
     @Override
     public void periodic() {
         //Uncomment to tune pid from SmartDashboard
-        // turnPidController.setP(SmartDashboard.getNumber("Turning P", 0.01));
-        // turnPidController.setI(SmartDashboard.getNumber("Turning I", 0.00001));
-        // turnPidController.setD(SmartDashboard.getNumber("Turning D", 0.0005));
+        turnPidController.setP(SmartDashboard.getNumber("Turning P", 0.01));
+        turnPidController.setI(SmartDashboard.getNumber("Turning I", 0.00001));
+        turnPidController.setD(SmartDashboard.getNumber("Turning D", 0.0005));
 
     }
 }

@@ -18,7 +18,7 @@ public class Elevator extends SubsystemBase{
     private CANSparkFlex elevatorMotor;
 
     public Elevator(){
-        elevatorMotor = new CANSparkFlex(RobotMap.ELEVATOR_MOTOR, MotorType.kBrushless);
+        elevatorMotor = new CANSparkFlex(RobotMap.MotorPorts.ELEVATOR_MOTOR, MotorType.kBrushless);
         elevatorMotor.setSmartCurrentLimit(40);
         elevatorMotor.burnFlash();
         elevatorMotor.setIdleMode(IdleMode.kBrake);

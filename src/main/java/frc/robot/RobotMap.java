@@ -109,14 +109,20 @@ public class RobotMap {
 
     }
 
-    public static final int SHOOT_LEFT = 11; 
-    public static final int SHOOT_RIGHT = 10; 
-    public static final int WRIST_MOTOR = 12; 
-    public static final int INDEXER_MOTOR = 13; 
-    public static final int INTAKE_MOTOR = 14;
-    public static final int ELEVATOR_MOTOR = 16;
+    public static final class MotorPorts{
+        public static final int SHOOT_LEFT = 11; 
+        public static final int SHOOT_RIGHT = 10; 
+        public static final int WRIST_MOTOR = 12; 
+        public static final int INDEXER_MOTOR = 13; 
+        public static final int INTAKE_MOTOR = 14;
+        public static final int ELEVATOR_MOTOR = 16;
 
-    public static final int PIGEON = 18;
+        public static final int WRIST_ENCODER = 8;
+
+        public static final int PIGEON = 18;
+    }
+
+
 
     public static final class LightConstants {
         public static final int LED_PORT = 7;

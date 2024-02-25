@@ -17,9 +17,8 @@ import frc.robot.RobotMap;
 import frc.robot.RobotMap.ModuleConstants;
 
 public class Shooter extends SubsystemBase{
-    
-    private final double shootSpeed = .5;
-    private final double wristSpeed = .15;
+    private final double shootSpeed = .5; // percent of max motor speed
+    private final double wristSpeed = .15; // percent of max motor speed
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;
     private CANSparkFlex wrist;
@@ -34,24 +33,25 @@ public class Shooter extends SubsystemBase{
 
     private final TrapezoidProfile.Constraints backConstraints = new TrapezoidProfile.Constraints(10, 20);
     // private final ProfiledPIDController pidWrist = new ProfiledPIDController(.5, 0, 0, backConstraints);
-    private final SparkPIDController pidWrist;
+    private final PIDController pidWrist; //maybe sparkPidController
     
 
-    private DutyCycleEncoder wristEncoder;
+    private DutyCycleEncoder wristEncoder; // thru bore encoder
 
 
     public Shooter(){
-        shootLeft = new CANSparkFlex(RobotMap.SHOOT_LEFT, MotorType.kBrushless);
-        shootRight = new CANSparkFlex(RobotMap.SHOOT_RIGHT, MotorType.kBrushless);
-        wrist = new CANSparkFlex(RobotMap.WRIST_MOTOR, MotorType.kBrushless);
-        shootLeft.setSmartCurrentLimit(40);
+        shootLeft = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_LEFT, MotorType.kBrushless);
+        shootRight = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_RIGHT, MotorType.kBrushless);
+        wrist = new CANSparkFlex(RobotMap.MotorPorts.WRIST_MOTOR, MotorType.kBrushless);
+        shootLeft.setSmartCurrentLimit(40); // neo vortex specifications, 40 amp breaker, cannot exceed 40
         shootLeft.burnFlash();
-        shootRight.setSmartCurrentLimit(40);
+        shootRight.setSmartCurrentLimit(40); // neo vortex specifications
         shootRight.burnFlash();
-        wrist.setSmartCurrentLimit(40);
+        wrist.setSmartCurrentLimit(40); // neo vortex specifications
         wrist.setIdleMode(IdleMode.kBrake);
         wrist.burnFlash();
         //trial and error
+        wristEncoder = new DutyCycleEncoder(8); //through bore encoder
         wristPidController = wrist.getPIDController();
         // wristPidController.setP(ModuleConstants.P_TURNING);
         // wristPidController.setI(ModuleConstants.I_TURNING);
@@ -64,13 +64,10 @@ public class Shooter extends SubsystemBase{
 
         wristPidController.setOutputRange(-1, 1);
 
-        //through bore encoder
-        wristEncoder = new DutyCycleEncoder(8);
-    //    wristEncoder = new AbsoluteEncoder(RobotMap.) 
-
+        
         //decide pid values later, P, I, D
-      // pidWrist = new PIDController(0.5, 0, 0);
-       pidWrist = wrist.getPIDController();
+       pidWrist = new PIDController(0.5, 0, 0);
+      // pidWrist = wrist.getPIDController();
 
       // pidWrist.setFeedbackDevice(wristEncoder);
 
@@ -130,7 +127,8 @@ public class Shooter extends SubsystemBase{
     }
 
     public void holdPosition(){
-        moveWrist(getWristPos());
+        setWrist(getWristPos());
+        wrist.set(pidWrist.calculate(getWristPos(), wristTarget));
         SmartDashboard.putBoolean("Inside hold position", true);
     }
 
@@ -150,8 +148,15 @@ public class Shooter extends SubsystemBase{
       //  double wristPower = 0;
       // wrist.set(pid.calculate(wristEncoder.getDistance(), getWristPos()));
       if(!controllerInterrupt){
-        wrist.set(pid.calculate(wristEncoder.getDistance(), getWristPos()));
-           // double wristPower = pidWrist.calculate(getWristPos(), wristTarget);
+        setWrist(getWristPos());
+        wrist.set(pidWrist.calculate(getWristPos(), wristTarget));
+
+
+    //     double wristPower = 0; test this too
+
+    //    wristPower = pidWrist.calculate(getWristPos(), wristTarget);
+    //     moveWrist(wristPower);
+
         pidWrist.setP(SmartDashboard.getNumber("P Wrist", 0.01));
         pidWrist.setI(SmartDashboard.getNumber("I Wrist", 0.00001));
         pidWrist.setD(SmartDashboard.getNumber("D Wrist", 0.0005));

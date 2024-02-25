@@ -14,7 +14,7 @@ public class Indexer extends SubsystemBase{
     private CANSparkFlex indexerMotor;
 
     public Indexer(){
-        indexerMotor = new CANSparkFlex(RobotMap.INDEXER_MOTOR, MotorType.kBrushless);
+        indexerMotor = new CANSparkFlex(RobotMap.MotorPorts.INDEXER_MOTOR, MotorType.kBrushless);
         indexerMotor.setSmartCurrentLimit(40);
         indexerMotor.burnFlash();
     }
