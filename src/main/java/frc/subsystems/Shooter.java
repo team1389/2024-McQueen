@@ -17,7 +17,7 @@ import frc.robot.RobotMap;
 import frc.robot.RobotMap.ModuleConstants;
 
 public class Shooter extends SubsystemBase{
-    private final double shootSpeed = .5; // percent of max motor speed
+    private final double shootSpeed = 1; // percent of max motor speed
     private final double wristSpeed = .15; // percent of max motor speed
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;

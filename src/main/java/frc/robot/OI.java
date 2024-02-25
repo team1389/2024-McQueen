@@ -117,7 +117,7 @@ public class OI {
         NamedCommands.registerCommand("IndexerToAmp", new RunIndexer(indexer, false));
         NamedCommands.registerCommand("RunIntake", new RunIntake(intake));
         
-        getAutonomousCommand();
+        // getAutonomousCommand();
 
         // Create a path following command using AutoBuilder. This will also trigger event markers.
     }
@@ -167,7 +167,7 @@ public class OI {
     }
 
     private double getDriveLeftX() {
-        return driveController.getRawAxis(0);
+        return -driveController.getRawAxis(0);
     }
     
     private double getDriveLeftY() {
