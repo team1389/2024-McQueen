@@ -58,6 +58,27 @@ public class Robot extends TimedRobot {
         double voltage = pdh.getVoltage();
         SmartDashboard.putNumber("Voltage", voltage);
 
+        SmartDashboard.putNumber("Wrist", pdh.getCurrent(10));
+        SmartDashboard.putNumber("Elevator", pdh.getCurrent(13));
+        SmartDashboard.putNumber("Shooter Left", pdh.getCurrent(11));
+        SmartDashboard.putNumber("Shooter Right", pdh.getCurrent(14));
+        SmartDashboard.putNumber("Indexer", pdh.getCurrent(17));
+        SmartDashboard.putNumber("Intake", pdh.getCurrent(16));
+
+
+        SmartDashboard.putNumber("BR Drive Current", pdh.getCurrent(1));
+        SmartDashboard.putNumber("BL Drive Current", pdh.getCurrent(12));
+        SmartDashboard.putNumber("FL Drive Current", pdh.getCurrent(8));
+        SmartDashboard.putNumber("FR Drive Current", pdh.getCurrent(5));
+
+
+        SmartDashboard.putNumber("FR Turn Current", pdh.getCurrent(6));
+        SmartDashboard.putNumber("FL Turn Current", pdh.getCurrent(9));
+        SmartDashboard.putNumber("BL Turn Current", pdh.getCurrent(2));
+        SmartDashboard.putNumber("BR Turn Current", pdh.getCurrent(0));
+
+        SmartDashboard.putNumber("Total Current", pdh.getTotalCurrent());
+
     }
 
 

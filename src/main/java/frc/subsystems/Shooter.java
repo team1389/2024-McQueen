@@ -78,7 +78,7 @@ public class Shooter extends SubsystemBase{
 
     
     public double setWrist(double pos) {
-        // SmartDashboard.putNumber("Wrist target", pos);
+        SmartDashboard.putNumber("Wrist target", pos);
         wristPidController.setReference(pos, CANSparkMax.ControlType.kPosition);
         return pos;
     }
@@ -127,9 +127,16 @@ public class Shooter extends SubsystemBase{
     }
 
     public void holdPosition(){
-        setWrist(getWristPos());
-        wrist.set(pidWrist.calculate(getWristPos(), wristTarget));
+        wrist.set(pidWrist.calculate(getWristPos(), getTargetAngle()));
         SmartDashboard.putBoolean("Inside hold position", true);
+    }
+
+    public void setTargetAngle(double pos){
+        wristTarget = pos;
+    }
+
+    public double getTargetAngle(){
+        return wristTarget;
     }
 
     
@@ -144,6 +151,7 @@ public class Shooter extends SubsystemBase{
         SmartDashboard.putNumber("Wrist Encoder Position", wristEncoder.getAbsolutePosition() - wristEncoder.getPositionOffset());
         SmartDashboard.putNumber("Wrist Angle", getWristAngle());
         SmartDashboard.putNumber("wristPos", getWristPos());
+        SmartDashboard.putNumber("Wrist Target", getTargetAngle());
      //   wristTarget = SmartDashboard.getNumber("Wrist target", getWristPos());
       //  double wristPower = 0;
       // wrist.set(pid.calculate(wristEncoder.getDistance(), getWristPos()));

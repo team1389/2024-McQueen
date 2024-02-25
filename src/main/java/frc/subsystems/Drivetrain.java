@@ -4,6 +4,7 @@ package frc.subsystems;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
+//import com.ctre.phoenix6.hardware.WPI_PigeonIMU;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -68,6 +69,7 @@ public class Drivetrain extends SubsystemBase {
     
     // private final AHRS gyro = new AHRS(SPI.Port.kMXP);
     private final Pigeon2 pigeon = new Pigeon2(RobotMap.MotorPorts.PIGEON, "rio");
+    //private final WPI_PigeonIMU pigeon = new Pigeon2(RobotMap.MotorPorts.PIGEON, "rio");
 
     public final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(DriveConstants.driveKinematics,
             new Rotation2d(0), getModulePositions(), new Pose2d());

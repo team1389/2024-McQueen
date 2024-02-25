@@ -12,7 +12,7 @@ import frc.robot.RobotMap;
 //1 motor that spins the intake thingies
 
 public class Intake extends SubsystemBase{
-    private final double intakeSpeed = 0.5;
+    private final double intakeSpeed = 1;
     private CANSparkFlex intakeMotor;
     private AnalogPotentiometer pot;
     private final double distanceWONode = 0; //change

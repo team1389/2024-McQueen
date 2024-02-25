@@ -72,8 +72,8 @@ public class OI {
         manipAButton.whileTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
         manipBButton.whileTrue(new RunIndexerAmp(indexer, false));
         manipFullscreen.whileTrue(new Shoot(shooter));
-        manipYButton.whileTrue(new IndexAndShoot(indexer, intake));
-        // manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
+       // manipYButton.whileTrue(new IndexAndShoot(indexer, intake));
+         manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
         // manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
         manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
         manipLeftTrigger.whileTrue(new RunIntake(intake));
@@ -82,7 +82,7 @@ public class OI {
         manipLeftBumper.whileTrue(new Shoot(shooter));
         manipRightBumper.whileTrue(new RunIntake(intake).alongWith(new RunIndexer(indexer, true)));
         manipEllipsisButton.whileTrue(new AlignShooter(shooter, shooter));
-        manipGoogle.onTrue(new InstantCommand(() -> shooter.holdPosition()));
+        manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
 
         // manipStadia.whileTrue(new AutoAlign(drivetrain, limeLightVision));
 

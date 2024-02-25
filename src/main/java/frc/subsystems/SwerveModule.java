@@ -68,7 +68,7 @@ public class SwerveModule extends SubsystemBase{
         turnPidController.setFeedbackDevice(turnEncoder);
 
         turnPidController.setP(ModuleConstants.P_TURNING);
-        turnPidController.setI(ModuleConstants.I_TURNING);
+       // turnPidController.setI(ModuleConstants.I_TURNING);
         turnPidController.setD(ModuleConstants.D_TURNING);
 
         //Uncomment to tune pid from SmartDashboard
