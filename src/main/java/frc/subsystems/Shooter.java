@@ -51,6 +51,7 @@ public class Shooter extends SubsystemBase{
         wrist.setIdleMode(IdleMode.kBrake);
         wrist.burnFlash();
         //trial and error
+        wristEncoder = new DutyCycleEncoder(8); //through bore encoder
         wristPidController = wrist.getPIDController();
         // wristPidController.setP(ModuleConstants.P_TURNING);
         // wristPidController.setI(ModuleConstants.I_TURNING);
@@ -63,10 +64,7 @@ public class Shooter extends SubsystemBase{
 
         wristPidController.setOutputRange(-1, 1);
 
-        //through bore encoder
-        wristEncoder = new DutyCycleEncoder(8);
-    //    wristEncoder = new AbsoluteEncoder(RobotMap.) 
-
+        
         //decide pid values later, P, I, D
        pidWrist = new PIDController(0.5, 0, 0);
       // pidWrist = wrist.getPIDController();
