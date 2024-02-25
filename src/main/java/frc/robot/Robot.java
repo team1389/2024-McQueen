@@ -42,6 +42,8 @@ public class Robot extends TimedRobot {
         
         pdh = new PowerDistribution();
 
+        oi.shooter.resetWristPos();
+
 
     }
 
@@ -91,6 +93,7 @@ public class Robot extends TimedRobot {
         oi.drivetrain.backLeft.resetEncoders();
         oi.drivetrain.frontRight.resetEncoders();
         oi.drivetrain.backRight.resetEncoders();
+        
        // oi.drivetrain.setAngleAdjustment(0);
 
     }
