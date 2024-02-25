@@ -20,7 +20,9 @@ public class LimelightVision extends SubsystemBase{
     double tx = LimelightHelpers.getTX("");
     double ty = LimelightHelpers.getTY("");
     double ta = LimelightHelpers.getTA(""); //area
-    double dist = (APRILTAGHEIGHT-LIMELIGHTHEIGHT)/ (Math.tan(ty) * Math.cos(tx));
+    // double dist = (APRILTAGHEIGHT-LIMELIGHTHEIGHT)/ (Math.tan(ty) * Math.cos(tx));
+    double dist = -10.27749229*(Math.log(0.03008423*ty));
+
 
     public LimelightVision(){
         LimelightHelpers.setLEDMode_PipelineControl("");
@@ -38,6 +40,10 @@ public class LimelightVision extends SubsystemBase{
 
         }
 
+    public double getDist(double ty){
+        return -10.27749229*(Math.log(0.03008423*ty));
+    }
+
     // poseEstimator.updateWithTime(Timer.getFPGATimestamp(), getRotation2d(), getModulePositions());
     // updateFieldPose();
     
@@ -52,7 +58,7 @@ public class LimelightVision extends SubsystemBase{
         SmartDashboard.putNumber("LimelightX1", x);
         SmartDashboard.putNumber("LimelightY2", y);
         SmartDashboard.putNumber("LimelightArea3", area);
-        SmartDashboard.putNumber("Distance From April Tag", dist);
+        SmartDashboard.putNumber("Distance From April Tag", getDist(y));
         
         SmartDashboard.putNumber("LimelightX", LimelightHelpers.getTX(""));
         SmartDashboard.putString("InsideAutoAlign", "success");

@@ -17,6 +17,7 @@ import frc.robot.RobotMap;
 import frc.robot.RobotMap.ModuleConstants;
 
 public class Shooter extends SubsystemBase{
+    
     private final double shootSpeed = .5;
     private final double wristSpeed = .15;
     private CANSparkFlex shootLeft;
@@ -78,6 +79,7 @@ public class Shooter extends SubsystemBase{
         pidWrist.setD(0);
     }
 
+    
     public double setWrist(double pos) {
         // SmartDashboard.putNumber("Wrist target", pos);
         wristPidController.setReference(pos, CANSparkMax.ControlType.kPosition);
