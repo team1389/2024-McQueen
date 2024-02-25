@@ -8,14 +8,17 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import frc.command.*;
+import frc.robot.RobotMap.OIConstants;
 import frc.subsystems.*;
 import frc.util.DPadButton;
 import frc.util.DPadButton.Direction;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -58,7 +61,7 @@ public class OI {
     private Trigger manipDown;
     private Trigger manipRight;
     
-    public final Drivetrain drivetrain = new Drivetrain();
+    public final DriveSubsystem drivetrain = new DriveSubsystem();
     
     public final Indexer indexer = new Indexer();
 
@@ -91,20 +94,31 @@ public class OI {
 
         // Cool new way to make a drive command by passing in Suppliers for the
         // joysticks
-        drivetrain.setDefaultCommand(new TeleOpDrive(
-                drivetrain,
-                () -> getDriveLeftY(),
-                () -> getDriveLeftX(),
-                () -> getDriveRightX(),
-                () -> getDriveRightY(),
-                () -> getDriveLeftBumper(), // By default be in field oriented
-                () -> !getDriveRightBumper(), // Slow function
-                () -> driveXButton.getAsBoolean(), // Hold x position
-                () -> driveRightTrigger.getAsBoolean(),
-                () -> driveRightTrigger.getAsBoolean(),//auto alignment
-                () -> driveController.getRawAxis(5),
-                limeLightVision) // flip
-        );
+        // drivetrain.setDefaultCommand(new TeleOpDrive(
+        //         drivetrain,
+        //         () -> getDriveLeftY(),
+        //         () -> getDriveLeftX(),
+        //         () -> getDriveRightX(),
+        //         () -> getDriveRightY(),
+        //         () -> getDriveLeftBumper(), // By default be in field oriented
+        //         () -> !getDriveRightBumper(), // Slow function
+        //         () -> driveXButton.getAsBoolean(), // Hold x position
+        //         () -> driveRightTrigger.getAsBoolean(),
+        //         () -> driveRightTrigger.getAsBoolean(),//auto alignment
+        //         () -> driveController.getRawAxis(5),
+        //         limeLightVision) // flip
+        // );
+
+            drivetrain.setDefaultCommand(
+        // The left stick controls translation of the robot.
+        // Turning is controlled by the X axis of the right stick.
+        new RunCommand(
+            () -> drivetrain.drive(
+                -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
+                true, true),
+            drivetrain));
 
         shooter.setDefaultCommand(new ManualWrist(shooter, () -> getManipLeftY()));
         elevator.setDefaultCommand(new ManualElevator(elevator, () -> getManipRightY()));

@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.util.SwerveTelemetry;
+//import frc.util.SwerveTelemetry;
+import frc.util.SwerveUtils;
 
 /**
  * Don't change the name of this class since the VM is set up to run this
@@ -21,11 +22,13 @@ public class Robot extends TimedRobot {
      */
     private OI oi;
     private Command autoCommand;
-    SwerveTelemetry frontLeftTelemetry;
-    SwerveTelemetry backLeftTelemetry;
-    SwerveTelemetry frontRightTelemetry;
-    SwerveTelemetry backRightTelemetry;
+    // SwerveUtils frontLeftTelemetry;
+    // SwerveUtils backLeftTelemetry;
+    // SwerveUtils frontRightTelemetry;
+    // SwerveUtils backRightTelemetry;
     PowerDistribution pdh;
+
+
 
   //  public static OI;
 
@@ -35,10 +38,10 @@ public class Robot extends TimedRobot {
         oi = new OI();
         oi.light.rainbow();
 
-        frontLeftTelemetry = new SwerveTelemetry(oi.drivetrain.frontLeft);
-        backLeftTelemetry = new SwerveTelemetry(oi.drivetrain.backLeft);
-        frontRightTelemetry = new SwerveTelemetry(oi.drivetrain.frontRight);
-        backRightTelemetry = new SwerveTelemetry(oi.drivetrain.backRight);
+        // frontLeftTelemetry = new SwerveUtils(oi.drivetrain.frontLeft);
+        // backLeftTelemetry = new SwerveUtils(oi.drivetrain.backLeft);
+        // frontRightTelemetry = new SwerveUtils(oi.drivetrain.frontRight);
+        // backRightTelemetry = new SwerveUtils(oi.drivetrain.backRight);
         
         pdh = new PowerDistribution();
 
@@ -81,6 +84,13 @@ public class Robot extends TimedRobot {
 
     }
 
+      /** This function is called once each time the robot enters Disabled mode. */
+    @Override
+    public void disabledInit() {}
+
+    @Override
+    public void disabledPeriodic() {}
+
 
     @Override
     public void autonomousInit() {
@@ -96,24 +106,24 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        SwerveTelemetry frontLeftTelemetry = new SwerveTelemetry(oi.drivetrain.frontLeft);
-        SwerveTelemetry backLeftTelemetry = new SwerveTelemetry(oi.drivetrain.backLeft);
-        SwerveTelemetry frontRightTelemetry = new SwerveTelemetry(oi.drivetrain.frontRight);
-        SwerveTelemetry backRightTelemetry = new SwerveTelemetry(oi.drivetrain.backRight);
-        SendableRegistry.add(frontLeftTelemetry, "Swerve");
+    //     SwerveTelemetry frontLeftTelemetry = new SwerveTelemetry(oi.drivetrain.frontLeft);
+    //     SwerveTelemetry backLeftTelemetry = new SwerveTelemetry(oi.drivetrain.backLeft);
+    //     SwerveTelemetry frontRightTelemetry = new SwerveTelemetry(oi.drivetrain.frontRight);
+    //     SwerveTelemetry backRightTelemetry = new SwerveTelemetry(oi.drivetrain.backRight);
+    //     SendableRegistry.add(frontLeftTelemetry, "Swerve");
 
-       // SmartDashboard.putNumber("FL angular", frontLeftTelemetry.get);
+    //    // SmartDashboard.putNumber("FL angular", frontLeftTelemetry.get);
        
-        SendableRegistry.addLW(frontLeftTelemetry, "FL Swerve");
-        SendableRegistry.addLW(backLeftTelemetry, "BL Swerve");
-        SendableRegistry.addLW(frontRightTelemetry, "FR Swerve");
-        SendableRegistry.addLW(backRightTelemetry, "BR Swerve");
+    //     SendableRegistry.addLW(frontLeftTelemetry, "FL Swerve");
+    //     SendableRegistry.addLW(backLeftTelemetry, "BL Swerve");
+    //     SendableRegistry.addLW(frontRightTelemetry, "FR Swerve");
+    //     SendableRegistry.addLW(backRightTelemetry, "BR Swerve");
 
 
-        oi.drivetrain.frontLeft.resetEncoders();
-        oi.drivetrain.backLeft.resetEncoders();
-        oi.drivetrain.frontRight.resetEncoders();
-        oi.drivetrain.backRight.resetEncoders();
+    //     oi.drivetrain.frontLeft.resetEncoders();
+    //     oi.drivetrain.backLeft.resetEncoders();
+    //     oi.drivetrain.frontRight.resetEncoders();
+    //     oi.drivetrain.backRight.resetEncoders();
         
        // oi.drivetrain.setAngleAdjustment(0);
 
@@ -124,17 +134,17 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-        SmartDashboard.putNumber("FL angle", Math.toDegrees(frontLeftTelemetry.getAngle()));
-        SmartDashboard.putNumber("FL speed", frontLeftTelemetry.getSpeed());
+        // SmartDashboard.putNumber("FL angle", Math.toDegrees(frontLeftTelemetry.getAngle()));
+        // SmartDashboard.putNumber("FL speed", frontLeftTelemetry.getSpeed());
 
-        SmartDashboard.putNumber("BL angle", Math.toDegrees(backLeftTelemetry.getAngle()));
-        SmartDashboard.putNumber("BL speed", backLeftTelemetry.getSpeed());
+        // SmartDashboard.putNumber("BL angle", Math.toDegrees(backLeftTelemetry.getAngle()));
+        // SmartDashboard.putNumber("BL speed", backLeftTelemetry.getSpeed());
 
-        SmartDashboard.putNumber("FR angle", Math.toDegrees(frontRightTelemetry.getAngle()));
-        SmartDashboard.putNumber("FR speed", frontRightTelemetry.getSpeed());
+        // SmartDashboard.putNumber("FR angle", Math.toDegrees(frontRightTelemetry.getAngle()));
+        // SmartDashboard.putNumber("FR speed", frontRightTelemetry.getSpeed());
 
-        SmartDashboard.putNumber("BR angle", Math.toDegrees(backRightTelemetry.getAngle()));
-        SmartDashboard.putNumber("BR speed", backRightTelemetry.getSpeed());
+        // SmartDashboard.putNumber("BR angle", Math.toDegrees(backRightTelemetry.getAngle()));
+        // SmartDashboard.putNumber("BR speed", backRightTelemetry.getSpeed());
     }
 
     /**
