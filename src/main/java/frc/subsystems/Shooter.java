@@ -21,7 +21,8 @@ public class Shooter extends SubsystemBase{
     private final double wristSpeed = .15; // percent of max motor speed
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;
-    private CANSparkMax wrist;
+    private CANSparkFlex wrist;
+    private final SparkPIDController wristPidController;
     public boolean controllerInterrupt = false;
     private final double maxWristEncoderVal = 0.962;
     private final double minWristEncoderVal = 0.801;
@@ -41,7 +42,7 @@ public class Shooter extends SubsystemBase{
     public Shooter(){
         shootLeft = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_LEFT, MotorType.kBrushless);
         shootRight = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_RIGHT, MotorType.kBrushless);
-        wrist = new CANSparkMax(RobotMap.MotorPorts.WRIST_MOTOR, MotorType.kBrushless);
+        wrist = new CANSparkFlex(RobotMap.MotorPorts.WRIST_MOTOR, MotorType.kBrushless);
         shootLeft.setSmartCurrentLimit(40); // neo vortex specifications, 40 amp breaker, cannot exceed 40
         shootLeft.burnFlash();
         shootRight.setSmartCurrentLimit(40); // neo vortex specifications
@@ -50,7 +51,20 @@ public class Shooter extends SubsystemBase{
         wrist.setIdleMode(IdleMode.kBrake);
         wrist.burnFlash();
         //trial and error
-        wristEncoder = new DutyCycleEncoder(RobotMap.MotorPorts.WRIST_ENCODER); 
+        wristPidController = wrist.getPIDController();
+        // wristPidController.setP(ModuleConstants.P_TURNING);
+        // wristPidController.setI(ModuleConstants.I_TURNING);
+        // wristPidController.setD(ModuleConstants.D_TURNING);
+
+        // SmartDashboard.putNumber("Turning P", ModuleConstants.P_WRIST);
+        // SmartDashboard.putNumber("Turning I", ModuleConstants.I_WRIST);
+        // SmartDashboard.putNumber("Turning D", ModuleConstants.D_WRIST);
+        
+
+        wristPidController.setOutputRange(-1, 1);
+
+        //through bore encoder
+        wristEncoder = new DutyCycleEncoder(8);
     //    wristEncoder = new AbsoluteEncoder(RobotMap.) 
 
         //decide pid values later, P, I, D
@@ -65,10 +79,9 @@ public class Shooter extends SubsystemBase{
     }
 
     public double setWrist(double pos) {
-        var temp = wristTarget;
-        wristTarget = pos;
-        SmartDashboard.putNumber("Wrist target", wristTarget);
-        return temp;
+        // SmartDashboard.putNumber("Wrist target", pos);
+        wristPidController.setReference(pos, CANSparkMax.ControlType.kPosition);
+        return pos;
     }
 
      public void moveWrist(double power) {
@@ -90,7 +103,7 @@ public class Shooter extends SubsystemBase{
     } 
 
     public void stopWrist(){
-        wrist.set(0);
+        wrist.set(-.01);
     }
 
     public void stop(){
