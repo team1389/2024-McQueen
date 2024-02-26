@@ -8,13 +8,11 @@ import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.RobotMap.ModuleConstants;
 
 public class Shooter extends SubsystemBase{
     private final double shootSpeed = 1; // percent of max motor speed
@@ -23,12 +21,12 @@ public class Shooter extends SubsystemBase{
     private CANSparkFlex shootRight;
     private CANSparkFlex wrist;
     private final SparkPIDController wristPidController;
-    public boolean controllerInterrupt = false;
+    public boolean controllerInterrupt = true;
     private final double maxWristEncoderVal = 0.962;
     private final double minWristEncoderVal = 0.801;
  //   private PIDController pidWrist;
     public double wristTarget;
-    private PIDController pid = new PIDController(.5, 0, 0);
+    public double madyannPos;
 
 
     private final TrapezoidProfile.Constraints backConstraints = new TrapezoidProfile.Constraints(10, 20);
@@ -60,22 +58,29 @@ public class Shooter extends SubsystemBase{
         // SmartDashboard.putNumber("Turning P", ModuleConstants.P_WRIST);
         // SmartDashboard.putNumber("Turning I", ModuleConstants.I_WRIST);
         // SmartDashboard.putNumber("Turning D", ModuleConstants.D_WRIST);
+
+        
         
 
         wristPidController.setOutputRange(-1, 1);
 
         
         //decide pid values later, P, I, D
-       pidWrist = new PIDController(0.5, 0, 0);
+       pidWrist = new PIDController(0.25, 0, 0);
       // pidWrist = wrist.getPIDController();
 
       // pidWrist.setFeedbackDevice(wristEncoder);
 
-        pidWrist.setP(.5);
-        pidWrist.setI(0);
-        pidWrist.setD(0);
-    }
+        wristPidController.setP(.25);
+        wristPidController.setI(0);
+        wristPidController.setD(0);
 
+        madyannPos = 0.85;
+        SmartDashboard.putNumber("P Wrist", 0.25);
+        SmartDashboard.putNumber("I Wrist", 0.0000);
+        SmartDashboard.putNumber("D Wrist", 0.000);
+        SmartDashboard.putNumber("Madyanns Funny Number", .85);
+    }
     
     public double setWrist(double pos) {
         SmartDashboard.putNumber("Wrist target", pos);
@@ -86,6 +91,10 @@ public class Shooter extends SubsystemBase{
      public void moveWrist(double power) {
         power = MathUtil.clamp(power, -0.05, 0.1);
         wrist.set(power);
+    }
+
+    public double getMadyannsNumber(){
+        return madyannPos;
     }
 
     public void runShoot() {
@@ -139,6 +148,9 @@ public class Shooter extends SubsystemBase{
         return wristTarget;
     }
 
+    public void toggleControllerInterrupt(){
+        controllerInterrupt = !controllerInterrupt;
+    }
     
     @Override
     public void periodic(){
@@ -151,13 +163,17 @@ public class Shooter extends SubsystemBase{
         SmartDashboard.putNumber("Wrist Encoder Position", wristEncoder.getAbsolutePosition() - wristEncoder.getPositionOffset());
         SmartDashboard.putNumber("Wrist Angle", getWristAngle());
         SmartDashboard.putNumber("wristPos", getWristPos());
-        SmartDashboard.putNumber("Wrist Target", getTargetAngle());
+        // SmartDashboard.putNumber("P Wrist", 0.25);
+        // SmartDashboard.putNumber("I Wrist", 0.0000);
+        // SmartDashboard.putNumber("D Wrist", 0.000);
+        // SmartDashboard.putNumber("Wrist Target", getTargetAngle());
      //   wristTarget = SmartDashboard.getNumber("Wrist target", getWristPos());
       //  double wristPower = 0;
       // wrist.set(pid.calculate(wristEncoder.getDistance(), getWristPos()));
       if(!controllerInterrupt){
-        setWrist(getWristPos());
-        wrist.set(pidWrist.calculate(getWristPos(), wristTarget));
+        setWrist(.5);
+        // setWrist(SmartDashboard.getNumber("Madyanns Funny Number",.85));
+        // wrist.set(pidWrist.calculate(getWristPos(), wristTarget));
 
 
     //     double wristPower = 0; test this too
@@ -165,9 +181,9 @@ public class Shooter extends SubsystemBase{
     //    wristPower = pidWrist.calculate(getWristPos(), wristTarget);
     //     moveWrist(wristPower);
 
-        pidWrist.setP(SmartDashboard.getNumber("P Wrist", 0.01));
-        pidWrist.setI(SmartDashboard.getNumber("I Wrist", 0.00001));
-        pidWrist.setD(SmartDashboard.getNumber("D Wrist", 0.0005));
+        wristPidController.setP(SmartDashboard.getNumber("P Wrist", 0.25));
+        wristPidController.setI(SmartDashboard.getNumber("I Wrist", 0.0000));
+        wristPidController.setD(SmartDashboard.getNumber("D Wrist", 0.000));
           //  moveWrist(wristPower);
      }
     }

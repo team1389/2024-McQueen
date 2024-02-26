@@ -82,7 +82,9 @@ public class OI {
         manipLeftBumper.whileTrue(new Shoot(shooter));
         manipRightBumper.whileTrue(new RunIntake(intake).alongWith(new RunIndexer(indexer, true)));
         manipEllipsisButton.whileTrue(new AlignShooter(shooter, shooter));
-        manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
+        // manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
+        // manipGoogle.onTrue(new HoldPosition(shooter));
+        manipGoogle.onTrue(new InstantCommand(()-> shooter.toggleControllerInterrupt()));
 
         // manipStadia.whileTrue(new AutoAlign(drivetrain, limeLightVision));
 
