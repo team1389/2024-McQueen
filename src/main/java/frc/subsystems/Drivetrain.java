@@ -71,46 +71,46 @@
 //     private final Pigeon2 pigeon = new Pigeon2(RobotMap.MotorPorts.PIGEON, "rio");
 //     //private final WPI_PigeonIMU pigeon = new Pigeon2(RobotMap.MotorPorts.PIGEON, "rio");
 
-//     public final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(DriveConstants.driveKinematics,
-//             new Rotation2d(0), getModulePositions(), new Pose2d());
+    // public final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(DriveConstants.driveKinematics,
+    //         new Rotation2d(0), getModulePositions(), new Pose2d());
             
-//     private static final double TRACK_WIDTH_X = Units.inchesToMeters(24.0);
+    // private static final double TRACK_WIDTH_X = Units.inchesToMeters(24.0);
     
-//     private static final double TRACK_WIDTH_Y = Units.inchesToMeters(24.0);
+    // private static final double TRACK_WIDTH_Y = Units.inchesToMeters(24.0);
     
-//     private final Field2d m_field = new Field2d();
+    // private final Field2d m_field = new Field2d();
     
-//     private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(getModuleTranslations());
+    // private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(getModuleTranslations());
     
 //     private final SwerveModule[] modules = new SwerveModule[4]; // FL, FR, BL, BR
 
 //     public Drivetrain() {
 //      //   PigeonConfig();
-//     //         AutoBuilder.configureHolonomic(
-//     //         this::getPose, // Robot pose supplier
-//     //         this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-//     //         () -> kinematics.toChassisSpeeds(getModuleStates()), // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-//     //         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-//     //         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-//     //                 new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-//     //                 new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
-//     //                 4.5, // Max module speed, in m/s
-//     //                 0.4, // Drive base radius in meters. Distance from robot center to furthest module.
-//     //                 new ReplanningConfig() // Default path replanning config. See the API for the options here
-//     //         ),
-//     //         () -> {
-//     //           // Boolean supplier that controls when the path will be mirrored for the red alliance
-//     //           // This will flip the path being followed to the red side of the field.
-//     //           // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+    //         AutoBuilder.configureHolonomic(
+    //         this::getPose, // Robot pose supplier
+    //         this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+    //         () -> kinematics.toChassisSpeeds(getModuleStates()), // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+    //         this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+    //         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+    //                 new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+    //                 new PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
+    //                 4.5, // Max module speed, in m/s
+    //                 0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+    //                 new ReplanningConfig() // Default path replanning config. See the API for the options here
+    //         ),
+    //         () -> {
+    //           // Boolean supplier that controls when the path will be mirrored for the red alliance
+    //           // This will flip the path being followed to the red side of the field.
+    //           // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-//     //           var alliance = DriverStation.getAlliance();
-//     //           if (alliance.isPresent()) {
-//     //             return alliance.get() == DriverStation.Alliance.Red;
-//     //           }
-//     //           return false;
-//     //         },
-//     //         this // Reference to this subsystem to set requirements
-//     // ); 
+    //           var alliance = DriverStation.getAlliance();
+    //           if (alliance.isPresent()) {
+    //             return alliance.get() == DriverStation.Alliance.Red;
+    //           }
+    //           return false;
+    //         },
+    //         this // Reference to this subsystem to set requirements
+    // ); 
 // }
 
 //     // Pigeon Stuff
@@ -160,9 +160,9 @@
 //         return poseEstimator.getEstimatedPosition();
 //     }
 
-//     public void resetPose(Pose2d kms) {
-//         poseEstimator.resetPosition(getRotation2d(), getModulePositions(), kms);
-//     }
+    // public void resetPose(Pose2d kms) {
+    //     poseEstimator.resetPosition(getRotation2d(), getModulePositions(), kms);
+    // }
 
 //     public void resetOdometry(Pose2d pose) {
 //         poseEstimator.resetPosition(getRotation2d(), getModulePositions(), pose);
@@ -214,48 +214,48 @@
 //     }
 
 //     // Wheel order: FR, FL, BR, BL
-//     public SwerveModulePosition[] getModulePositions() {
-//         return new SwerveModulePosition[] {
-//             frontRight.getPosition(),
-//             frontLeft.getPosition(),
-//             backRight.getPosition(),
-//             backLeft.getPosition()
-//         };
-//     }
+    // public SwerveModulePosition[] getModulePositions() {
+    //     return new SwerveModulePosition[] {
+    //         frontRight.getPosition(),
+    //         frontLeft.getPosition(),
+    //         backRight.getPosition(),
+    //         backLeft.getPosition()
+    //     };
+    // }
 
-//     public void setModuleStates(SwerveModuleState[] desiredStates) {
-//         // Normalize to within robot max speed
-//         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.MAX_METERS_PER_SEC);
+    // public void setModuleStates(SwerveModuleState[] desiredStates) {
+    //     // Normalize to within robot max speed
+    //     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.MAX_METERS_PER_SEC);
         
-//         frontRight.setDesiredState(desiredStates[0], true);
-//         frontLeft.setDesiredState(desiredStates[1], true);
-//         backRight.setDesiredState(desiredStates[2], true);
-//         backLeft.setDesiredState(desiredStates[3], true);
+    //     frontRight.setDesiredState(desiredStates[0], true);
+    //     frontLeft.setDesiredState(desiredStates[1], true);
+    //     backRight.setDesiredState(desiredStates[2], true);
+    //     backLeft.setDesiredState(desiredStates[3], true);
         
-//     }
+    // }
 
-//     public void driveRobotRelative(ChassisSpeeds speeds){
-//      ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
-//      SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
-//      SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, MAX_DRIVE_SPEED);
+    // public void driveRobotRelative(ChassisSpeeds speeds){
+    //  ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
+    //  SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
+    //  SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, MAX_DRIVE_SPEED);
 
 
-//     }
+    // }
     
-//     public static Translation2d[] getModuleTranslations() {
-//         return new Translation2d[] {
-//           new Translation2d(TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0),
-//           new Translation2d(TRACK_WIDTH_X / 2.0, -TRACK_WIDTH_Y / 2.0),
-//           new Translation2d(-TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0),
-//           new Translation2d(-TRACK_WIDTH_X / 2.0, -TRACK_WIDTH_Y / 2.0)
-//         };
-//       }
+    // public static Translation2d[] getModuleTranslations() {
+    //     return new Translation2d[] {
+    //       new Translation2d(TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0),
+    //       new Translation2d(TRACK_WIDTH_X / 2.0, -TRACK_WIDTH_Y / 2.0),
+    //       new Translation2d(-TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0),
+    //       new Translation2d(-TRACK_WIDTH_X / 2.0, -TRACK_WIDTH_Y / 2.0)
+    //     };
+    //   }
 
-//     private SwerveModuleState[] getModuleStates() {
-//         SwerveModuleState[] states = new SwerveModuleState[4];
-//         for (int i = 0; i < 4; i++) {
-//           states[i] = modules[i].getState();
-//         }
-//         return states;
-//       }  
+    // private SwerveModuleState[] getModuleStates() {
+    //     SwerveModuleState[] states = new SwerveModuleState[4];
+    //     for (int i = 0; i < 4; i++) {
+    //       states[i] = modules[i].getState();
+    //     }
+    //     return states;
+    //   }  
 // }
