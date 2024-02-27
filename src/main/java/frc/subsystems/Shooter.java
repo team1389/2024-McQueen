@@ -16,7 +16,7 @@ import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase{
     private final double shootSpeed = 1; // percent of max motor speed
-    private final double wristSpeed = .01; // percent of max motor speed
+    private final double wristSpeed = .0375; // percent of max motor speed
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;
     private CANSparkFlex wrist;
@@ -107,7 +107,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void runWristDown(){
-        wrist.set(.05);
+        wrist.set(wristSpeed);
     } 
 
     public void stopWrist(){

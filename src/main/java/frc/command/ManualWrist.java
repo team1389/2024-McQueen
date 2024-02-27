@@ -21,7 +21,7 @@ public class ManualWrist extends Command{
     public void execute() {
         // shooter.controllerInterrupt = false;
         
-        shooter.moveWrist(MathUtil.clamp(power.get(), -0.2, 0.2));
+        shooter.moveWrist(MathUtil.clamp(power.get(), -0.0375, 0.0375));
     }
 
     @Override
