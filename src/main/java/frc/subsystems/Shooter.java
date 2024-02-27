@@ -66,20 +66,21 @@ public class Shooter extends SubsystemBase{
 
         
         //decide pid values later, P, I, D
-       pidWrist = new PIDController(0.25, 0, 0);
-      // pidWrist = wrist.getPIDController();
+        pidWrist = new PIDController(0.25, 0, 0);
+    //   pidWrist = wrist.getPIDController();
 
-      // pidWrist.setFeedbackDevice(wristEncoder);
+    //   pidWrist.setFeedbackDevice(wristEncoder);
 
-        wristPidController.setP(.25);
-        wristPidController.setI(0);
-        wristPidController.setD(0);
+        pidWrist.setP(.25);
+        pidWrist.setI(0);
+        pidWrist.setD(0);
 
         madyannPos = 0.85;
         SmartDashboard.putNumber("P Wrist", 0.25);
         SmartDashboard.putNumber("I Wrist", 0.0000);
         SmartDashboard.putNumber("D Wrist", 0.000);
         SmartDashboard.putNumber("Madyanns Funny Number", .85);
+        SmartDashboard.putNumber("Target Angle", 0.5);
     }
     
     public double setWrist(double pos) {
@@ -171,19 +172,19 @@ public class Shooter extends SubsystemBase{
       //  double wristPower = 0;
       // wrist.set(pid.calculate(wristEncoder.getDistance(), getWristPos()));
       if(!controllerInterrupt){
-        setWrist(.5);
+        // setWrist(.5);
         // setWrist(SmartDashboard.getNumber("Madyanns Funny Number",.85));
-        // wrist.set(pidWrist.calculate(getWristPos(), wristTarget));
-
-
+        wrist.set(pidWrist.calculate(getWristPos(), getTargetAngle()));
+        
     //     double wristPower = 0; test this too
 
     //    wristPower = pidWrist.calculate(getWristPos(), wristTarget);
     //     moveWrist(wristPower);
 
-        wristPidController.setP(SmartDashboard.getNumber("P Wrist", 0.25));
-        wristPidController.setI(SmartDashboard.getNumber("I Wrist", 0.0000));
-        wristPidController.setD(SmartDashboard.getNumber("D Wrist", 0.000));
+        setTargetAngle(SmartDashboard.getNumber("Target Angle", getTargetAngle()));
+        pidWrist.setP(SmartDashboard.getNumber("P Wrist", 0.25));
+        pidWrist.setI(SmartDashboard.getNumber("I Wrist", 0.0000));
+        pidWrist.setD(SmartDashboard.getNumber("D Wrist", 0.000));
           //  moveWrist(wristPower);
      }
     }
