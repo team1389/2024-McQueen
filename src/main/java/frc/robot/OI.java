@@ -70,7 +70,7 @@ public class OI {
         
         initControllers();
         manipAButton.whileTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
-        manipBButton.whileTrue(new RunIndexerAmp(indexer, false));
+        manipBButton.whileTrue(new RunIndexerAmp(indexer, false).alongWith(new RunIntake(intake)));
         manipFullscreen.whileTrue(new Shoot(shooter));
        // manipYButton.whileTrue(new IndexAndShoot(indexer, intake));
          manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));

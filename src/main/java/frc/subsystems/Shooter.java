@@ -16,7 +16,7 @@ import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase{
     private final double shootSpeed = 1; // percent of max motor speed
-    private final double wristSpeed = .15; // percent of max motor speed
+    private final double wristSpeed = .0375; // percent of max motor speed
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;
     private CANSparkFlex wrist;
@@ -108,7 +108,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void runWristDown(){
-        wrist.set(.05);
+        wrist.set(wristSpeed);
     } 
 
     public void stopWrist(){
@@ -164,6 +164,7 @@ public class Shooter extends SubsystemBase{
         SmartDashboard.putNumber("Wrist Encoder Position", wristEncoder.getAbsolutePosition() - wristEncoder.getPositionOffset());
         SmartDashboard.putNumber("Wrist Angle", getWristAngle());
         SmartDashboard.putNumber("wristPos", getWristPos());
+        SmartDashboard.putNumber("Frequency (Hz)", wristEncoder.getFrequency());
         // SmartDashboard.putNumber("P Wrist", 0.25);
         // SmartDashboard.putNumber("I Wrist", 0.0000);
         // SmartDashboard.putNumber("D Wrist", 0.000);
@@ -172,10 +173,11 @@ public class Shooter extends SubsystemBase{
       //  double wristPower = 0;
       // wrist.set(pid.calculate(wristEncoder.getDistance(), getWristPos()));
       if(!controllerInterrupt){
-        // setWrist(.5);
-        // setWrist(SmartDashboard.getNumber("Madyanns Funny Number",.85));
-        wrist.set(pidWrist.calculate(getWristPos(), getTargetAngle()));
-        
+        //setWrist(2);
+        setWrist(SmartDashboard.getNumber("Madyanns Funny Number",.85));
+        // wrist.set(pidWrist.calculate(getWristPos(), wristTarget));
+
+
     //     double wristPower = 0; test this too
 
     //    wristPower = pidWrist.calculate(getWristPos(), wristTarget);

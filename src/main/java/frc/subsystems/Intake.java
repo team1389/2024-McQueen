@@ -1,5 +1,6 @@
 package frc.subsystems;
 
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -12,7 +13,7 @@ import frc.robot.RobotMap;
 //1 motor that spins the intake thingies
 
 public class Intake extends SubsystemBase{
-    private final double intakeSpeed = 1;
+    private final double intakeSpeed = .4; //.4
     private CANSparkFlex intakeMotor;
     private AnalogPotentiometer pot;
     private final double distanceWONode = 0; //change
@@ -20,6 +21,7 @@ public class Intake extends SubsystemBase{
     public Intake(){
     intakeMotor = new CANSparkFlex(RobotMap.MotorPorts.INTAKE_MOTOR,MotorType.kBrushless);
     intakeMotor.setSmartCurrentLimit(40);
+    intakeMotor.setIdleMode(IdleMode.kCoast);
     intakeMotor.burnFlash();
     pot = new AnalogPotentiometer(0, 100, 30); //change parameters
     }
