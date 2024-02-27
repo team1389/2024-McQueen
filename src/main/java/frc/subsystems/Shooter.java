@@ -17,7 +17,7 @@ import frc.robot.RobotMap;
 import frc.robot.RobotMap.ModuleConstants;
 
 public class Shooter extends SubsystemBase{
-    private final double shootSpeed = .5; // percent of max motor speed
+    private final double shootSpeed = -1; // percent of max motor speed
     private final double wristSpeed = .15; // percent of max motor speed
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;
@@ -44,8 +44,10 @@ public class Shooter extends SubsystemBase{
         shootRight = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_RIGHT, MotorType.kBrushless);
         wrist = new CANSparkFlex(RobotMap.MotorPorts.WRIST_MOTOR, MotorType.kBrushless);
         shootLeft.setSmartCurrentLimit(40); // neo vortex specifications, 40 amp breaker, cannot exceed 40
+        shootLeft.setIdleMode(IdleMode.kCoast);
         shootLeft.burnFlash();
         shootRight.setSmartCurrentLimit(40); // neo vortex specifications
+        shootRight.setIdleMode(IdleMode.kCoast);
         shootRight.burnFlash();
         wrist.setSmartCurrentLimit(40); // neo vortex specifications
         wrist.setIdleMode(IdleMode.kBrake);
@@ -90,7 +92,7 @@ public class Shooter extends SubsystemBase{
 
     public void runShoot() {
         shootLeft.set(shootSpeed);
-        shootRight.set(-shootSpeed); //inverse the direction in rev
+        shootRight.set(shootSpeed); //inverse the direction in rev
     }
 
     public void runWristUp(){

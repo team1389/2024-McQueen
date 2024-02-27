@@ -20,16 +20,16 @@ public class RobotMap {
 
     //     // Not Updated
     //     // Note: these are for the drive and turning motors
-    //     public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(3);
-    //     public static final double DRIVE_GEAR_RATIO = 1 / 4.71; // 14T pinion
-    //     public static final double TURN_GEAR_RATIO = 1 / (1); // this should be 1 this is correct 
-    //     public static final double WRIST_GEAR_RATIO = 44.44 / 1; //TODO TBD 44.44 / 1 
+        public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(3);
+        public static final double DRIVE_GEAR_RATIO = 1 / 4.71; // 14T pinion
+        public static final double TURN_GEAR_RATIO = 1 / (1); // this should be 1 this is correct 
+        public static final double WRIST_GEAR_RATIO = 44.44 / 1; //TODO TBD 44.44 / 1 
 
-    //     public static final double FREE_MOTOR_SPEED_RPS = 6784 / 60; // RPM/60 //confmried
-    //     public static final double DRIVE_FREE_MAX_SPEED_MPS = (FREE_MOTOR_SPEED_RPS * WHEEL_DIAMETER_METERS * Math.PI)
-    //             / DRIVE_GEAR_RATIO;
-    //     public static final double DRIVE_ROTATIONS_TO_METERS = DRIVE_GEAR_RATIO * Math.PI * WHEEL_DIAMETER_METERS;
-    //     public static final double TURNING_ROTATIONS_TO_RAD = TURN_GEAR_RATIO * 2 * Math.PI;
+        public static final double FREE_MOTOR_SPEED_RPS = 6784 / 60; // RPM/60 //confmried
+        public static final double DRIVE_FREE_MAX_SPEED_MPS = (FREE_MOTOR_SPEED_RPS * WHEEL_DIAMETER_METERS * Math.PI)
+                / DRIVE_GEAR_RATIO;
+        public static final double DRIVE_ROTATIONS_TO_METERS = DRIVE_GEAR_RATIO * Math.PI * WHEEL_DIAMETER_METERS;
+        public static final double TURNING_ROTATIONS_TO_RAD = TURN_GEAR_RATIO * 2 * Math.PI;
 
 
 
@@ -142,8 +142,8 @@ public class RobotMap {
     public static final double kMaxSpeedMetersPerSecond = 4.8; //10
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
-    public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
+    public static final double kDirectionSlewRate = 100000; // radians per second //1.2
+    public static final double kMagnitudeSlewRate = 100000; // percent per second (1 = 100%) //1.8
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
     // Chassis configuration
@@ -174,7 +174,7 @@ public class RobotMap {
     public static final int kFrontRightTurningCanId = 7; //FR
     public static final int kRearRightTurningCanId = 9; //BR
 
-    public static final boolean kGyroReversed = false;
+    public static final boolean kPigeonReversed = false;
   }
 
   public static final class ModuleConstants {
@@ -214,9 +214,14 @@ public class RobotMap {
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
 
-    public static final double kTurningP = 1;
-    public static final double kTurningI = 0;
-    public static final double kTurningD = 0;
+    //     public static final double P_TURNING = 0.075; // PID constant
+    //     public static final double I_TURNING = 0.000001; // PID Constant
+    //     public static final double D_TURNING = 0.00025; // PID constant
+    //     public static final double P_DRIVE = 0.25; // PID constant
+
+    public static final double kTurningP = 1; //1
+    public static final double kTurningI = 0; //0
+    public static final double kTurningD = 0; //0
     public static final double kTurningFF = 0;
     public static final double kTurningMinOutput = -1;
     public static final double kTurningMaxOutput = 1;

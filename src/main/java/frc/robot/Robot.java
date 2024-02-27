@@ -16,16 +16,19 @@ import frc.util.SwerveUtils;
  */
 public class Robot extends TimedRobot {
 
+    private Command m_autonomousCommand;
+
+
     /**
      * Initialize all systems here as public & static.
      * Ex: public static System system = new System();
      */
     private OI oi;
     private Command autoCommand;
-    // SwerveUtils frontLeftTelemetry;
-    // SwerveUtils backLeftTelemetry;
-    // SwerveUtils frontRightTelemetry;
-    // SwerveUtils backRightTelemetry;
+    // SwerveTelemetry frontLeftTelemetry;
+    // SwerveTelemetry backLeftTelemetry;
+    // SwerveTelemetry frontRightTelemetry;
+    // SwerveTelemetry backRightTelemetry;
     PowerDistribution pdh;
 
 
@@ -38,10 +41,10 @@ public class Robot extends TimedRobot {
         oi = new OI();
         oi.light.rainbow();
 
-        // frontLeftTelemetry = new SwerveUtils(oi.drivetrain.frontLeft);
-        // backLeftTelemetry = new SwerveUtils(oi.drivetrain.backLeft);
-        // frontRightTelemetry = new SwerveUtils(oi.drivetrain.frontRight);
-        // backRightTelemetry = new SwerveUtils(oi.drivetrain.backRight);
+        // frontLeftTelemetry = new SwerveTelemetry(oi.drivetrain.frontLeft);
+        // backLeftTelemetry = new SwerveTelemetry(oi.drivetrain.backLeft);
+        // frontRightTelemetry = new SwerveTelemetry(oi.drivetrain.frontRight);
+        // backRightTelemetry = new SwerveTelemetry(oi.drivetrain.backRight);
         
         pdh = new PowerDistribution();
 
@@ -58,15 +61,16 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        // oi.robotPeriodic();
         double voltage = pdh.getVoltage();
         SmartDashboard.putNumber("Voltage", voltage);
 
-        SmartDashboard.putNumber("Wrist", pdh.getCurrent(10));
-        SmartDashboard.putNumber("Elevator", pdh.getCurrent(13));
-        SmartDashboard.putNumber("Shooter Left", pdh.getCurrent(11));
-        SmartDashboard.putNumber("Shooter Right", pdh.getCurrent(14));
-        SmartDashboard.putNumber("Indexer", pdh.getCurrent(17));
-        SmartDashboard.putNumber("Intake", pdh.getCurrent(16));
+        SmartDashboard.putNumber("Wrist Current", pdh.getCurrent(10));
+        SmartDashboard.putNumber("Elevator Current", pdh.getCurrent(13));
+        SmartDashboard.putNumber("Shooter Left Current", pdh.getCurrent(11));
+        SmartDashboard.putNumber("Shooter Right Current", pdh.getCurrent(14));
+        SmartDashboard.putNumber("Indexer Current", pdh.getCurrent(17));
+        SmartDashboard.putNumber("Intake Current", pdh.getCurrent(16));
 
 
         SmartDashboard.putNumber("BR Drive Current", pdh.getCurrent(1));
@@ -95,6 +99,8 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         //Example of setting auto: Scheduler.getInstance().add(YOUR AUTO);
+        m_autonomousCommand = oi.getAutonomousCommand();
+
     }
 
     /**

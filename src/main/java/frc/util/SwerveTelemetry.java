@@ -4,12 +4,12 @@
 // import edu.wpi.first.util.sendable.Sendable;
 // import edu.wpi.first.util.sendable.SendableBuilder;
 // import edu.wpi.first.util.sendable.SendableRegistry;
-// import frc.subsystems.SwerveModule;
+// import frc.subsystems.MAXSwerveModule;
 
 // public class SwerveTelemetry implements Sendable {
-//     SwerveModule swerveWheel;
+//     MAXSwerveModule swerveWheel;
 
-//     public SwerveTelemetry(SwerveModule wheel) {
+//     public SwerveTelemetry(MAXSwerveModule wheel) {
 //         swerveWheel = wheel;
 //         SendableRegistry.addLW(this, "joe");
 

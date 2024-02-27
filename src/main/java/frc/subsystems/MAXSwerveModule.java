@@ -7,6 +7,7 @@ package frc.subsystems;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
@@ -15,6 +16,7 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap.ModuleConstants;
 
 public class MAXSwerveModule {
@@ -112,11 +114,15 @@ public class MAXSwerveModule {
 
     // Add delay for MAXSwerveModule initialization
     // Timer.delay(0.2);
-    // m_drivingSparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 20);
-    // m_turningSparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 20);
+    m_drivingSparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 20);
+    m_turningSparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 20);
     
-    // m_drivingSparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 65535);
-    // m_turningSparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 65535);
+    m_drivingSparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 65535);
+    m_turningSparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 65535);
+
+    SmartDashboard.putNumber("Turning P", ModuleConstants.kDrivingP);
+    SmartDashboard.putNumber("Turning I", ModuleConstants.kDrivingI);
+    SmartDashboard.putNumber("Turning D", ModuleConstants.kDrivingD);
 
   }
 
@@ -179,4 +185,12 @@ public class MAXSwerveModule {
   public double getVelocitySteer() {
     return m_turningEncoder.getVelocity();
   }
+
+    public void periodic() {
+        //Uncomment to tune pid from SmartDashboard
+        m_turningPIDController.setP(SmartDashboard.getNumber("Turning P", 0.01));
+        m_turningPIDController.setI(SmartDashboard.getNumber("Turning I", 0.00001));
+        m_turningPIDController.setD(SmartDashboard.getNumber("Turning D", 0.0005));
+
+    }
 }

@@ -38,8 +38,7 @@ public class DriveSubsystem extends SubsystemBase {
        private static final double MAX_DRIVE_SPEED = Units.feetToMeters(10);
 
 
-     public final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(RobotMap.driveKinematics,
-            new Rotation2d(0), getModulePositions(), new Pose2d());
+     public final SwerveDrivePoseEstimator poseEstimator;
             
     private static final double TRACK_WIDTH_X = Units.inchesToMeters(24.0);
     
@@ -103,6 +102,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
+    poseEstimator = new SwerveDrivePoseEstimator(RobotMap.driveKinematics,
+            new Rotation2d(0), getModulePositions(), new Pose2d());
     AutoBuilder.configureHolonomic(
             this::getPose, // Robot pose supplier
             this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
@@ -151,6 +152,34 @@ public class DriveSubsystem extends SubsystemBase {
         new double[] {getPose().getX(), getPose().getY(), getPose().getRotation().getDegrees()});
 
     SmartDashboard.putNumber("Robot Speed", modules[0].getVelocityDrive());
+    SmartDashboard.putNumber("Robot Heading", getHeading());
+    SmartDashboard.putNumber("Pigeon yaw", pigeon.getYaw().getValueAsDouble());
+    SmartDashboard.putNumber("Pigeon pitch", pigeon.getPitch().getValueAsDouble());
+    SmartDashboard.putNumber("Pigeon roll", pigeon.getRoll().getValueAsDouble());
+    SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+
+    m_field.setRobotPose(getPose());
+    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("rotation", getPose().getRotation().getDegrees());
+    //SmartDashboard.putNumber("Speed", m_poseEstimator);
+    SmartDashboard.putData("Field", m_field);
+    SmartDashboard.putNumberArray(
+        "Odometry",
+        new double[] {getPose().getX(), getPose().getY(), getPose().getRotation().getDegrees()});
+
+    SmartDashboard.putNumber("Robot Speed", modules[0].getVelocityDrive());
+    SmartDashboard.putNumber("FL Speed", modules[0].getVelocityDrive());
+    SmartDashboard.putNumber("FR Speed", modules[1].getVelocityDrive());
+    SmartDashboard.putNumber("BL Speed", modules[2].getVelocityDrive());
+    SmartDashboard.putNumber("BR Speed", modules[3].getVelocityDrive());
+    
+    SmartDashboard.putNumber("FL Angle", modules[0].getVelocitySteer());
+    SmartDashboard.putNumber("FR Angle", modules[1].getVelocitySteer());
+    SmartDashboard.putNumber("BL Angle", modules[2].getVelocitySteer());
+    SmartDashboard.putNumber("BR Angle", modules[3].getVelocitySteer());
+
+
+
   }
 
   /**
@@ -311,7 +340,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return pigeon.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return pigeon.getRate() * (DriveConstants.kPigeonReversed ? -1.0 : 1.0);
   }
 
   public SwerveModuleState[] getModuleStates() {

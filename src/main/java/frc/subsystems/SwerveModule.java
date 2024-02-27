@@ -31,7 +31,7 @@
 
 //     private final boolean absoluteEncoderReversed;
 
-//     public double targetAngle, targetSpeed;
+//     public double , targetSpeed;targetAngle
 
 //     public double angularOffset;
 
