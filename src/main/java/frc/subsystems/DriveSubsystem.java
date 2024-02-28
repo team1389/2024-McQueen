@@ -145,12 +145,6 @@ public class DriveSubsystem extends SubsystemBase {
        // m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
     modules = new MAXSwerveModule[]{frontLeft, frontRight, backLeft, backRight};
 
-    SmartDashboard.putNumber("rotation", getPose().getRotation().getDegrees());
-
-    SmartDashboard.putNumberArray(
-        "Odometry",
-        new double[] {getPose().getX(), getPose().getY(), getPose().getRotation().getDegrees()});
-
     SmartDashboard.putNumber("Robot Speed", modules[0].getVelocityDrive());
     SmartDashboard.putNumber("Robot Heading", getHeading());
     SmartDashboard.putNumber("Pigeon yaw", pigeon.getYaw().getValueAsDouble());
