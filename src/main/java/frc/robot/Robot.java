@@ -110,10 +110,10 @@ public class Robot extends TimedRobot {
         SendableRegistry.addLW(backRightTelemetry, "BR Swerve");
 
 
-        oi.drivetrain.frontLeft.resetEncoders();
-        oi.drivetrain.backLeft.resetEncoders();
-        oi.drivetrain.frontRight.resetEncoders();
-        oi.drivetrain.backRight.resetEncoders();
+        // oi.drivetrain.frontLeft.resetEncoders();
+        // oi.drivetrain.backLeft.resetEncoders();
+        // oi.drivetrain.frontRight.resetEncoders();
+        // oi.drivetrain.backRight.resetEncoders();
         
        // oi.drivetrain.setAngleAdjustment(0);
 

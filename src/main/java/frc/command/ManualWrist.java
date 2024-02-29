@@ -3,6 +3,7 @@ package frc.command;
 import java.util.function.Supplier;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.Shooter;
 
@@ -20,8 +21,8 @@ public class ManualWrist extends Command{
     @Override
     public void execute() {
         // shooter.controllerInterrupt = false;
-        
-        shooter.moveWrist(MathUtil.clamp(power.get(), -0.0375, 0.0375));
+        SmartDashboard.putNumber("Manual Wrist Power", power.get());
+        shooter.moveWrist(MathUtil.clamp(power.get(), -0.05, 0.15));
     }
 
     @Override

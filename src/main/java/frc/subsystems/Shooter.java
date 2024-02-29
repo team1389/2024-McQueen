@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.MathUtil;
@@ -15,26 +16,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase{
-    private final double shootSpeed = 1; // percent of max motor speed
-    private final double wristSpeed = .0375; // percent of max motor speed
+    private final double shootSpeed = -1; // percent of max motor speed
+    private final double wristSpeed = .15; // percent of max motor speed
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;
     private CANSparkFlex wrist;
     private final SparkPIDController wristPidController;
     public boolean controllerInterrupt = true;
-    private final double maxWristEncoderVal = 0.962;
-    private final double minWristEncoderVal = 0.801;
  //   private PIDController pidWrist;
     public double wristTarget;
     public double madyannPos;
-
+    private DutyCycleEncoder wristAbsEncoder;
 
     private final TrapezoidProfile.Constraints backConstraints = new TrapezoidProfile.Constraints(10, 20);
     // private final ProfiledPIDController pidWrist = new ProfiledPIDController(.5, 0, 0, backConstraints);
     private final PIDController pidWrist; //maybe sparkPidController
     
 
-    private DutyCycleEncoder wristEncoder; // thru bore encoder
+    private RelativeEncoder wristEncoder; // thru bore encoder
 
 
     public Shooter(){
@@ -49,7 +48,8 @@ public class Shooter extends SubsystemBase{
         wrist.setIdleMode(IdleMode.kBrake);
         wrist.burnFlash();
         //trial and error
-        wristEncoder = new DutyCycleEncoder(8); //through bore encoder
+        wristEncoder = wrist.getEncoder(); //through bore encoder
+        
         wristPidController = wrist.getPIDController();
         // wristPidController.setP(ModuleConstants.P_TURNING);
         // wristPidController.setI(ModuleConstants.I_TURNING);
@@ -66,13 +66,13 @@ public class Shooter extends SubsystemBase{
 
         
         //decide pid values later, P, I, D
-        pidWrist = new PIDController(0.25, 0, 0);
+        pidWrist = new PIDController(5, 0.1, 0);
     //   pidWrist = wrist.getPIDController();
 
     //   pidWrist.setFeedbackDevice(wristEncoder);
 
-        pidWrist.setP(.25);
-        pidWrist.setI(0);
+        pidWrist.setP(5);
+        pidWrist.setI(.1);
         pidWrist.setD(0);
 
         madyannPos = 0.85;
@@ -80,17 +80,32 @@ public class Shooter extends SubsystemBase{
         SmartDashboard.putNumber("I Wrist", 0.0000);
         SmartDashboard.putNumber("D Wrist", 0.000);
         SmartDashboard.putNumber("Madyanns Funny Number", .85);
-        SmartDashboard.putNumber("Target Angle", 0.5);
+        SmartDashboard.putNumber("Target Angle", 155);
+        SmartDashboard.putNumber("Wrist Motor Speed", 0.25);
+        wristAbsEncoder = new DutyCycleEncoder(8);
     }
     
-    public double setWrist(double pos) {
-        SmartDashboard.putNumber("Wrist target", pos);
-        wristPidController.setReference(pos, CANSparkMax.ControlType.kPosition);
-        return pos;
+    // public void setWrist(double angle) {
+    //     wrist.set(pidWrist.calculate(wristEncoder.getPosition(), angle));
+    // }
+
+    public double setWristTarget(double pos) {
+        var temp = wristTarget;
+        wristTarget = pos;
+        SmartDashboard.putNumber("Wrist target", wristTarget);
+        return temp;
+    }
+
+    public void setWrist(double angle){
+        //angle is from .8 to ~.96
+        //set tolerance sets the error value to stop the pid loop at 
+        pidWrist.setTolerance(.5);
+        double wristPower = pidWrist.calculate(getAbsWristPosition()*100, angle*100);
+        moveWrist(wristPower);
     }
 
      public void moveWrist(double power) {
-        power = MathUtil.clamp(power, -0.05, 0.1);
+        power = MathUtil.clamp(power, -0.3, 0.3);
         wrist.set(power);
     }
 
@@ -100,7 +115,7 @@ public class Shooter extends SubsystemBase{
 
     public void runShoot() {
         shootLeft.set(shootSpeed);
-        shootRight.set(-shootSpeed); //inverse the direction in rev
+        shootRight.set(shootSpeed); //inverse the direction in rev
     }
 
     public void runWristUp(){
@@ -108,11 +123,11 @@ public class Shooter extends SubsystemBase{
     }
 
     public void runWristDown(){
-        wrist.set(wristSpeed);
+        wrist.set(-.05);
     } 
 
     public void stopWrist(){
-        wrist.set(-.01);
+        wrist.set(0);
     }
 
     public void stop(){
@@ -120,25 +135,21 @@ public class Shooter extends SubsystemBase{
         shootRight.set(0);
     }
 
-    public double getWristDis() {
-        return wristEncoder.getDistance();
-    }
-
-    public double getWristPos(){
-        return wristEncoder.getAbsolutePosition() - wristEncoder.getPositionOffset();
-    }
-
-    public double getWristAngle(){
-        return ((getWristPos()-minWristEncoderVal) / (maxWristEncoderVal-minWristEncoderVal)) * 90;
-    }
-
     public void resetWristPos() {
-        wristEncoder.reset();
+        wristEncoder.setPosition(0);
+    }
+
+    public double getWristPosition(){
+        return wristEncoder.getPosition();
+    }
+
+    public double getAbsWristPosition(){
+        return wristAbsEncoder.getAbsolutePosition();
     }
 
     public void holdPosition(){
-        wrist.set(pidWrist.calculate(getWristPos(), getTargetAngle()));
-        SmartDashboard.putBoolean("Inside hold position", true);
+        moveWrist(-0.1334*getAbsWristPosition() + 0.1343);
+        // SmartDashboard.putBoolean("Inside hold position", true);
     }
 
     public void setTargetAngle(double pos){
@@ -155,39 +166,22 @@ public class Shooter extends SubsystemBase{
     
     @Override
     public void periodic(){
-        // moveWrist(getWristPos());
-        double wristAngle = (Math.PI / 2) - ((Math.PI * 2) - getWristPos() + Math.toRadians(25));
-        SmartDashboard.putNumber("Wrist Encoder Distance", getWristDis());
-        SmartDashboard.putNumber("encoder value in rotations", wristEncoder.get());
 
-        SmartDashboard.putNumber("Wrist Encoder Absolute Position", wristEncoder.getAbsolutePosition());
-        SmartDashboard.putNumber("Wrist Encoder Position", wristEncoder.getAbsolutePosition() - wristEncoder.getPositionOffset());
-        SmartDashboard.putNumber("Wrist Angle", getWristAngle());
-        SmartDashboard.putNumber("wristPos", getWristPos());
-        SmartDashboard.putNumber("Frequency (Hz)", wristEncoder.getFrequency());
+        SmartDashboard.putNumber("Wrist Encoder Position", getWristPosition()); 
+        SmartDashboard.putNumber("Wrist Encoder ABS Position", getAbsWristPosition()); 
+
+        pidWrist.setP(SmartDashboard.getNumber("P Wrist", 1));
+        pidWrist.setI(SmartDashboard.getNumber("I Wrist", 0.0000));
+        pidWrist.setD(SmartDashboard.getNumber("D Wrist", 0.000));
         // SmartDashboard.putNumber("P Wrist", 0.25);
         // SmartDashboard.putNumber("I Wrist", 0.0000);
         // SmartDashboard.putNumber("D Wrist", 0.000);
         // SmartDashboard.putNumber("Wrist Target", getTargetAngle());
-     //   wristTarget = SmartDashboard.getNumber("Wrist target", getWristPos());
-      //  double wristPower = 0;
-      // wrist.set(pid.calculate(wristEncoder.getDistance(), getWristPos()));
-      if(!controllerInterrupt){
-        //setWrist(2);
-        setWrist(SmartDashboard.getNumber("Madyanns Funny Number",.85));
-        // wrist.set(pidWrist.calculate(getWristPos(), wristTarget));
-
-
-    //     double wristPower = 0; test this too
-
-    //    wristPower = pidWrist.calculate(getWristPos(), wristTarget);
-    //     moveWrist(wristPower);
-
-        setTargetAngle(SmartDashboard.getNumber("Target Angle", getTargetAngle()));
-        pidWrist.setP(SmartDashboard.getNumber("P Wrist", 0.25));
-        pidWrist.setI(SmartDashboard.getNumber("I Wrist", 0.0000));
-        pidWrist.setD(SmartDashboard.getNumber("D Wrist", 0.000));
-          //  moveWrist(wristPower);
-     }
+        //wristTarget = SmartDashboard.getNumber("Wrist target", getWristPos());
+        // wrist.set(pid.calculate(wristEncoder.getDistance(), getWristPos()));
+        if(!controllerInterrupt){
+            holdPosition();
+        }
+        wristTarget = SmartDashboard.getNumber("Wrist target", getWristPosition());
     }
 }
