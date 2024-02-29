@@ -93,8 +93,8 @@ public class OI {
         // joysticks
         drivetrain.setDefaultCommand(new TeleOpDrive(
                 drivetrain,
-                () -> getDriveLeftY(),
                 () -> getDriveLeftX(),
+                () -> getDriveLeftY(),
                 () -> getDriveRightX(),
                 () -> getDriveRightY(),
                 () -> getDriveLeftBumper(), // By default be in field oriented
