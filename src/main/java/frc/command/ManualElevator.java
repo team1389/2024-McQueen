@@ -20,7 +20,7 @@ public class ManualElevator extends Command{
     @Override
     public void execute() {
         // elevator.controllerInterrupt = true;
-        elevator.moveElevator(MathUtil.clamp(power.get(), -1, 1));
+        elevator.moveElevator(MathUtil.clamp(power.get(), -.2, .2));
     }
 
     @Override

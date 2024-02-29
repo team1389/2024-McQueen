@@ -67,7 +67,7 @@
 //         ModuleConstants.BR_ANGLE_OFFSET);
 
     
-//     // private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+ //     private final AHRS gyro = new AHRS(SPI.Port.kMXP);
 //     private final Pigeon2 pigeon = new Pigeon2(RobotMap.MotorPorts.PIGEON, "rio");
 //     //private final WPI_PigeonIMU pigeon = new Pigeon2(RobotMap.MotorPorts.PIGEON, "rio");
 

@@ -176,7 +176,7 @@ public class OI {
     }
 
     private double getManipLeftY() {
-        return -manipController.getRawAxis(1);
+        return manipController.getRawAxis(1);
     }
     
     private double getManipRightY() {
