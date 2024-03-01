@@ -127,6 +127,10 @@ public class OI {
         
 
 
+        driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
+        driveXButton.onTrue(new InstantCommand(() -> drivetrain.setX()));
+
+
         // Press A button -> zero gyro heading
       //  driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
 
