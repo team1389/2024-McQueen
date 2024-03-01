@@ -11,7 +11,7 @@ public class Shoot extends Command{
 
     public Shoot(Shooter shooter){
         this.shooter = shooter;
-        addRequirements(shooter);
+        // addRequirements(shooter);
     }
 
     @Override

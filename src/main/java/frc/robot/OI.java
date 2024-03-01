@@ -72,24 +72,24 @@ public class OI {
     public final LimelightVision limeLightVision = new LimelightVision();
 
     public OI() {
-        
+
         initControllers();
         manipAButton.whileTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
         manipBButton.whileTrue(new RunIndexerAmp(indexer, false));
-        manipFullscreen.whileTrue(new Shoot(shooter));
        // manipYButton.whileTrue(new IndexAndShoot(indexer, intake));
          manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
         // manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
         manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
         manipLeftTrigger.whileTrue(new RunIntake(intake));
         manipRightTrigger.whileTrue(new RunOuttake(intake));
-        manipMenuButton.whileTrue(new RunOuttake(intake));
+        // manipMenuButton.whileTrue(new RunOuttake(intake));
         manipLeftBumper.whileTrue(new Shoot(shooter).alongWith(new HoldPosition(shooter)));
         manipRightBumper.whileTrue(new RunIntake(intake).alongWith(new RunIndexer(indexer, true)));
         // manipEllipsisButton.whileTrue(new AlignShooter(shooter, shooter));
        // manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
-        manipGoogle.whileTrue(new SetWrist(shooter, 0.87));
-        manipEllipsisButton.whileTrue(new HoldPosition(shooter));
+        manipGoogle.whileTrue(new SetWrist(shooter));
+        manipEllipsisButton.whileTrue(new MoveShooter(shooter));
+        manipMenuButton.whileTrue(new MoveShooterDown(shooter));
         // manipStadia.whileTrue(new AutoAlign(drivetrain, limeLightVision));
 
         // Cool new way to make a drive command by passing in Suppliers for the

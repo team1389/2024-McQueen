@@ -9,7 +9,7 @@ public class MoveShooterDown extends Command{
 
     public MoveShooterDown(Shooter shooter){
         this.shooter = shooter;
-        addRequirements(shooter);
+        // addRequirements(shooter);
     }
 
     @Override

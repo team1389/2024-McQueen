@@ -15,7 +15,7 @@ public class ShootToSpeaker extends Command{
         this.shooter = shooter;
         this.indexer = indexer;
         this.intake = intake;
-        addRequirements(intake, indexer, shooter);
+        // addRequirements(intake, indexer, shooter);
     }
 
     @Override
