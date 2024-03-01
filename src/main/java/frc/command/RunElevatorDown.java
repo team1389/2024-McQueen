@@ -13,12 +13,12 @@ public class RunElevatorDown extends Command{
  
     public RunElevatorDown(Elevator theelevator){
         this.elevator = theelevator;
-        addRequirements(elevator); 
+        // addRequirements(elevator); 
     }
 
     public RunElevatorDown(Elevator theelevator, double time){
         this.elevator = theelevator;
-        addRequirements(elevator); 
+        // addRequirements(elevator); 
         this.time = time;
     }
 

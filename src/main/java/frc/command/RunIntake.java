@@ -7,7 +7,7 @@ public class RunIntake extends Command{
     private Intake intake;
     public RunIntake(Intake intake){
         this.intake = intake;
-        addRequirements(intake);
+        // addRequirements(intake);
     }
 
     @Override

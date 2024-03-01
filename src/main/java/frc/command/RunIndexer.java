@@ -10,12 +10,12 @@ public class RunIndexer extends Command{
 
     public RunIndexer(Indexer indexer){
         this.indexer = indexer;
-        addRequirements(indexer);
+        // addRequirements(indexer);
     }
 
     public RunIndexer(Indexer indexer, boolean isShoot){
         this.indexer = indexer;
-        addRequirements(indexer);
+        // addRequirements(indexer);
     }
 
     @Override

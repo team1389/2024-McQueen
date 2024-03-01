@@ -12,7 +12,7 @@ public class IndexAndShoot extends Command{
     public IndexAndShoot(Indexer indexer, Intake intake){
         this.indexer = indexer;
         this.intake = intake;
-        addRequirements(intake, indexer);
+        // addRequirements(intake, indexer);
     }
 
     @Override

@@ -11,7 +11,7 @@ public class AlignShooter extends Command{
     public AlignShooter(Shooter shooter, Shooter wrist){
         this.shooter = shooter;
         this.wrist = wrist;
-        addRequirements(shooter);
+        // addRequirements(shooter);
     }
 
     @Override

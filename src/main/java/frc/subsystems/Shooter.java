@@ -76,11 +76,9 @@ public class Shooter extends SubsystemBase{
         pidWrist.setD(0);
 
         madyannPos = 0.85;
-        SmartDashboard.putNumber("P Wrist", 0.25);
-        SmartDashboard.putNumber("I Wrist", 0.0000);
+        SmartDashboard.putNumber("P Wrist", 0.12);
+        SmartDashboard.putNumber("I Wrist", 0.005);
         SmartDashboard.putNumber("D Wrist", 0.000);
-        SmartDashboard.putNumber("Madyanns Funny Number", .85);
-        SmartDashboard.putNumber("Target Angle", 155);
         SmartDashboard.putNumber("Wrist Motor Speed", 0.25);
         wristAbsEncoder = new DutyCycleEncoder(8);
     }
@@ -97,6 +95,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setWrist(double angle){
+        angle = MathUtil.clamp(angle, 0.8, .95);
         //angle is from .8 to ~.96
         //set tolerance sets the error value to stop the pid loop at 
         // pidWrist.setTolerance(.005);
@@ -119,7 +118,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void runWristUp(){
-        wrist.set(-wristSpeed);
+        wrist.set(wristSpeed);
     }
 
     public void runWristDown(){
@@ -170,8 +169,8 @@ public class Shooter extends SubsystemBase{
         SmartDashboard.putNumber("Wrist Encoder Position", getWristPosition()); 
         SmartDashboard.putNumber("Wrist Encoder ABS Position", getAbsWristPosition()); 
 
-        pidWrist.setP(SmartDashboard.getNumber("P Wrist", 1));
-        pidWrist.setI(SmartDashboard.getNumber("I Wrist", 0.0000));
+        pidWrist.setP(SmartDashboard.getNumber("P Wrist", .12));
+        pidWrist.setI(SmartDashboard.getNumber("I Wrist", 0.005));
         pidWrist.setD(SmartDashboard.getNumber("D Wrist", 0.000));
         // SmartDashboard.putNumber("P Wrist", 0.25);
         // SmartDashboard.putNumber("I Wrist", 0.0000);
