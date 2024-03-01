@@ -317,7 +317,7 @@ public class DriveSubsystem extends SubsystemBase {
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
     pigeon.reset();
-    pigeon.setYaw(0);
+    pigeon.setYaw(45);
   }
 
   /**

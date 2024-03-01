@@ -202,8 +202,7 @@ public class RobotMap {
         / kDrivingMotorReduction) / 60.0; // meters per second
 
     public static final double kTurningEncoderPositionFactor = (2 * Math.PI); // radians
-    //public static final double kTurningEncoderVelocityFactor = (2 * Math.PI) / 60.0; // radians per second
-    public static final double kTurningEncoderVelocityFactor = 0.0008463260209216138; // radians per second
+    public static final double kTurningEncoderVelocityFactor = (2 * Math.PI) / 60.0; // radians per second
 
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
