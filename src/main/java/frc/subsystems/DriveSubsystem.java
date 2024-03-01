@@ -4,6 +4,7 @@
 
 package frc.subsystems;
 
+import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -91,7 +92,7 @@ public class DriveSubsystem extends SubsystemBase {
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
-      Rotation2d.fromDegrees(pigeon.getAngle()),
+      Rotation2d.fromDegrees(-pigeon.getAngle()),
       new SwerveModulePosition[] {
           frontLeft.getPosition(),
           frontRight.getPosition(),
@@ -135,7 +136,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     m_odometry.update(
-        Rotation2d.fromDegrees(pigeon.getAngle()),
+        Rotation2d.fromDegrees(-pigeon.getAngle()),
         new SwerveModulePosition[] {
             frontLeft.getPosition(),
             frontRight.getPosition(),
@@ -147,11 +148,12 @@ public class DriveSubsystem extends SubsystemBase {
 
     SmartDashboard.putNumber("Robot Speed", modules[0].getVelocityDrive());
     SmartDashboard.putNumber("Robot Heading", getHeading());
-    SmartDashboard.putNumber("Pigeon Angle", pigeon.getAngle());
+    SmartDashboard.putNumber("Pigeon Angle", -pigeon.getAngle());
     SmartDashboard.putNumber("Pigeon yaw", pigeon.getYaw().getValueAsDouble());
     SmartDashboard.putNumber("Pigeon pitch", pigeon.getPitch().getValueAsDouble());
     SmartDashboard.putNumber("Pigeon roll", pigeon.getRoll().getValueAsDouble());
     SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+    SmartDashboard.putNumber("Turn rate", getTurnRate());
 
     m_field.setRobotPose(getPose());
     // This method will be called once per scheduler run
@@ -195,7 +197,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void resetOdometry(Pose2d pose) {
     m_odometry.resetPosition(
-        Rotation2d.fromDegrees(pigeon.getAngle()),
+        Rotation2d.fromDegrees(-pigeon.getAngle()),
         new SwerveModulePosition[] {
             frontLeft.getPosition(),
             frontRight.getPosition(),
@@ -275,7 +277,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(pigeon.getAngle()))
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(-pigeon.getAngle()))
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
@@ -323,13 +325,26 @@ public class DriveSubsystem extends SubsystemBase {
     pigeon.setYaw(0);
   }
 
+  public void PigeonConfig(){
+            Pigeon2Configuration configs = new Pigeon2Configuration();
+            // mount X-up
+            configs.MountPose.MountPoseYaw = 0;
+            configs.MountPose.MountPosePitch = 90;
+            configs.MountPose.MountPoseRoll = 0;
+            configs.Pigeon2Features.DisableNoMotionCalibration = false;
+            configs.Pigeon2Features.DisableTemperatureCompensation = false;
+            configs.Pigeon2Features.EnableCompass = false;
+            pigeon.setYaw(0);
+            pigeon.getConfigurator().apply(configs);
+        }
+
   /**
    * Returns the heading of the robot.
    *
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return Rotation2d.fromDegrees(pigeon.getAngle()).getDegrees() % 360 - 180;
+    return Rotation2d.fromDegrees(-pigeon.getAngle()).getDegrees() % 360 - 180;
   }
 
   /**
