@@ -20,16 +20,16 @@ public class RobotMap {
 
     //     // Not Updated
     //     // Note: these are for the drive and turning motors
-        public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(3);
-        public static final double DRIVE_GEAR_RATIO = 1 / 4.71; // 14T pinion
-        public static final double TURN_GEAR_RATIO = 1 / (1); // this should be 1 this is correct 
-        public static final double WRIST_GEAR_RATIO = 44.44 / 1; //TODO TBD 44.44 / 1 
+        // public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(3);
+        // public static final double DRIVE_GEAR_RATIO = 1 / 4.71; // 14T pinion
+        // public static final double TURN_GEAR_RATIO = 1 / (1); // this should be 1 this is correct 
+        // public static final double WRIST_GEAR_RATIO = 44.44 / 1; //TODO TBD 44.44 / 1 
 
-        public static final double FREE_MOTOR_SPEED_RPS = 6784 / 60; // RPM/60 //confmried
-        public static final double DRIVE_FREE_MAX_SPEED_MPS = (FREE_MOTOR_SPEED_RPS * WHEEL_DIAMETER_METERS * Math.PI)
-                / DRIVE_GEAR_RATIO;
-        public static final double DRIVE_ROTATIONS_TO_METERS = DRIVE_GEAR_RATIO * Math.PI * WHEEL_DIAMETER_METERS;
-        public static final double TURNING_ROTATIONS_TO_RAD = TURN_GEAR_RATIO * 2 * Math.PI;
+        // public static final double FREE_MOTOR_SPEED_RPS = 6784 / 60; // RPM/60 //confmried
+        // public static final double DRIVE_FREE_MAX_SPEED_MPS = (FREE_MOTOR_SPEED_RPS * WHEEL_DIAMETER_METERS * Math.PI)
+        //         / DRIVE_GEAR_RATIO;
+        // public static final double DRIVE_ROTATIONS_TO_METERS = DRIVE_GEAR_RATIO * Math.PI * WHEEL_DIAMETER_METERS;
+        // public static final double TURNING_ROTATIONS_TO_RAD = TURN_GEAR_RATIO * 2 * Math.PI;
 
 
 
@@ -139,11 +139,11 @@ public class RobotMap {
     public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 4.8; //10
+    public static final double kMaxSpeedMetersPerSecond = 2.4; //10, //4.8
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
-    public static final double kDirectionSlewRate = 100000; // radians per second //1.2
-    public static final double kMagnitudeSlewRate = 100000; // percent per second (1 = 100%) //1.8
+    public static final double kDirectionSlewRate = 10000; // radians per second //1.2, 10000
+    public static final double kMagnitudeSlewRate = 10000; // percent per second (1 = 100%) //1.8, 10000
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
     // Chassis configuration
@@ -188,8 +188,8 @@ public class RobotMap {
     public static final boolean kTurningEncoderInverted = true;
 
     // Calculations required for driving motor conversion factors and feed forward
-    public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
-    public static final double kWheelDiameterMeters = 0.0762;
+    public static final double kDrivingMotorFreeSpeedRps = VortexMotorConstants.kFreeSpeedRpm / 60;
+    public static final double kWheelDiameterMeters = 0.0762; //7689, (FL - 0.07721) (FR - 0.07682) (BL - 0.07708) (BR - 0.07726)
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15 teeth on the bevel pinion
     public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
@@ -253,8 +253,8 @@ public class RobotMap {
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
 
-  public static final class NeoMotorConstants {
-    public static final double kFreeSpeedRpm = 5676;
+  public static final class VortexMotorConstants {
+    public static final double kFreeSpeedRpm = 6784; //5676 for neo
   }
 
 }

@@ -124,8 +124,11 @@ public class OI {
         elevator.setDefaultCommand(new ManualElevator(elevator, () -> getManipRightY()));
 
 
-        // Press A button -> zero gyro heading
-      //  driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
+        // Press A button -> zero gyro headingq
+        driveAButton.onTrue(new InstantCommand(() -> drivetrain.zeroHeading()));
+
+        // Press X button -> set X to not slide
+        driveXButton.onTrue(new InstantCommand(() -> drivetrain.setX()));
 
         driveYButton.onTrue(new InstantCommand(() -> {light.isRainbowing = true;}));
 

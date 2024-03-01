@@ -147,6 +147,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     SmartDashboard.putNumber("Robot Speed", modules[0].getVelocityDrive());
     SmartDashboard.putNumber("Robot Heading", getHeading());
+    SmartDashboard.putNumber("Pigeon Angle", pigeon.getAngle());
     SmartDashboard.putNumber("Pigeon yaw", pigeon.getYaw().getValueAsDouble());
     SmartDashboard.putNumber("Pigeon pitch", pigeon.getPitch().getValueAsDouble());
     SmartDashboard.putNumber("Pigeon roll", pigeon.getRoll().getValueAsDouble());
@@ -167,10 +168,12 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("BL Speed", modules[2].getVelocityDrive());
     SmartDashboard.putNumber("BR Speed", modules[3].getVelocityDrive());
     
-    SmartDashboard.putNumber("FL Angle", modules[0].getVelocitySteer());
-    SmartDashboard.putNumber("FR Angle", modules[1].getVelocitySteer());
-    SmartDashboard.putNumber("BL Angle", modules[2].getVelocitySteer());
-    SmartDashboard.putNumber("BR Angle", modules[3].getVelocitySteer());
+    SmartDashboard.putNumber("FL angle velocity", modules[0].getVelocitySteer());
+    SmartDashboard.putNumber("FR angle velocity", modules[1].getVelocitySteer());
+    SmartDashboard.putNumber("BL angle velocity", modules[2].getVelocitySteer());
+    SmartDashboard.putNumber("BR angle velocity", modules[3].getVelocitySteer());
+
+   // SmartDashboard.putNumber("State", modules[0].getState());
 
 
 
@@ -317,7 +320,7 @@ public class DriveSubsystem extends SubsystemBase {
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
     pigeon.reset();
-    pigeon.setYaw(45);
+    pigeon.setYaw(0);
   }
 
   /**
@@ -326,7 +329,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return Rotation2d.fromDegrees(pigeon.getAngle()).getDegrees() % 360;
+    return Rotation2d.fromDegrees(pigeon.getAngle()).getDegrees() % 360 - 180;
   }
 
   /**
