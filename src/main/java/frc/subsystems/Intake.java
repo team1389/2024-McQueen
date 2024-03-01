@@ -21,7 +21,7 @@ public class Intake extends SubsystemBase{
     intakeMotor = new CANSparkFlex(RobotMap.MotorPorts.INTAKE_MOTOR,MotorType.kBrushless);
     intakeMotor.setSmartCurrentLimit(40);
     intakeMotor.burnFlash();
-    pot = new AnalogPotentiometer(1, 100, 30); //change parameters
+    pot = new AnalogPotentiometer(0, 100, 30); //change parameters
 
     }
 
