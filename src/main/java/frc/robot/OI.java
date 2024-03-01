@@ -84,12 +84,12 @@ public class OI {
         manipLeftTrigger.whileTrue(new RunIntake(intake));
         manipRightTrigger.whileTrue(new RunOuttake(intake));
         manipMenuButton.whileTrue(new RunOuttake(intake));
-        manipLeftBumper.whileTrue(new Shoot(shooter));
+        manipLeftBumper.whileTrue(new Shoot(shooter).alongWith(new HoldPosition(shooter)));
         manipRightBumper.whileTrue(new RunIntake(intake).alongWith(new RunIndexer(indexer, true)));
-        manipEllipsisButton.whileTrue(new AlignShooter(shooter, shooter));
+        // manipEllipsisButton.whileTrue(new AlignShooter(shooter, shooter));
        // manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
-        manipGoogle.onTrue(new InstantCommand(() -> shooter.holdPosition()));
-
+        manipGoogle.whileTrue(new SetWrist(shooter, 0.87));
+        manipEllipsisButton.whileTrue(new HoldPosition(shooter));
         // manipStadia.whileTrue(new AutoAlign(drivetrain, limeLightVision));
 
         // Cool new way to make a drive command by passing in Suppliers for the
@@ -120,8 +120,11 @@ public class OI {
                 true, true),
             drivetrain));
 
-        shooter.setDefaultCommand(new ManualWrist(shooter, () -> getManipLeftY()));
+        
+        // shooter.setDefaultCommand(new ManualWrist(shooter, () -> -getManipLeftY()));
+        shooter.setDefaultCommand(new HoldPosition(shooter));
         elevator.setDefaultCommand(new ManualElevator(elevator, () -> getManipRightY()));
+        
 
 
         // Press A button -> zero gyro headingq

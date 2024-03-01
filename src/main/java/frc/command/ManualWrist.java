@@ -13,19 +13,17 @@ public class ManualWrist extends Command{
     public ManualWrist(Shooter shooter, Supplier<Double> power) {
         this.shooter = shooter;
         this.power = power;
-        
+        shooter.controllerInterrupt = true;
         addRequirements(shooter);
     }
     
     @Override
     public void execute() {
-        shooter.controllerInterrupt = true;
-        
         shooter.moveWrist(MathUtil.clamp(power.get(), -0.2, 0.2));
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooter.moveWrist(0);
+        shooter.holdPosition();
     }
 }
