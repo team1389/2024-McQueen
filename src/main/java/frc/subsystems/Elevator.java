@@ -36,6 +36,9 @@ public class Elevator extends SubsystemBase{
     public void moveElevator(double power){
         elevatorMotor.set(power);
     }
+    public double getAbsElevatorPosition(){
+        return elevatorAbsEncoder.getAbsolutePosition();
+    }
     public void moveToTop(){
         elevatorMotor.set(-speed);
     }
