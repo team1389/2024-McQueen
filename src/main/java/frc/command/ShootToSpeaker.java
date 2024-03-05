@@ -37,9 +37,4 @@ public class ShootToSpeaker extends Command{
         indexer.stop();
     }
 
-    // @Override
-    // public boolean isFinished(){
-    //     return 
-
-    // }
 }

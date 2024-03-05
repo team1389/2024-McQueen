@@ -75,10 +75,10 @@ public class OI {
 
         initControllers();
         manipAButton.onTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
-        manipBButton.whileTrue(new RunIndexerAmp(indexer, false));
+        manipBButton.whileTrue(new RunIndexer(indexer, false));
        // manipYButton.whileTrue(new IndexAndShoot(indexer, intake));
        //  manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
-         manipYButton.onTrue(new ContinueIntake(intake).alongWith(new RunIndexer(indexer, true).alongWith(new Shoot(shooter))));
+         manipYButton.onTrue(new ContinueIntake(intake).alongWith(new RunIndexer(indexer, true).alongWith(new Shoot(shooter, intake))));
         // manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
         manipXButton.onTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
        // manipLeftTrigger.whileTrue(new RunIntake(intake));
@@ -87,7 +87,7 @@ public class OI {
        // manipLeftTrigger.onTrue(new RunIntake(intake));
         // manipRightTrigger.whileTrue(new RunOuttake(intake));
         // manipMenuButton.whileTrue(new RunOuttake(intake));
-        manipLeftBumper.whileTrue(new Shoot(shooter).alongWith(new HoldPosition(shooter)));
+        manipLeftBumper.whileTrue(new Shoot(shooter, intake).alongWith(new HoldPosition(shooter)));
         manipRightBumper.whileTrue(new RunIntake(intake).alongWith(new RunIndexer(indexer, true)));
         // manipEllipsisButton.whileTrue(new AlignShooter(shooter, shooter));
        // manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
@@ -139,7 +139,7 @@ public class OI {
 
         driveYButton.onTrue(new InstantCommand(() -> {light.isRainbowing = true;}));
 
-        NamedCommands.registerCommand("Shoot", new Shoot(shooter));
+        NamedCommands.registerCommand("Shoot", new Shoot(shooter, intake));
         NamedCommands.registerCommand("IndexerToShooter", new RunIndexer(indexer, true));
         NamedCommands.registerCommand("IndexerToAmp", new RunIndexer(indexer, false));
         NamedCommands.registerCommand("RunIntake", new RunIntake(intake));
