@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,8 +34,12 @@ public class Intake extends SubsystemBase{
         intakeMotor.set(intakeSpeed);
     }
 
-    public boolean hitSensor(){ // w/o note sensor is at 35.2
-        // distance sensor does not get values
+    // public boolean hitSensor(){ 
+    //     SmartDashboard.putNumber("Distance Sensor", pot.get());
+    //     return Math.abs(distanceWONode - pot.get()) > 5;
+    // }
+
+        public boolean hitSensor(){ 
         SmartDashboard.putNumber("Distance Sensor", pot.get());
         return distanceWONode - pot.get() > 5;
     }
@@ -45,6 +50,6 @@ public class Intake extends SubsystemBase{
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("Distance Sensor", pot.get());
+        SmartDashboard.putNumber("Distance Sensor 1", pot.get());
     }
 }

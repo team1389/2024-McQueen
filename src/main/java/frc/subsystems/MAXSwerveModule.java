@@ -189,9 +189,9 @@ public class MAXSwerveModule {
 
     public void periodic() {
         //Uncomment to tune pid from SmartDashboard
-        m_turningPIDController.setP(SmartDashboard.getNumber("Turning P", 0.01));
-        m_turningPIDController.setI(SmartDashboard.getNumber("Turning I", 0.00001));
-        m_turningPIDController.setD(SmartDashboard.getNumber("Turning D", 0.0005));
+        m_turningPIDController.setP(SmartDashboard.getNumber("Turning P", 1));
+        m_turningPIDController.setI(SmartDashboard.getNumber("Turning I", 0));
+        m_turningPIDController.setD(SmartDashboard.getNumber("Turning D", 0));
 
     }
 }

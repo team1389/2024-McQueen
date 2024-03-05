@@ -10,22 +10,24 @@ public class ShootToSpeaker extends Command{
      private Shooter shooter;
      private Indexer indexer;
      private Intake intake;
-
+     int count;
     public ShootToSpeaker(Shooter shooter, Indexer indexer, Intake intake){
         this.shooter = shooter;
         this.indexer = indexer;
         this.intake = intake;
+        count = 0;
         // addRequirements(intake, indexer, shooter);
     }
 
     @Override
     public void execute(){
         shooter.runShoot();
- //       addCommand(new WaitCommand(5));
-        intake.runIntake();
-        indexer.moveToShoot();
-        shooter.runShoot();
-        
+        count++;
+        if(count > 40){
+            intake.runIntake();
+            indexer.moveToShoot();
+        }
+        //addCommand(new WaitCommand(5));        
     }
 
     @Override
@@ -34,4 +36,5 @@ public class ShootToSpeaker extends Command{
         shooter.stop();
         indexer.stop();
     }
+
 }
