@@ -13,12 +13,10 @@ public class RunIntake extends Command{
     @Override
     public void execute(){
         intake.runIntake();
-        
     }
 
     @Override
     public void end(boolean interrupted){
-
         intake.stop();
     }
 

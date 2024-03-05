@@ -80,6 +80,7 @@ public class Shooter extends SubsystemBase{
         SmartDashboard.putNumber("I Wrist", 0.005);
         SmartDashboard.putNumber("D Wrist", 0.000);
         SmartDashboard.putNumber("Wrist Motor Speed", 0.25);
+        //correct value
         wristAbsEncoder = new DutyCycleEncoder(8);
     }
     
@@ -98,7 +99,6 @@ public class Shooter extends SubsystemBase{
         angle = MathUtil.clamp(angle, 0.8, .95);
         //angle is from .8 to ~.96
         //set tolerance sets the error value to stop the pid loop at 
-        // pidWrist.setTolerance(.005);
         double wristPower = pidWrist.calculate(getAbsWristPosition()*100, angle*100);
         moveWrist(wristPower);
     }

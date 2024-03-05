@@ -27,7 +27,8 @@ public class Elevator extends SubsystemBase{
         elevatorMotor.setSmartCurrentLimit(40);
         elevatorMotor.burnFlash();
         elevatorMotor.setIdleMode(IdleMode.kBrake);
-        elevatorAbsEncoder = new DutyCycleEncoder(1);
+        //correct port
+        elevatorAbsEncoder = new DutyCycleEncoder(7);
     }
     public void moveElevator(double power){
         elevatorMotor.set(power);

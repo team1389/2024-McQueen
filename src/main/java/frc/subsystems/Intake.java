@@ -16,15 +16,15 @@ public class Intake extends SubsystemBase{
     private final double intakeSpeed = 1;
     private CANSparkFlex intakeMotor;
     private AnalogPotentiometer pot;
-    private final double distanceWONode = 0; //change
+    private final double distanceWONode = 46.7; //change
     public Intake(){
     intakeMotor = new CANSparkFlex(RobotMap.MotorPorts.INTAKE_MOTOR,MotorType.kBrushless);
     intakeMotor.setSmartCurrentLimit(40);
     intakeMotor.burnFlash();
+    //incorrect port, needs to be moved to anolog from DIO
     pot = new AnalogPotentiometer(0, 100, 30); //change parameters
-
     }
-
+    
     public void runIntake(){
         intakeMotor.set(-intakeSpeed);
     }
@@ -41,5 +41,10 @@ public class Intake extends SubsystemBase{
 
     public void stop(){
         intakeMotor.set(0);
+    }
+
+    @Override
+    public void periodic(){
+        SmartDashboard.putNumber("Distance Sensor", pot.get());
     }
 }
