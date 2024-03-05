@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,12 +17,12 @@ public class Intake extends SubsystemBase{
     private final double intakeSpeed = 1;
     private CANSparkFlex intakeMotor;
     private AnalogPotentiometer pot;
-    private final double distanceWONode = 0; //change
+    private final double distanceWONode = 46.7; //change
     public Intake(){
     intakeMotor = new CANSparkFlex(RobotMap.MotorPorts.INTAKE_MOTOR,MotorType.kBrushless);
     intakeMotor.setSmartCurrentLimit(40);
     intakeMotor.burnFlash();
-    pot = new AnalogPotentiometer(1, 100, 30); //change parameters
+    pot = new AnalogPotentiometer(0, 100, 30); //change parameters
 
     }
 
@@ -33,13 +34,22 @@ public class Intake extends SubsystemBase{
         intakeMotor.set(intakeSpeed);
     }
 
-    public boolean hitSensor(){ // w/o note sensor is at 35.2
-        // distance sensor does not get values
+    // public boolean hitSensor(){ 
+    //     SmartDashboard.putNumber("Distance Sensor", pot.get());
+    //     return Math.abs(distanceWONode - pot.get()) > 5;
+    // }
+
+        public boolean hitSensor(){ 
         SmartDashboard.putNumber("Distance Sensor", pot.get());
         return distanceWONode - pot.get() > 5;
     }
 
     public void stop(){
         intakeMotor.set(0);
+    }
+
+    @Override
+    public void periodic(){
+        SmartDashboard.putNumber("Distance Sensor 1", pot.get());
     }
 }

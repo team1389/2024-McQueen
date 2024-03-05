@@ -74,14 +74,18 @@ public class OI {
     public OI() {
 
         initControllers();
-        manipAButton.whileTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
+        manipAButton.onTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
         manipBButton.whileTrue(new RunIndexerAmp(indexer, false));
        // manipYButton.whileTrue(new IndexAndShoot(indexer, intake));
-         manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
+       //  manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
+         manipYButton.onTrue(new ContinueIntake(intake).alongWith(new RunIndexer(indexer, true).alongWith(new Shoot(shooter))));
         // manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
-        manipXButton.whileTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
-        manipLeftTrigger.whileTrue(new RunIntake(intake));
-        manipRightTrigger.whileTrue(new RunOuttake(intake));
+        manipXButton.onTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
+       // manipLeftTrigger.whileTrue(new RunIntake(intake));
+        manipLeftTrigger.onTrue(new SetElevator(elevator, .6));
+        manipRightTrigger.onTrue(new SetElevator(elevator, .2));
+       // manipLeftTrigger.onTrue(new RunIntake(intake));
+        // manipRightTrigger.whileTrue(new RunOuttake(intake));
         // manipMenuButton.whileTrue(new RunOuttake(intake));
         manipLeftBumper.whileTrue(new Shoot(shooter).alongWith(new HoldPosition(shooter)));
         manipRightBumper.whileTrue(new RunIntake(intake).alongWith(new RunIndexer(indexer, true)));

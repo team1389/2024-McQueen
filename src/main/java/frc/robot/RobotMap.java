@@ -124,8 +124,10 @@ public class RobotMap {
         public static final int ELEVATOR_MOTOR = 16;
 
         public static final int WRIST_ENCODER = 8;
+        public static final int ELEVATOR_ENCODER = 0;
 
         public static final int PIGEON = 18;
+
     }
 
 

@@ -20,6 +20,7 @@ public class Shooter extends SubsystemBase{
     private final double wristSpeed = .15; // percent of max motor speed
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;
+    private RelativeEncoder shootEncoder;
     private CANSparkFlex wrist;
     private final SparkPIDController wristPidController;
     public boolean controllerInterrupt = true;
@@ -28,7 +29,6 @@ public class Shooter extends SubsystemBase{
     public double madyannPos;
     private DutyCycleEncoder wristAbsEncoder;
 
-    private final TrapezoidProfile.Constraints backConstraints = new TrapezoidProfile.Constraints(10, 20);
     // private final ProfiledPIDController pidWrist = new ProfiledPIDController(.5, 0, 0, backConstraints);
     private final PIDController pidWrist; //maybe sparkPidController
     
@@ -40,6 +40,7 @@ public class Shooter extends SubsystemBase{
         shootLeft = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_LEFT, MotorType.kBrushless);
         shootRight = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_RIGHT, MotorType.kBrushless);
         wrist = new CANSparkFlex(RobotMap.MotorPorts.WRIST_MOTOR, MotorType.kBrushless);
+       // shootRelativeEncoder = new RelativeEncoder();
         shootLeft.setSmartCurrentLimit(40); // neo vortex specifications, 40 amp breaker, cannot exceed 40
         shootLeft.burnFlash();
         shootRight.setSmartCurrentLimit(40); // neo vortex specifications
@@ -49,6 +50,7 @@ public class Shooter extends SubsystemBase{
         wrist.burnFlash();
         //trial and error
         wristEncoder = wrist.getEncoder(); //through bore encoder
+        shootEncoder = shootLeft.getEncoder();
         
         wristPidController = wrist.getPIDController();
         // wristPidController.setP(ModuleConstants.P_TURNING);
@@ -114,7 +116,7 @@ public class Shooter extends SubsystemBase{
 
     public void runShoot() {
         shootLeft.set(shootSpeed);
-        shootRight.set(shootSpeed); //inverse the direction in rev
+        shootRight.set(shootSpeed); //inversed the direction in rev
     }
 
     public void runWristUp(){
@@ -147,6 +149,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void holdPosition(){
+        // calculated line of best fit from tested points
         moveWrist(-0.1334*getAbsWristPosition() + 0.1343);
         // SmartDashboard.putBoolean("Inside hold position", true);
     }
@@ -182,5 +185,8 @@ public class Shooter extends SubsystemBase{
         //     holdPosition();
         // }
         wristTarget = SmartDashboard.getNumber("Wrist target", getWristPosition());
+
+        SmartDashboard.putNumber("Shoot Left Encoder CPR", shootEncoder.getCountsPerRevolution());
+        SmartDashboard.putNumber("Shoot Left Encoder PPR", shootEncoder.getCountsPerRevolution()/4);
     }
 }
