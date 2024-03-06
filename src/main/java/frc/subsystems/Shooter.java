@@ -126,6 +126,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void runShoot(double shootSpeed1) {
+        SmartDashboard.putNumber("Shooting Power for Tuning ", shootSpeed1);
         shootLeft.set(shootSpeed1);
         shootRight.set(shootSpeed1); //inversed the direction in rev
     }
