@@ -15,6 +15,9 @@ public class AlignShooter extends Command{
     public AlignShooter(Shooter shooter, Shooter wrist){
         this.shooter = shooter;
         this.wrist = wrist;
+        SmartDashboard.putNumber("Robot_Space X", 0);
+        SmartDashboard.putNumber("Field_Space X", 0);
+        SmartDashboard.putNumber("Target_Space X", 0);
         // addRequirements(shooter);
     }
 
@@ -65,9 +68,9 @@ public class AlignShooter extends Command{
         double speakerHeight = 0; //change to speakerheight in inches
         double targetAngleInRadians = Math.atan(speakerHeight/distanceFromLimelightToGoalInches);
         double targetAngleInWeirdUnits = 0.96-(((1.4833-targetAngleInRadians)*0.16)/1.396);
-        shooter.setWrist(targetAngleInWeirdUnits);
-        shooter.runShoot();
-        wrist.runWristDown();
+       // shooter.setWrist(targetAngleInWeirdUnits);
+        // shooter.runShoot();
+        // wrist.runWristDown();
         // addCommand(new WaitCommand(5)); 
         
     }
