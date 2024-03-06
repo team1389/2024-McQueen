@@ -28,6 +28,8 @@ public class Shooter extends SubsystemBase{
     public double wristTarget;
     public double madyannPos;
     private DutyCycleEncoder wristAbsEncoder;
+    private final double MAX_DEGREES = 85;
+    private final double MIN_DEGREES = 5;
 
     // private final ProfiledPIDController pidWrist = new ProfiledPIDController(.5, 0, 0, backConstraints);
     private final PIDController pidWrist; //maybe sparkPidController
@@ -98,7 +100,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setWrist(double angle){
-        angle = MathUtil.clamp(angle, 0.8, .95);
+        angle = MathUtil.clamp(angle, 0.8, .9);
         //angle is from .8 to ~.96
         //set tolerance sets the error value to stop the pid loop at 
         double wristPower = pidWrist.calculate(getAbsWristPosition()*100, angle*100);
@@ -108,6 +110,10 @@ public class Shooter extends SubsystemBase{
      public void moveWrist(double power) {
         power = MathUtil.clamp(power, -0.3, 0.3);
         wrist.set(power);
+    }
+
+    public double absToDegrees(double amongus){
+        return 0.96-((MAX_DEGREES)-amongus)/(MAX_DEGREES - MIN_DEGREES)*(0.16);
     }
 
     public double getMadyannsNumber(){

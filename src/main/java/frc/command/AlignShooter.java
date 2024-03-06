@@ -3,6 +3,7 @@ package frc.command;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.Shooter;
 import frc.util.LimelightHelpers;
@@ -26,6 +27,11 @@ public class AlignShooter extends Command{
         tx = rrResults.tx;
         var ty = rrResults.ty;
         var robotPose = rrResults.getTargetPose_RobotSpace();
+        var robotPose3d = rrResults.getRobotPose_FieldSpace();
+        var robotPose3d3d = rrResults.getRobotPose_TargetSpace();
+        SmartDashboard.putNumber("Robot_Space X", robotPose.getX());
+        SmartDashboard.putNumber("Field_Space X", robotPose3d.getX());
+        SmartDashboard.putNumber("Target_Space X", robotPose3d3d.getX());
         var tz = robotPose.getZ();
         
         // //get distance time 
