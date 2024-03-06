@@ -28,8 +28,8 @@ public class Shoot extends Command{
         shooter.stop();
     }
 
-    @Override
-    public boolean isFinished(){
-        return !intake.hitSensor();
-    }
+    // @Override
+    // public boolean isFinished(){
+    //     return !intake.hitSensor();
+    // }
 }

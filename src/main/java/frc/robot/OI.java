@@ -75,17 +75,18 @@ public class OI {
 
         initControllers();
         manipAButton.onTrue(new RunIntake(intake).andThen(new InstantCommand(() -> light.setColor(0, 128, 255))));
-        manipBButton.whileTrue(new RunIndexer(indexer, false));
+       // manipBButton.whileTrue(new RunIndexer(indexer, false));
+        manipBButton.whileTrue(new RunIndexerAmp(indexer, false));
        // manipYButton.whileTrue(new IndexAndShoot(indexer, intake));
-       //  manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
-         manipYButton.onTrue(new ContinueIntake(intake).alongWith(new RunIndexer(indexer, true).alongWith(new Shoot(shooter, intake))));
+         manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
+       //  manipYButton.onTrue(new ContinueIntake(intake).alongWith(new RunIndexer(indexer, true).alongWith(new Shoot(shooter, intake)))); //TODO
         // manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
         manipXButton.onTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
-       // manipLeftTrigger.whileTrue(new RunIntake(intake));
-        manipLeftTrigger.onTrue(new SetElevator(elevator, .6));
-        manipRightTrigger.onTrue(new SetElevator(elevator, .2));
+        manipLeftTrigger.whileTrue(new RunIntake(intake));
+        //  manipLeftTrigger.onTrue(new SetElevator(elevator, .605)); //.605 //TODO
+        //  manipRightTrigger.onTrue(new SetElevator(elevator, .55)); //.511 //TODO
        // manipLeftTrigger.onTrue(new RunIntake(intake));
-        // manipRightTrigger.whileTrue(new RunOuttake(intake));
+         manipRightTrigger.whileTrue(new RunOuttake(intake));
         // manipMenuButton.whileTrue(new RunOuttake(intake));
         manipLeftBumper.whileTrue(new Shoot(shooter, intake).alongWith(new HoldPosition(shooter)));
         manipRightBumper.whileTrue(new RunIntake(intake).alongWith(new RunIndexer(indexer, true)));
@@ -127,7 +128,7 @@ public class OI {
         
         // shooter.setDefaultCommand(new ManualWrist(shooter, () -> -getManipLeftY()));
         shooter.setDefaultCommand(new HoldPosition(shooter));
-        elevator.setDefaultCommand(new ManualElevator(elevator, () -> getManipRightY()));
+        elevator.setDefaultCommand(new ManualElevator(elevator, () -> -getManipRightY()));
         
 
 

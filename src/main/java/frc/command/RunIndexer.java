@@ -34,9 +34,9 @@ public class RunIndexer extends Command{
         indexer.stop();
     }
 
-    @Override
-    public boolean isFinished(){
-        return !intake.hitSensor();
-    }
+    // @Override
+    // public boolean isFinished(){
+    //     return !intake.hitSensor();
+    // }
 
 }

@@ -1,5 +1,6 @@
 package frc.command;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.subsystems.Shooter;
@@ -16,6 +17,7 @@ public class ShootToSpeaker extends Command{
         this.indexer = indexer;
         this.intake = intake;
         count = 0;
+
         // addRequirements(intake, indexer, shooter);
     }
 
@@ -23,7 +25,7 @@ public class ShootToSpeaker extends Command{
     public void execute(){
         shooter.runShoot();
         count++;
-        if(count > 40){
+        if(shooter.getLeftSpeed() > 0){
             intake.runIntake();
             indexer.moveToShoot();
         }

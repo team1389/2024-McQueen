@@ -14,12 +14,13 @@ public class ManualElevator extends Command{
         this.elevator = elevator;
         this.power = power;
         
+        
         addRequirements(elevator);
     }
     
     @Override
     public void execute() {
-        // elevator.controllerInterrupt = true;
+        elevator.controllerInterrupt = true;
         elevator.moveElevator(MathUtil.clamp(power.get(), -1, 1));
     }
 

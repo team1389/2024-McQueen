@@ -34,12 +34,9 @@ public class Intake extends SubsystemBase{
         intakeMotor.set(intakeSpeed);
     }
 
-    // public boolean hitSensor(){ 
-    //     SmartDashboard.putNumber("Distance Sensor", pot.get());
-    //     return Math.abs(distanceWONode - pot.get()) > 5;
-    // }
 
-        public boolean hitSensor(){ 
+
+    public boolean hitSensor(){ 
         SmartDashboard.putNumber("Distance Sensor", pot.get());
         return distanceWONode - pot.get() > 5;
     }
