@@ -74,7 +74,7 @@ public class Shooter extends SubsystemBase{
     //   pidWrist = wrist.getPIDController();
 
     //   pidWrist.setFeedbackDevice(wristEncoder);
-    
+
         pidWrist.setP(.055);
         pidWrist.setI(.013);
         pidWrist.setD(0);
@@ -123,6 +123,11 @@ public class Shooter extends SubsystemBase{
     public void runShoot() {
         shootLeft.set(shootSpeed);
         shootRight.set(shootSpeed); //inversed the direction in rev
+    }
+
+    public void runShoot(double shootSpeed1) {
+        shootLeft.set(shootSpeed1);
+        shootRight.set(shootSpeed1); //inversed the direction in rev
     }
 
     public void runWristUp(){
