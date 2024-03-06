@@ -10,14 +10,12 @@ import frc.util.LimelightHelpers;
 
 public class AlignShooter extends Command{
      private Shooter shooter;
-     private Shooter wrist;
-
-    public AlignShooter(Shooter shooter, Shooter wrist){
+    public AlignShooter(Shooter shooter){
         this.shooter = shooter;
-        this.wrist = wrist;
         SmartDashboard.putNumber("Robot_Space X", 0);
         SmartDashboard.putNumber("Field_Space X", 0);
         SmartDashboard.putNumber("Target_Space X", 0);
+        SmartDashboard.putBoolean("Is Align", false);
         // addRequirements(shooter);
     }
 
@@ -32,6 +30,7 @@ public class AlignShooter extends Command{
         var robotPose = rrResults.getTargetPose_RobotSpace();
         var robotPose3d = rrResults.getRobotPose_FieldSpace();
         var robotPose3d3d = rrResults.getRobotPose_TargetSpace();
+        SmartDashboard.putBoolean("Is Align", true);
         SmartDashboard.putNumber("Robot_Space X", robotPose.getX());
         SmartDashboard.putNumber("Field_Space X", robotPose3d.getX());
         SmartDashboard.putNumber("Target_Space X", robotPose3d3d.getX());

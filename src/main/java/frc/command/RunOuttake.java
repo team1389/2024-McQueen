@@ -22,8 +22,8 @@ public class RunOuttake extends Command{
         intake.stop();
     }
 
-    @Override
-    public boolean isFinished(){
-        return intake.hitSensor();
-    }
+    // @Override
+    // public boolean isFinished(){
+    //     return intake.hitSensor();
+    // }
 }

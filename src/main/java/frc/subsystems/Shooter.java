@@ -70,18 +70,18 @@ public class Shooter extends SubsystemBase{
 
         
         //decide pid values later, P, I, D
-        pidWrist = new PIDController(5, 0.1, 0);
+        pidWrist = new PIDController(0.055, 0.013, 0);
     //   pidWrist = wrist.getPIDController();
 
     //   pidWrist.setFeedbackDevice(wristEncoder);
 
-        pidWrist.setP(5);
-        pidWrist.setI(.1);
+        pidWrist.setP(.055);
+        pidWrist.setI(.013);
         pidWrist.setD(0);
 
         madyannPos = 0.85;
-        SmartDashboard.putNumber("P Wrist", 0.12);
-        SmartDashboard.putNumber("I Wrist", 0.005);
+        SmartDashboard.putNumber("P Wrist", 0.055);
+        SmartDashboard.putNumber("I Wrist", 0.013);
         SmartDashboard.putNumber("D Wrist", 0.000);
         SmartDashboard.putNumber("Wrist Motor Speed", 0.25);
         //correct value
@@ -100,7 +100,7 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setWrist(double angle){
-        angle = MathUtil.clamp(angle, 0.8, .9);
+        angle = MathUtil.clamp(angle, 0.8, .94);
         //angle is from .8 to ~.96
         //set tolerance sets the error value to stop the pid loop at 
         double wristPower = pidWrist.calculate(getAbsWristPosition()*100, angle*100);
@@ -123,6 +123,11 @@ public class Shooter extends SubsystemBase{
     public void runShoot() {
         shootLeft.set(shootSpeed);
         shootRight.set(shootSpeed); //inversed the direction in rev
+    }
+
+    public void runShoot(double shootSpeed1) {
+        shootLeft.set(shootSpeed1);
+        shootRight.set(shootSpeed1); //inversed the direction in rev
     }
 
     public void runWristUp(){
@@ -183,11 +188,11 @@ public class Shooter extends SubsystemBase{
     @Override
     public void periodic(){
 
-        SmartDashboard.putNumber("Wrist Encoder Position", getWristPosition()); 
+        // SmartDashboard.putNumber("Wrist Encoder Position", getWristPosition()); 
         SmartDashboard.putNumber("Wrist Encoder ABS Position", getAbsWristPosition()); 
 
-        pidWrist.setP(SmartDashboard.getNumber("P Wrist", .12));
-        pidWrist.setI(SmartDashboard.getNumber("I Wrist", 0.005));
+        pidWrist.setP(SmartDashboard.getNumber("P Wrist", .055));
+        pidWrist.setI(SmartDashboard.getNumber("I Wrist", 0.013));
         pidWrist.setD(SmartDashboard.getNumber("D Wrist", 0.000));
         // SmartDashboard.putNumber("P Wrist", 0.25);
         // SmartDashboard.putNumber("I Wrist", 0.0000);
