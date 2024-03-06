@@ -19,10 +19,12 @@ import frc.robot.RobotMap;
 /** Add your docs here. */
 public class Elevator extends SubsystemBase{
     double speed = 1;
-    public double setpoint = .5;
+    public double pos = .5;
     private CANSparkFlex elevatorMotor;
     private DutyCycleEncoder elevatorEncoder;
     private final PIDController elevatorPid;
+    public boolean controllerInterrupt = true;
+
 
     public Elevator(){
         elevatorMotor = new CANSparkFlex(RobotMap.MotorPorts.ELEVATOR_MOTOR, MotorType.kBrushless);
@@ -31,6 +33,10 @@ public class Elevator extends SubsystemBase{
         elevatorMotor.setIdleMode(IdleMode.kBrake);
         elevatorEncoder = new DutyCycleEncoder(RobotMap.MotorPorts.ELEVATOR_ENCODER);
         elevatorPid = new PIDController(0, 0, 0);
+
+        SmartDashboard.putNumber("P Elevator", 0.12);
+        SmartDashboard.putNumber("I Elevator", 0.005);
+        SmartDashboard.putNumber("D Elevator", 0.000);
         
     }
     public void moveElevator(double power){
@@ -49,18 +55,22 @@ public class Elevator extends SubsystemBase{
         elevatorMotor.set(0.0);
     }
 
-    public void setSetpoint(double pos){
-        setpoint = pos;
+    public void setSetpoint(double setpoint){
+        pos = setpoint;
     }
 
     public void setElevator(double pos){
-        pos = MathUtil.clamp(pos, 0, 1); // change
-        elevatorMotor.set(elevatorPid.calculate(elevatorEncoder.getDistance(), setpoint));
+        pos = MathUtil.clamp(pos, .511, .605); 
+        elevatorMotor.set(elevatorPid.calculate(elevatorEncoder.getDistance(), pos));
     }
 
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Elevator Encoder Abs Pos", elevatorEncoder.getAbsolutePosition());
+
+        elevatorPid.setP(SmartDashboard.getNumber("P Elevator", .12));
+        elevatorPid.setI(SmartDashboard.getNumber("I Elevator", 0.005));
+        elevatorPid.setD(SmartDashboard.getNumber("D Elevator", 0.000));
         
     }
 }

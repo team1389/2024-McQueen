@@ -154,6 +154,14 @@ public class Shooter extends SubsystemBase{
         return wristAbsEncoder.getAbsolutePosition();
     }
 
+    public double getRPM(){
+        return wristAbsEncoder.getFrequency() * 60;
+    }
+
+    public double getLeftSpeed(){
+        return shootEncoder.getVelocity();
+    }
+
     public void holdPosition(){
         // calculated line of best fit from tested points
         moveWrist(-0.1334*getAbsWristPosition() + 0.1343);
@@ -193,6 +201,6 @@ public class Shooter extends SubsystemBase{
         wristTarget = SmartDashboard.getNumber("Wrist target", getWristPosition());
 
         SmartDashboard.putNumber("Shoot Left Encoder CPR", shootEncoder.getCountsPerRevolution());
-        SmartDashboard.putNumber("Shoot Left Encoder PPR", shootEncoder.getCountsPerRevolution()/4);
+        SmartDashboard.putNumber("Shoot Left Velocity", shootEncoder.getVelocity());
     }
 }
