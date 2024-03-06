@@ -10,11 +10,12 @@ import frc.util.LimelightHelpers;
 
 public class AlignShooter extends Command{
      private Shooter shooter;
-     private Shooter wrist;
-
-    public AlignShooter(Shooter shooter, Shooter wrist){
+    public AlignShooter(Shooter shooter){
         this.shooter = shooter;
-        this.wrist = wrist;
+        SmartDashboard.putNumber("Robot_Space X", 0);
+        SmartDashboard.putNumber("Field_Space X", 0);
+        SmartDashboard.putNumber("Target_Space X", 0);
+        SmartDashboard.putBoolean("Is Align", false);
         // addRequirements(shooter);
     }
 
@@ -29,6 +30,7 @@ public class AlignShooter extends Command{
         var robotPose = rrResults.getTargetPose_RobotSpace();
         var robotPose3d = rrResults.getRobotPose_FieldSpace();
         var robotPose3d3d = rrResults.getRobotPose_TargetSpace();
+        SmartDashboard.putBoolean("Is Align", true);
         SmartDashboard.putNumber("Robot_Space X", robotPose.getX());
         SmartDashboard.putNumber("Field_Space X", robotPose3d.getX());
         SmartDashboard.putNumber("Target_Space X", robotPose3d3d.getX());
@@ -61,13 +63,13 @@ public class AlignShooter extends Command{
         double distanceFromLimelightToGoalInches = 40;//CHANGE - get tx value from MegaTag pose
         
 
-        //now calculate shooting angle from distance and height
-        double speakerHeight = 0; //change to speakerheight in inches
-        double targetAngleInRadians = Math.atan(speakerHeight/distanceFromLimelightToGoalInches);
-        double targetAngleInWeirdUnits = 0.96-(((1.4833-targetAngleInRadians)*0.16)/1.396);
-        shooter.setWrist(targetAngleInWeirdUnits);
-        shooter.runShoot();
-        wrist.runWristDown();
+        // //now calculate shooting angle from distance and height
+        // double speakerHeight = 0; //change to speakerheight in inches
+        // double targetAngleInRadians = Math.atan(speakerHeight/distanceFromLimelightToGoalInches);
+        // double targetAngleInWeirdUnits = 0.96-(((1.4833-targetAngleInRadians)*0.16)/1.396);
+        // shooter.setWrist(targetAngleInWeirdUnits);
+        // shooter.runShoot();
+        // shooter.runWristDown();
         // addCommand(new WaitCommand(5)); 
         
     }

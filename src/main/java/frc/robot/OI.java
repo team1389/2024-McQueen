@@ -78,7 +78,8 @@ public class OI {
         manipBButton.whileTrue(new RunIndexer(indexer, false));
        // manipYButton.whileTrue(new IndexAndShoot(indexer, intake));
        //  manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
-         manipYButton.onTrue(new ContinueIntake(intake).alongWith(new RunIndexer(indexer, true).alongWith(new Shoot(shooter, intake))));
+        //  manipYButton.onTrue(new ContinueIntake(intake).alongWith(new RunIndexer(indexer, true).alongWith(new Shoot(shooter, intake))));
+        manipYButton.onTrue(new AlignShooter(shooter));
         // manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
         manipXButton.onTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
        // manipLeftTrigger.whileTrue(new RunIntake(intake));
