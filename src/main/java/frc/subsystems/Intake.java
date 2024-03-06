@@ -22,10 +22,10 @@ public class Intake extends SubsystemBase{
     intakeMotor = new CANSparkFlex(RobotMap.MotorPorts.INTAKE_MOTOR,MotorType.kBrushless);
     intakeMotor.setSmartCurrentLimit(40);
     intakeMotor.burnFlash();
+    //incorrect port, needs to be moved to anolog from DIO
     pot = new AnalogPotentiometer(0, 100, 30); //change parameters
-
     }
-
+    
     public void runIntake(){
         intakeMotor.set(-intakeSpeed);
     }

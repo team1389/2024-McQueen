@@ -258,5 +258,5 @@ public class RobotMap {
   public static final class VortexMotorConstants {
     public static final double kFreeSpeedRpm = 6784; //5676 for neo
   }
-
+  
 }
