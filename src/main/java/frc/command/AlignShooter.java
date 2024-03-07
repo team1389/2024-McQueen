@@ -67,13 +67,13 @@ public class AlignShooter extends Command{
         double distanceFromLimelightToGoalInches = 40;//CHANGE - get tx value from MegaTag pose
         
 
-        // //now calculate shooting angle from distance and height
-        // double speakerHeight = 0; //change to speakerheight in inches
-        // double targetAngleInRadians = Math.atan(speakerHeight/distanceFromLimelightToGoalInches);
-        // double targetAngleInWeirdUnits = 0.96-(((1.4833-targetAngleInRadians)*0.16)/1.396);
-        // shooter.setWrist(targetAngleInWeirdUnits);
+        //now calculate shooting angle from distance and height
+        double speakerHeight = 0; //change to speakerheight in inches
+        double targetAngleInRadians = Math.atan(speakerHeight/distanceFromLimelightToGoalInches);
+        double targetAngleInWeirdUnits = 0.96-(((1.4833-targetAngleInRadians)*0.16)/1.396);
+       // shooter.setWrist(targetAngleInWeirdUnits);
         // shooter.runShoot();
-        // shooter.runWristDown();
+        // wrist.runWristDown();
         // addCommand(new WaitCommand(5)); 
         
     }

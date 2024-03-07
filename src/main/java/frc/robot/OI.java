@@ -78,11 +78,11 @@ public class OI {
        // manipBButton.whileTrue(new RunIndexer(indexer, false));
         manipBButton.whileTrue(new RunIndexerAmp(indexer, false));
        // manipYButton.whileTrue(new IndexAndShoot(indexer, intake));
-         manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
+        //  manipYButton.whileTrue(new ShootToSpeaker(shooter, indexer, intake));
        //  manipYButton.onTrue(new ContinueIntake(intake).alongWith(new RunIndexer(indexer, true).alongWith(new Shoot(shooter, intake)))); //TODO
         // manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
         manipXButton.onTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
-        manipLeftTrigger.whileTrue(new RunIntake(intake));
+         manipLeftTrigger.whileTrue(new RunIntake(intake));
         //  manipLeftTrigger.onTrue(new SetElevator(elevator, .605)); //.605 //TODO
         //  manipRightTrigger.onTrue(new SetElevator(elevator, .55)); //.511 //TODO
        // manipLeftTrigger.onTrue(new RunIntake(intake));
@@ -90,7 +90,7 @@ public class OI {
         // manipMenuButton.whileTrue(new RunOuttake(intake));
         manipLeftBumper.whileTrue(new Shoot(shooter, intake).alongWith(new HoldPosition(shooter)));
         manipRightBumper.whileTrue(new RunIntake(intake).alongWith(new RunIndexer(indexer, true)));
-        // manipEllipsisButton.whileTrue(new AlignShooter(shooter, shooter));
+        // manipYButton.whileTrue(new AlignShooter(shooter, shooter));
        // manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
         manipGoogle.whileTrue(new SetWrist(shooter));
         manipEllipsisButton.whileTrue(new MoveShooter(shooter));

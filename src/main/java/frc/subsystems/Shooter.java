@@ -16,11 +16,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase{
-    private final double shootSpeed = -1; // percent of max motor speed
+    private final double shootSpeed = 1; // percent of max motor speed
     private final double wristSpeed = .15; // percent of max motor speed
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;
-    private RelativeEncoder shootEncoder;
+    private RelativeEncoder shootEncoderLeft;
+    private RelativeEncoder shootEncoderRight;
     private CANSparkFlex wrist;
     private final SparkPIDController wristPidController;
     public boolean controllerInterrupt = true;
@@ -52,7 +53,8 @@ public class Shooter extends SubsystemBase{
         wrist.burnFlash();
         //trial and error
         wristEncoder = wrist.getEncoder(); //through bore encoder
-        shootEncoder = shootLeft.getEncoder();
+        shootEncoderLeft = shootLeft.getEncoder();
+        shootEncoderRight = shootRight.getEncoder();
         
         wristPidController = wrist.getPIDController();
         // wristPidController.setP(ModuleConstants.P_TURNING);
@@ -105,6 +107,7 @@ public class Shooter extends SubsystemBase{
         //set tolerance sets the error value to stop the pid loop at 
         double wristPower = pidWrist.calculate(getAbsWristPosition()*100, angle*100);
         moveWrist(wristPower);
+        
     }
 
      public void moveWrist(double power) {
@@ -121,14 +124,16 @@ public class Shooter extends SubsystemBase{
     }
 
     public void runShoot() {
-        shootLeft.set(shootSpeed);
-        shootRight.set(shootSpeed); //inversed the direction in rev
+        shootLeft.set(-shootSpeed);
+        shootRight.set(-shootSpeed); //inversed the direction in rev
     }
 
     public void runShoot(double shootSpeed1) {
-        shootLeft.set(shootSpeed1);
-        shootRight.set(shootSpeed1); //inversed the direction in rev
+        SmartDashboard.putNumber("Shooting Power for Tuning 1", -shootSpeed1);
+        shootLeft.set(-shootSpeed1);
+        shootRight.set(-shootSpeed1); //inversed the direction in rev
     }
+    
 
     public void runWristUp(){
         wrist.set(wristSpeed);
@@ -163,13 +168,18 @@ public class Shooter extends SubsystemBase{
         return wristAbsEncoder.getFrequency() * 60;
     }
 
+    public double getRightSpeed(){
+        return shootEncoderRight.getVelocity();
+    }
+
     public double getLeftSpeed(){
-        return shootEncoder.getVelocity();
+        return shootEncoderLeft.getVelocity();
     }
 
     public void holdPosition(){
         // calculated line of best fit from tested points
-        moveWrist(-0.1334*getAbsWristPosition() + 0.1343);
+          // moveWrist(-0.1334*getAbsWristPosition() + 0.1343);
+        moveWrist(-0.1401*getAbsWristPosition() + 0.141);
         // SmartDashboard.putBoolean("Inside hold position", true);
     }
 
@@ -205,7 +215,10 @@ public class Shooter extends SubsystemBase{
         // }
         wristTarget = SmartDashboard.getNumber("Wrist target", getWristPosition());
 
-        SmartDashboard.putNumber("Shoot Left Encoder CPR", shootEncoder.getCountsPerRevolution());
-        SmartDashboard.putNumber("Shoot Left Velocity", shootEncoder.getVelocity());
+        SmartDashboard.putNumber("Shoot Left Encoder CPR", shootEncoderLeft.getCountsPerRevolution());
+        SmartDashboard.putNumber("Shoot Left Velocity", shootEncoderLeft.getVelocity());
+
+        SmartDashboard.putNumber("Shoot Right Encoder CPR", shootEncoderLeft.getCountsPerRevolution());
+        SmartDashboard.putNumber("Shoot Right Velocity", shootEncoderLeft.getVelocity());
     }
 }
