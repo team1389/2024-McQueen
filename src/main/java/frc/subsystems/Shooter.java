@@ -66,9 +66,6 @@ public class Shooter extends SubsystemBase{
         // SmartDashboard.putNumber("Turning I", ModuleConstants.I_WRIST);
         // SmartDashboard.putNumber("Turning D", ModuleConstants.D_WRIST);
 
-        
-        
-
         wristPidController.setOutputRange(-1, 1);
 
         
@@ -122,10 +119,11 @@ public class Shooter extends SubsystemBase{
         
     }
 
-    // public void setShoot(double speed){
-    //     speed = MathUtil.clamp(speed, 0, 1);
+    // public void setShoot(double rpm){
+    //     rpm = MathUtil.clamp(rpm, 0, 3000);
 
-    //     shootSpeed = pidShoot.calculate(getRPM(), angle*100);        
+    //     shootSpeed = pidShoot.calculate(getRPM(), angle*100);
+
     // }
 
      public void moveWrist(double power) {

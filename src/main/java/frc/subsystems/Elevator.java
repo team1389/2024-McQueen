@@ -7,6 +7,8 @@ package frc.subsystems;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkFlexExternalEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.MathUtil;
@@ -15,6 +17,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.RobotMap.ModuleConstants;
 
 /** Add your docs here. */
 public class Elevator extends SubsystemBase{
@@ -23,6 +26,8 @@ public class Elevator extends SubsystemBase{
     public double pos = .5;
     private CANSparkFlex elevatorMotor;
     private DutyCycleEncoder elevatorEncoder;
+    private SparkFlexExternalEncoder elevatorEncoder1;
+    private RelativeEncoder elevatorRelativeEncoder;
     private final PIDController elevatorPid;
     public boolean controllerInterrupt = true;
 
@@ -34,6 +39,7 @@ public class Elevator extends SubsystemBase{
         elevatorMotor.setIdleMode(IdleMode.kBrake);
         elevatorEncoder = new DutyCycleEncoder(RobotMap.MotorPorts.ELEVATOR_ENCODER);
         elevatorPid = new PIDController(0, 0, 0);
+    //    elevatorRelativeEncoder = new RelativeEncoder();
         elevatorEncoder.reset();
 
         SmartDashboard.putNumber("P Elevator", 0.12);
@@ -41,6 +47,8 @@ public class Elevator extends SubsystemBase{
         SmartDashboard.putNumber("D Elevator", 0.000);
         
         SmartDashboard.putNumber("Elevator Encoder Abs Pos", 0);
+
+        elevatorRelativeEncoder.setPositionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor);
     }
     public void moveElevator(double power){
         elevatorMotor.set(power);

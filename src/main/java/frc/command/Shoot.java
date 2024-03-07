@@ -10,12 +10,12 @@ import frc.subsystems.Intake;
 public class Shoot extends Command{
      private Shooter shooter;
      private Intake intake;
-     private double shootingPower = 0.5;
+     private double shootingRPM = 1000;
 
     public Shoot(Shooter shooter, Intake intake){
         this.shooter = shooter;
         this.intake = intake;
-        SmartDashboard.putNumber("Shooting Power for Tuning", shootingPower);
+        SmartDashboard.putNumber("Shooting RPM for Tuning", shootingRPM);
         // addRequirements(shooter);
     }
 
@@ -28,9 +28,9 @@ public class Shoot extends Command{
 
     @Override
     public void execute(){
-        shootingPower = SmartDashboard.getNumber("Shooting Power for Tuning", shootingPower);
-        shooter.runShoot(shootingPower);
- //       addCommand(new WaitCommand(5));
+        shootingRPM = SmartDashboard.getNumber("Shooting RPM for Tuning", shootingRPM);
+        shooter.runShoot(shootingRPM);
+ //     addCommand(new WaitCommand(5));
         
     }
 
