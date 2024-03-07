@@ -23,7 +23,6 @@ public class Shooter extends SubsystemBase{
     private RelativeEncoder shootEncoderLeft;
     private RelativeEncoder shootEncoderRight;
     private CANSparkFlex wrist;
-    private final SparkPIDController wristPidController;
     public boolean controllerInterrupt = true;
  //   private PIDController pidWrist;
     public double wristTarget;
@@ -34,7 +33,7 @@ public class Shooter extends SubsystemBase{
 
     // private final ProfiledPIDController pidWrist = new ProfiledPIDController(.5, 0, 0, backConstraints);
     private final PIDController pidWrist; //maybe sparkPidController
-    
+    private final PIDController pidLeftShooter; //nope justin
 
     private RelativeEncoder wristEncoder; // thru bore encoder
 
@@ -45,6 +44,7 @@ public class Shooter extends SubsystemBase{
         wrist = new CANSparkFlex(RobotMap.MotorPorts.WRIST_MOTOR, MotorType.kBrushless);
        // shootRelativeEncoder = new RelativeEncoder();
         shootLeft.setSmartCurrentLimit(40); // neo vortex specifications, 40 amp breaker, cannot exceed 40
+        shootLeft.setInverted(true);
         shootLeft.burnFlash();
         shootRight.setSmartCurrentLimit(40); // neo vortex specifications
         shootRight.burnFlash();
@@ -56,7 +56,7 @@ public class Shooter extends SubsystemBase{
         shootEncoderLeft = shootLeft.getEncoder();
         shootEncoderRight = shootRight.getEncoder();
         
-        wristPidController = wrist.getPIDController();
+        SparkPIDController leftPidController = shootLeft.getPIDController();
         // wristPidController.setP(ModuleConstants.P_TURNING);
         // wristPidController.setI(ModuleConstants.I_TURNING);
         // wristPidController.setD(ModuleConstants.D_TURNING);
@@ -68,24 +68,36 @@ public class Shooter extends SubsystemBase{
         
         
 
-        wristPidController.setOutputRange(-1, 1);
+        leftPidController.setOutputRange(-1, 1);
 
         
         //decide pid values later, P, I, D
         pidWrist = new PIDController(0.055, 0.013, 0);
+        pidLeftShooter = new PIDController(0.5, 0, 0);
+
     //   pidWrist = wrist.getPIDController();
 
-    //   pidWrist.setFeedbackDevice(wristEncoder);
+        // leftPidController.setFeedbackDevice();
 
         pidWrist.setP(.055);
         pidWrist.setI(.013);
         pidWrist.setD(0);
+
+
+        pidLeftShooter.setP(.55);
+        pidLeftShooter.setI(0);
+        pidLeftShooter.setD(0);
+
 
         madyannPos = 0.85;
         SmartDashboard.putNumber("P Wrist", 0.055);
         SmartDashboard.putNumber("I Wrist", 0.013);
         SmartDashboard.putNumber("D Wrist", 0.000);
         SmartDashboard.putNumber("Wrist Motor Speed", 0.25);
+
+        SmartDashboard.putNumber("P Left Shooter", 0.5);
+        SmartDashboard.putNumber("I Left Shooter", 0.0);
+        SmartDashboard.putNumber("D Left Shooter", 0.000);
         //correct value
         wristAbsEncoder = new DutyCycleEncoder(8);
     }
@@ -128,11 +140,18 @@ public class Shooter extends SubsystemBase{
         shootRight.set(-shootSpeed); //inversed the direction in rev
     }
 
-    public void runShoot(double shootSpeed1) {
-        SmartDashboard.putNumber("Shooting Power for Tuning 1", -shootSpeed1);
-        shootLeft.set(-shootSpeed1);
-        shootRight.set(-shootSpeed1); //inversed the direction in rev
+    public void runShoot(double shooterRPM) {
+        double leftShootPower = 0.5;
+        leftShootPower = pidLeftShooter.calculate(getLeftSpeed(), 2000);
+        shootLeft.set(leftShootPower);
+        // shootRight.set(-shootSpeed1); //inversed the direction in rev
     }
+
+    // public void runShoot(double shootSpeed1) {
+    //     SmartDashboard.putNumber("Shooting Power for Tuning 1", -shootSpeed1);
+    //     shootLeft.set(-shootSpeed1);
+    //     shootRight.set(-shootSpeed1); //inversed the direction in rev
+    // }
     
 
     public void runWristUp(){
@@ -204,6 +223,10 @@ public class Shooter extends SubsystemBase{
         pidWrist.setP(SmartDashboard.getNumber("P Wrist", .055));
         pidWrist.setI(SmartDashboard.getNumber("I Wrist", 0.013));
         pidWrist.setD(SmartDashboard.getNumber("D Wrist", 0.000));
+
+        pidWrist.setP(SmartDashboard.getNumber("P Left Shooter", .5));
+        pidWrist.setI(SmartDashboard.getNumber("I Left Shooter", 0));
+        pidWrist.setD(SmartDashboard.getNumber("D Left Shooter", 0.000));
         // SmartDashboard.putNumber("P Wrist", 0.25);
         // SmartDashboard.putNumber("I Wrist", 0.0000);
         // SmartDashboard.putNumber("D Wrist", 0.000);
@@ -216,9 +239,9 @@ public class Shooter extends SubsystemBase{
         wristTarget = SmartDashboard.getNumber("Wrist target", getWristPosition());
 
         SmartDashboard.putNumber("Shoot Left Encoder CPR", shootEncoderLeft.getCountsPerRevolution());
-        SmartDashboard.putNumber("Shoot Left Velocity", shootEncoderLeft.getVelocity());
+        SmartDashboard.putNumber("Shoot Left RPM", getLeftSpeed());
 
-        SmartDashboard.putNumber("Shoot Right Encoder CPR", shootEncoderLeft.getCountsPerRevolution());
-        SmartDashboard.putNumber("Shoot Right Velocity", shootEncoderLeft.getVelocity());
+        SmartDashboard.putNumber("Shoot Right Encoder CPR", shootEncoderRight.getCountsPerRevolution());
+        SmartDashboard.putNumber("Shoot Right RPM", getRightSpeed());
     }
 }

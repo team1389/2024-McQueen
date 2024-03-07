@@ -7,6 +7,7 @@ package frc.subsystems;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.MathUtil;
@@ -24,6 +25,7 @@ public class Elevator extends SubsystemBase{
     private CANSparkFlex elevatorMotor;
     private DutyCycleEncoder elevatorEncoder;
     private final PIDController elevatorPid;
+    private SparkAbsoluteEncoder sparkAbs;
     public boolean controllerInterrupt = true;
 
 
@@ -35,6 +37,10 @@ public class Elevator extends SubsystemBase{
         elevatorEncoder = new DutyCycleEncoder(RobotMap.MotorPorts.ELEVATOR_ENCODER);
         elevatorPid = new PIDController(0, 0, 0);
         elevatorEncoder.reset();
+        //test today?
+        sparkAbs = elevatorMotor.getAbsoluteEncoder();
+        sparkAbs.setPositionConversionFactor(1);
+        sparkAbs.getPosition();
 
         SmartDashboard.putNumber("P Elevator", 0.12);
         SmartDashboard.putNumber("I Elevator", 0.005);
