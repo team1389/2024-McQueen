@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase{
-    private final double shootSpeed = 1; // percent of max motor speed
+    private double shootSpeed = 1; // percent of max motor speed
     private final double wristSpeed = .15; // percent of max motor speed
     private CANSparkFlex shootLeft;
     private CANSparkFlex shootRight;
@@ -34,6 +34,7 @@ public class Shooter extends SubsystemBase{
 
     // private final ProfiledPIDController pidWrist = new ProfiledPIDController(.5, 0, 0, backConstraints);
     private final PIDController pidWrist; //maybe sparkPidController
+    private final PIDController pidShoot;
     
 
     private RelativeEncoder wristEncoder; // thru bore encoder
@@ -73,6 +74,7 @@ public class Shooter extends SubsystemBase{
         
         //decide pid values later, P, I, D
         pidWrist = new PIDController(0.055, 0.013, 0);
+        pidShoot = new PIDController(.055, .013, 0);
     //   pidWrist = wrist.getPIDController();
 
     //   pidWrist.setFeedbackDevice(wristEncoder);
@@ -81,6 +83,11 @@ public class Shooter extends SubsystemBase{
         pidWrist.setI(.013);
         pidWrist.setD(0);
 
+        pidShoot.setP(.055);
+        pidShoot.setI(.013);
+        pidShoot.setD(0);
+
+
         madyannPos = 0.85;
         SmartDashboard.putNumber("P Wrist", 0.055);
         SmartDashboard.putNumber("I Wrist", 0.013);
@@ -88,6 +95,11 @@ public class Shooter extends SubsystemBase{
         SmartDashboard.putNumber("Wrist Motor Speed", 0.25);
         //correct value
         wristAbsEncoder = new DutyCycleEncoder(8);
+
+
+        SmartDashboard.putNumber("Shoot P", 0.055);
+        SmartDashboard.putNumber("Shoot I", 0.013);
+        SmartDashboard.putNumber("Wrist D", 0.000);
     }
     
     // public void setWrist(double angle) {
@@ -102,13 +114,19 @@ public class Shooter extends SubsystemBase{
     }
 
     public void setWrist(double angle){
-        angle = MathUtil.clamp(angle, 0.8, .94);
+        angle = MathUtil.clamp(angle, 0.8, .97);
         //angle is from .8 to ~.96
         //set tolerance sets the error value to stop the pid loop at 
         double wristPower = pidWrist.calculate(getAbsWristPosition()*100, angle*100);
         moveWrist(wristPower);
         
     }
+
+    // public void setShoot(double speed){
+    //     speed = MathUtil.clamp(speed, 0, 1);
+
+    //     shootSpeed = pidShoot.calculate(getRPM(), angle*100);        
+    // }
 
      public void moveWrist(double power) {
         power = MathUtil.clamp(power, -0.3, 0.3);
@@ -168,6 +186,10 @@ public class Shooter extends SubsystemBase{
         return wristAbsEncoder.getFrequency() * 60;
     }
 
+    public void setSpeed(){
+        shootSpeed = 3.6 * (getRPM()/5252);
+    }
+
     public double getRightSpeed(){
         return shootEncoderRight.getVelocity();
     }
@@ -216,9 +238,10 @@ public class Shooter extends SubsystemBase{
         wristTarget = SmartDashboard.getNumber("Wrist target", getWristPosition());
 
         SmartDashboard.putNumber("Shoot Left Encoder CPR", shootEncoderLeft.getCountsPerRevolution());
-        SmartDashboard.putNumber("Shoot Left Velocity", shootEncoderLeft.getVelocity());
+        SmartDashboard.putNumber("Shoot Left Velocity", getLeftSpeed());
 
-        SmartDashboard.putNumber("Shoot Right Encoder CPR", shootEncoderLeft.getCountsPerRevolution());
-        SmartDashboard.putNumber("Shoot Right Velocity", shootEncoderLeft.getVelocity());
+        SmartDashboard.putNumber("Shoot Right Encoder CPR", shootEncoderRight.getCountsPerRevolution());
+        SmartDashboard.putNumber("Shoot Right Velocity", getRightSpeed());
+        SmartDashboard.putNumber("ShootRPM", getRPM());
     }
 }
