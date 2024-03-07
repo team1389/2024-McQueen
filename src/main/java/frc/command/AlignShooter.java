@@ -36,6 +36,10 @@ public class AlignShooter extends Command{
         SmartDashboard.putNumber("Target_Space X", robotPose3d3d.getX());
         var tz = robotPose.getZ();
         
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        NetworkTableEntry tX = table.getEntry("tx");
+        SmartDashboard.putNumber("Gotted tx", tX.getDouble(0));
+
         // //get distance time 
 
         // NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
