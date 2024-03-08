@@ -9,23 +9,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Vision extends SubsystemBase{
     
     //find name later other wont work
-    PhotonCamera camera;
+    private final PhotonCamera cam;
     double yaw = 0;
 
-    public Vision(PhotonCamera camera){
-        this.camera = camera; 
+    public Vision(){
+        cam = new PhotonCamera("OV9281");
     }
 
     @Override
     public void periodic(){
-        var result = camera.getLatestResult();
-        PhotonTrackedTarget target = result.getBestTarget();
-        yaw = target.getYaw();
+        // var result = cam.getLatestResult();
+        // PhotonTrackedTarget target = result.getBestTarget();
+        // yaw = target.getYaw();
     }
 
-    public double getYaw() {
-        return yaw;
-    }
+    // public double getYaw() {
+    //     return yaw;
+    // }
     
 
 

@@ -2,6 +2,8 @@ package frc.robot;
 
 import java.util.HashMap;
 
+import org.photonvision.PhotonCamera;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -61,6 +63,7 @@ public class OI {
     private Trigger manipDown;
     private Trigger manipRight;
     
+
     public final DriveSubsystem drivetrain = new DriveSubsystem();
     
     public final Indexer indexer = new Indexer();
@@ -70,6 +73,7 @@ public class OI {
     public final Shooter shooter = new Shooter();
     public final Elevator elevator = new Elevator();
     public final LimelightVision limeLightVision = new LimelightVision();
+    public final Vision vision = new Vision();
 
     public OI() {
 

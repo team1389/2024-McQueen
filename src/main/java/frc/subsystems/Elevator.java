@@ -26,8 +26,8 @@ public class Elevator extends SubsystemBase{
     public double pos = .5;
     private CANSparkFlex elevatorMotor;
     private DutyCycleEncoder elevatorEncoder;
-    private SparkFlexExternalEncoder elevatorEncoder1;
-    private RelativeEncoder elevatorRelativeEncoder;
+    // private SparkFlexExternalEncoder elevatorEncoder1;
+    // private RelativeEncoder elevatorRelativeEncoder;
     private final PIDController elevatorPid;
     public boolean controllerInterrupt = true;
 
@@ -48,7 +48,7 @@ public class Elevator extends SubsystemBase{
         
         SmartDashboard.putNumber("Elevator Encoder Abs Pos", 0);
 
-        elevatorRelativeEncoder.setPositionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor);
+        // elevatorRelativeEncoder.setPositionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor);
     }
     public void moveElevator(double power){
         elevatorMotor.set(power);

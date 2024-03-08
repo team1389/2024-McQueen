@@ -10,7 +10,7 @@ import frc.subsystems.Intake;
 public class Shoot extends Command{
      private Shooter shooter;
      private Intake intake;
-     private double shootingRPM = 1000;
+     private double shootingRPM = 3000;
 
     public Shoot(Shooter shooter, Intake intake){
         this.shooter = shooter;
