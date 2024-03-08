@@ -149,13 +149,13 @@ public class Shooter extends SubsystemBase{
         return temp;
     }
 
-    public void setShoot(double rpm){
-        rpm = MathUtil.clamp(rpm, 0, 3000);
+    // public void setShoot(double rpm){
+    //     rpm = MathUtil.clamp(rpm, 0, 3000);
 
-        shootSpeed = pidShoot.calculate(getLeftSpeed(), rpm);
-        runShoot(shootSpeed);
+    //     shootSpeed = pidShoot.calculate(getLeftSpeed(), rpm);
+    //     runShoot(shootSpeed);
 
-    }
+    // }
 
      public void moveWrist(double power) {
         power = MathUtil.clamp(power, -0.3, 0.3);
