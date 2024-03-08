@@ -36,39 +36,39 @@ public class AlignShooter extends Command{
         SmartDashboard.putNumber("Target_Space X", robotPose3d3d.getX());
         var tz = robotPose.getZ();
         
-        // //get distance time 
+        //get distance time 
 
-        // NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        // NetworkTableEntry tyDistance = table.getEntry("ty");
-        // double targetOffsetAngle_Vertical = tyDistance.getDouble(0.0);
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        NetworkTableEntry tyDistance = table.getEntry("ty");
+        double targetOffsetAngle_Vertical = tyDistance.getDouble(0.0);
 
-        // // how many degrees back is your limelight rotated from perfectly vertical?
-        // double limelightMountAngleDegrees = 25.0; 
+        // how many degrees back is your limelight rotated from perfectly vertical?
+        double limelightMountAngleDegrees = 25.0; 
     
-        // // distance from the center of the Limelight lens to the floor
-        // double limelightLensHeightInches = 20.0; 
+        // distance from the center of the Limelight lens to the floor
+        double limelightLensHeightInches = 20.0; 
 
-        // // distance from the target to the floor
-        // double goalHeightInches = 60.0; 
+        // distance from the target to the floor
+        double goalHeightInches = 60.0; 
 
-        // double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-        // double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+        double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+        double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
-        // //calculate distance
-        // double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
-        //
+        //calculate distance
+        double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+        
 
         //USE TX VALUE FROM MEGATAG INSTEAD TO GET DISTANCE
 
-        double distanceFromLimelightToGoalInches = 40;//CHANGE - get tx value from MegaTag pose
+       // double distanceFromLimelightToGoalInches = 40;//CHANGE - get tx value from MegaTag pose
         
 
         //now calculate shooting angle from distance and height
-        double speakerHeight = 0; //change to speakerheight in inches
+        double speakerHeight = 78; //change to speakerheight in inches
         double targetAngleInRadians = Math.atan(speakerHeight/distanceFromLimelightToGoalInches);
         double targetAngleInWeirdUnits = 0.97-(((1.4833-targetAngleInRadians)*0.17)/1.396);
-       // shooter.setWrist(targetAngleInWeirdUnits);
-        // shooter.runShoot();
+        shooter.setWrist(targetAngleInWeirdUnits);
+        shooter.runShoot();
         // wrist.runWristDown();
         // addCommand(new WaitCommand(5)); 
         
