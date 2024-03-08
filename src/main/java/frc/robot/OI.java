@@ -93,7 +93,7 @@ public class OI {
         // manipYButton.whileTrue(new AlignShooter(shooter, shooter));
        // manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
         manipGoogle.whileTrue(new SetWrist(shooter));
-        manipFullscreen.whileTrue(new SetShoot(shooter));
+        // manipFullscreen.whileTrue(new SetShoot(shooter));
         manipEllipsisButton.whileTrue(new MoveShooter(shooter));
         manipMenuButton.whileTrue(new MoveShooterDown(shooter));
 
