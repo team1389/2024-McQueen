@@ -5,9 +5,12 @@
 package frc.subsystems;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkAbsoluteEncoder;
+import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkFlexExternalEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 
@@ -26,11 +29,12 @@ public class Elevator extends SubsystemBase{
     public double pos = .5;
     private CANSparkFlex elevatorMotor;
     private DutyCycleEncoder elevatorEncoder;
-    // private SparkFlexExternalEncoder elevatorEncoder1;
-    // private RelativeEncoder elevatorRelativeEncoder;
+    private SparkFlexExternalEncoder elevatorEncoder1;
+    private RelativeEncoder elevatorRelativeEncoder;
+    private SparkAbsoluteEncoder elevatorAbsoluteEncoder;
     private final PIDController elevatorPid;
     public boolean controllerInterrupt = true;
-
+//set it to absolute mode
 
     public Elevator(){
         elevatorMotor = new CANSparkFlex(RobotMap.MotorPorts.ELEVATOR_MOTOR, MotorType.kBrushless);
@@ -39,22 +43,32 @@ public class Elevator extends SubsystemBase{
         elevatorMotor.setIdleMode(IdleMode.kBrake);
         elevatorEncoder = new DutyCycleEncoder(RobotMap.MotorPorts.ELEVATOR_ENCODER);
         elevatorPid = new PIDController(0, 0, 0);
-    //    elevatorRelativeEncoder = new RelativeEncoder();
+        elevatorRelativeEncoder = elevatorMotor.getEncoder();
+        elevatorAbsoluteEncoder = elevatorMotor.getAbsoluteEncoder(Type.kDutyCycle);
         elevatorEncoder.reset();
+       // elevatorMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
         SmartDashboard.putNumber("P Elevator", 0.12);
         SmartDashboard.putNumber("I Elevator", 0.005);
         SmartDashboard.putNumber("D Elevator", 0.000);
         
-        SmartDashboard.putNumber("Elevator Encoder Abs Pos", 0);
+      //  SmartDashboard.putNumber("Elevator Encoder Abs Pos", 0);
 
         // elevatorRelativeEncoder.setPositionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor);
     }
     public void moveElevator(double power){
         elevatorMotor.set(power);
     }
+    public double getElevatorPosition(){
+        return elevatorEncoder.getAbsolutePosition() - elevatorEncoder.getPositionOffset();
+    }
+
     public double getAbsElevatorPosition(){
-        return elevatorEncoder.getAbsolutePosition();
+        return elevatorAbsoluteEncoder.getPosition();
+    }
+
+    public double getRelEncoderPos(){
+        return elevatorRelativeEncoder.getPosition();
     }
 
     // public double getElevatorPosition(){
@@ -87,6 +101,9 @@ public class Elevator extends SubsystemBase{
         SmartDashboard.putNumber("Elevator Encoder Abs Pos", getAbsElevatorPosition());
 
         SmartDashboard.putNumber("Elevator Encoder Distance", elevatorEncoder.getDistance());
+        SmartDashboard.putNumber("Elevator Pos Offset", elevatorEncoder.getPositionOffset());
+
+        SmartDashboard.putNumber("Elevator Pos", getRelEncoderPos());
 
         elevatorPid.setP(SmartDashboard.getNumber("P Elevator", .12));
         elevatorPid.setI(SmartDashboard.getNumber("I Elevator", 0.005));

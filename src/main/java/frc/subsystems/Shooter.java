@@ -26,6 +26,7 @@ public class Shooter extends SubsystemBase{
     public boolean controllerInterrupt = true;
  //   private PIDController pidWrist;
     public double wristTarget;
+    public double shootTarget;
     public double madyannPos;
     private DutyCycleEncoder wristAbsEncoder;
     private final double MAX_DEGREES = 85;
@@ -141,12 +142,20 @@ public class Shooter extends SubsystemBase{
         
     }
 
-    // public void setShoot(double rpm){
-    //     rpm = MathUtil.clamp(rpm, 0, 3000);
+    public double setShootTarget(double rpm) {
+        var temp = shootTarget;
+        shootTarget = rpm;
+        SmartDashboard.putNumber("Shoot target", shootTarget);
+        return temp;
+    }
 
-    //     shootSpeed = pidShoot.calculate(getRPM(), angle*100);
+    public void setShoot(double rpm){
+        rpm = MathUtil.clamp(rpm, 0, 3000);
 
-    // }
+        shootSpeed = pidShoot.calculate(getLeftSpeed(), rpm);
+        runShoot(shootSpeed);
+
+    }
 
      public void moveWrist(double power) {
         power = MathUtil.clamp(power, -0.3, 0.3);
@@ -274,8 +283,10 @@ public class Shooter extends SubsystemBase{
         //     holdPosition();
         // }
         wristTarget = SmartDashboard.getNumber("Wrist target", getWristPosition());
+        // shootTarget = SmartDashboard.getNumber("Shoot target", getWristPosition());
 
         SmartDashboard.putNumber("Shoot Left Encoder CPR", shootEncoderLeft.getCountsPerRevolution());
+        SmartDashboard.putNumber("Shoot Left RPM", getLeftSpeed());
         SmartDashboard.putNumber("Shoot Left RPM", getLeftSpeed());
 
         SmartDashboard.putNumber("Shoot Right Encoder CPR", shootEncoderRight.getCountsPerRevolution());

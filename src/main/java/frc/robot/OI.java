@@ -97,8 +97,12 @@ public class OI {
         // manipYButton.whileTrue(new AlignShooter(shooter, shooter));
        // manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
         manipGoogle.whileTrue(new SetWrist(shooter));
+        // manipFullscreen.whileTrue(new SetShoot(shooter));
         manipEllipsisButton.whileTrue(new MoveShooter(shooter));
         manipMenuButton.whileTrue(new MoveShooterDown(shooter));
+
+       
+        manipYButton.whileTrue(new AlignShooter(shooter));
         // manipStadia.whileTrue(new AutoAlign(drivetrain, limeLightVision));
 
         // Cool new way to make a drive command by passing in Suppliers for the
