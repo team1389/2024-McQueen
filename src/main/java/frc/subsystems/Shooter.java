@@ -61,10 +61,10 @@ public class Shooter extends SubsystemBase{
         shootEncoderRight = shootRight.getEncoder();
         
         leftPidController = shootLeft.getPIDController();
-        leftPidController.setFeedbackDevice(shootEncoderLeft);
+        // leftPidController.setFeedbackDevice(shootEncoderLeft);
 
         rightPidController = shootRight.getPIDController();
-        rightPidController.setFeedbackDevice(shootEncoderRight);
+        // rightPidController.setFeedbackDevice(shootEncoderRight);
         // wristPidController.setP(ModuleConstants.P_TURNING);
         // wristPidController.setI(ModuleConstants.I_TURNING);
         // wristPidController.setD(ModuleConstants.D_TURNING);
@@ -89,19 +89,19 @@ public class Shooter extends SubsystemBase{
         pidWrist.setI(.013);
         pidWrist.setD(0);
 
-        leftPidController.setP(.1);
-        leftPidController.setI(0);
-        leftPidController.setD(0);
+        // leftPidController.setP(.1);
+        // leftPidController.setI(0);
+        // leftPidController.setD(0);
         // leftPidController.setIZone(0);
-        leftPidController.setFF(0.000175);
-        leftPidController.setOutputRange(0.4, 1);
+        // leftPidController.setFF(0.000175);
+        // leftPidController.setOutputRange(0.4, 1);
 
-        rightPidController.setP(.1);
-        rightPidController.setI(0);
-        rightPidController.setD(0);
+        // rightPidController.setP(.1);
+        // rightPidController.setI(0);
+        // rightPidController.setD(0);
         // rightPidController.setIZone(0);
-        rightPidController.setFF(0.000175);
-        rightPidController.setOutputRange(-1, -.4);
+        // rightPidController.setFF(0.000175);
+        // rightPidController.setOutputRange(-1, -.4);
 
 
         madyannPos = 0.85;
@@ -171,16 +171,17 @@ public class Shooter extends SubsystemBase{
     }
 
     public void runShoot() {
-        shootLeft.set(-shootSpeed);
-        shootRight.set(-shootSpeed); //inversed the direction in rev
+        shootLeft.set(shootSpeed);
+        shootRight.set(shootSpeed); //inversed the direction in rev
     }
 
     public void runShoot(double shooterRPM) {
+        throw new UnsupportedOperationException("rpm pid is broken rn");
         // double leftShootPower = 0.5;
         // leftShootPower = pidLeftShooter.calculate(getLeftSpeed(), 2000);
         // SmartDashboard.putNumber("I hate Shuffeboard so much", leftShootPower);
         // shootLeft.set(leftShootPower);
-        rightPidController.setReference(-shooterRPM, CANSparkMax.ControlType.kVelocity);
+        // rightPidController.setReference(-shooterRPM, CANSparkMax.ControlType.kVelocity);
         // leftPidController.setReference(shooterRPM, CANSparkMax.ControlType.kVelocity);
         // shootRight.set(-shootSpeed1); //inversed the direction in rev
     }

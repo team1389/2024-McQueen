@@ -29,7 +29,8 @@ public class Shoot extends Command{
     @Override
     public void execute(){
         shootingRPM = SmartDashboard.getNumber("Shooting RPM for Tuning", shootingRPM);
-        shooter.runShoot(shootingRPM);
+        // shooter.runShoot(shootingRPM);
+        shooter.runShoot();
  //     addCommand(new WaitCommand(5));
         
     }
