@@ -80,16 +80,18 @@ public class OI {
 
         initControllers();
 
-        manipAButton.whileTrue(new RunIntakeCmd(intakeSubsystem));
+        manipAButton.whileTrue(new AutoAlignCmd(drivetrainSubsystem, limeLightVisionSubsystem));
 
         manipBButton.onTrue(new IntakeCmd(intakeSubsystem));
 
-        manipXButton.onTrue(new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem));
+        manipXButton.onTrue(new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
 
         manipYButton.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
 
         manipMenuButton.whileTrue(new RunElevatorDownCmd(elevatorSubsystem));
         manipEllipsisButton.whileTrue(new RunElevatorUpCmd(elevatorSubsystem));
+
+
 
         // manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
         // manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));
