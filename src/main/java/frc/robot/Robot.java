@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
      */
     private OI oi;
     private Command autoCommand;
+    private DriveSubsystem drivetrain;
     // SwerveTelemetry frontLeftTelemetry;
     // SwerveTelemetry backLeftTelemetry;
     // SwerveTelemetry frontRightTelemetry;
@@ -48,6 +49,10 @@ public class Robot extends TimedRobot {
         // backRightTelemetry = new SwerveTelemetry(oi.drivetrain.backRight);
         
         pdh = new PowerDistribution();
+
+        drivetrain.PigeonConfig();
+
+        drivetrain.PigeonConfig();
 
         oi.shooterSubsystem.resetWristPos();
 
