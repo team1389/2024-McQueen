@@ -107,7 +107,7 @@ public class OI {
         //  manipLeftTrigger.onTrue(new SetElevator(elevatorSubsystem, .605)); //.605 //TODO
         //  manipRightTrigger.onTrue(new SetElevator(elevatorSubsystem, .55)); //.511 //TODO
        // manipLeftTrigger.onTrue(new RunIntake(intakeSubsystem));
-         manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
+        // manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
         // manipMenuButton.whileTrue(new RunOuttake(intakeSubsystem));
         manipLeftBumper.whileTrue(new ShootPIDCmd(shooterSubsystem, ShooterConstants.kTopRPM).alongWith(new HoldPositionCmd(shooterSubsystem)));
         manipRightBumper.whileTrue(new RunIntakeCmd(intakeSubsystem).alongWith(new RunIndexerCmd(indexerSubsystem, true)));
