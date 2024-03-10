@@ -68,7 +68,6 @@ public class AlignShooterCmd extends Command{
         double targetAngleInRadians = Math.atan(speakerHeight/distanceFromLimelightToGoalInches);
         double targetAngleInWeirdUnits = 0.97-(((1.4833-targetAngleInRadians)*0.17)/1.396);
         shooter.setWrist(targetAngleInWeirdUnits);
-        shooter.runShoot();
         // wrist.runWristDown();
         // addCommand(new WaitCommand(5)); 
         

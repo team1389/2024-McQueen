@@ -7,36 +7,39 @@ import frc.subsystems.ShooterSubsystem;
 import frc.subsystems.IndexerSubsystem;
 import frc.subsystems.IntakeSubsystem;
 
-public class ShootToSpeakerCmd extends Command{
+public class PreShootCmd extends Command{
      private ShooterSubsystem shooter;
      private IndexerSubsystem indexer;
      private IntakeSubsystem intake;
-     int count;
-    public ShootToSpeakerCmd(ShooterSubsystem shooter, IndexerSubsystem indexer, IntakeSubsystem intake){
-        this.shooter = shooter;
+     int timer = 0;
+    public PreShootCmd(IndexerSubsystem indexer, IntakeSubsystem intake, ShooterSubsystem shooter){
         this.indexer = indexer;
         this.intake = intake;
-        count = 0;
+        shooter = shooter;
 
         // addRequirements(intake, indexer, shooter);
     }
 
     @Override
     public void execute(){
-        shooter.runShoot();
-        count++;
-        if(shooter.getBottomSpeedRPM() > 0){
-            intake.runIntake();
-            indexer.moveToShoot();
-        }
+        indexer.moveToShoot();
+        intake.runIntake();
+        // timer += 1;
         //addCommand(new WaitCommand(5));        
     }
 
     @Override
     public void end(boolean interrupted){
+        indexer.stop();
         intake.stop();
         shooter.stop();
-        indexer.stop();
+        // timer = 0;
+    }
+
+    @Override
+    public boolean isFinished(){
+        // return (timer>20);
+        return !(intake.hitSensor());
     }
 
 }

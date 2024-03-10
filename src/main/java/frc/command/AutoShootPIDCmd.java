@@ -6,12 +6,12 @@ import frc.robot.RobotMap.ShooterConstants;
 import frc.subsystems.IntakeSubsystem;
 import frc.subsystems.ShooterSubsystem;
 
-public class ShootPIDCmd extends Command{
+public class AutoShootPIDCmd extends Command{
      private ShooterSubsystem shooterSubsytem;
     //  private Intake intakeSubsytem; TBD
      private double shootingRPM;
 
-    public ShootPIDCmd(ShooterSubsystem shooterSubsytem, double setpoint){
+    public AutoShootPIDCmd(ShooterSubsystem shooterSubsytem, double setpoint){
         this.shooterSubsytem = shooterSubsytem;
         // this.intakeSubsytem = intakeSubsytem;
         shootingRPM = setpoint;
@@ -29,6 +29,12 @@ public class ShootPIDCmd extends Command{
 
     @Override
     public void end(boolean interrupted){
-        shooterSubsytem.stop();        
+        shooterSubsytem.runShoot(shootingRPM);        
+    }
+
+    @Override
+    public boolean isFinished(){
+        // return !intake.hitSensor();
+        return shooterSubsytem.isAtTargetRPM(shootingRPM);
     }
 }

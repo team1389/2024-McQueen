@@ -13,17 +13,15 @@ public class RunOuttakeCmd extends Command{
     @Override
     public void execute(){
         intake.runOuttake();
-        
     }
 
     @Override
     public void end(boolean interrupted){
-
         intake.stop();
     }
 
-    // @Override
-    // public boolean isFinished(){
-    //     return intake.hitSensor();
-    // }
+    @Override
+    public boolean isFinished(){
+        return !intake.hitSensor();
+    }
 }
