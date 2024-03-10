@@ -79,9 +79,27 @@ public class OI {
     public OI() {
 
         initControllers();
-        manipAButton.onTrue(new RunIntakeCmd(intakeSubsystem).andThen(new InstantCommand(() -> lightSubsystem.setColor(0, 128, 255))));
+
+        manipAButton.whileTrue(new AutoAlignCmd(drivetrainSubsystem, limeLightVisionSubsystem));
+
+        manipBButton.onTrue(new IntakeCmd(intakeSubsystem));
+
+        manipXButton.onTrue(new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
+
+        manipYButton.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
+
+        manipMenuButton.whileTrue(new RunElevatorDownCmd(elevatorSubsystem));
+        manipEllipsisButton.whileTrue(new RunElevatorUpCmd(elevatorSubsystem));
+
+
+
+        // manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
+        // manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));
+
+
+        // manipLeftTrigger.whileTrue(new RunIntakeCmd(intakeSubsystem).andThen(new PreAmpCmd(indexerSubsystem,intakeSubsystem)));
+
        // manipBButton.whileTrue(new RunIndexer(indexerSubsystem, false));
-        manipBButton.whileTrue(new RunIndexerAmpCmd(indexerSubsystem, false));
        // manipYButton.whileTrue(new IndexAndShoot(indexerSubsystem, intakeSubsystem));
         //  manipYButton.whileTrue(new ShootToSpeaker(shooter, indexerSubsystem, intakeSubsystem));
        //  manipYButton.onTrue(new ContinueIntake(intakeSubsystem).alongWith(new RunIndexer(indexerSubsystem, true).alongWith(new Shoot(shooter, intakeSubsystem)))); //TODO
@@ -97,31 +115,12 @@ public class OI {
         manipRightBumper.whileTrue(new RunIntakeCmd(intakeSubsystem).alongWith(new RunIndexerCmd(indexerSubsystem, true)));
         // manipYButton.whileTrue(new AlignShooter(shooter, shooter));
        // manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
-        manipGoogle.whileTrue(new SetWristCmd(shooterSubsystem));
         // manipFullscreen.whileTrue(new SetShoot(shooter));
-        manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
-        manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));
-
-       
-        manipYButton.whileTrue(new AlignShooterCmd(shooterSubsystem));
+        
         // manipStadia.whileTrue(new AutoAlign(drivetrainSubsystem, limeLightVisionSubsystem));
 
-        // Cool new way to make a drive command by passing in Suppliers for the
-        // joysticks
-        // drivetrainSubsystem.setDefaultCommand(new TeleOpDrive(
-        //         drivetrainSubsystem,
-        //         () -> getDriveLeftY(),
-        //         () -> getDriveLeftX(),
-        //         () -> getDriveRightX(),
-        //         () -> getDriveRightY(),
-        //         () -> getDriveLeftBumper(), // By default be in field oriented
-        //         () -> !getDriveRightBumper(), // Slow function
-        //         () -> driveXButton.getAsBoolean(), // Hold x position
-        //         () -> driveRightTrigger.getAsBoolean(),
-        //         () -> driveRightTrigger.getAsBoolean(),//auto alignment
-        //         () -> driveController.getRawAxis(5),
-        //         limeLightVisionSubsystem) // flip
-        // );
+        shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
+        elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
 
             drivetrainSubsystem.setDefaultCommand(
         // The left stick controls translation of the robot.
@@ -134,13 +133,6 @@ public class OI {
                 true, true),
             drivetrainSubsystem));
 
-        
-        // shooter.setDefaultCommand(new ManualWrist(shooter, () -> -getManipLeftY()));
-        shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
-        elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
-        
-
-
         // Press A button -> zero gyro headingq
         driveAButton.onTrue(new InstantCommand(() -> drivetrainSubsystem.zeroHeading()));
 
@@ -149,7 +141,7 @@ public class OI {
 
         driveYButton.onTrue(new InstantCommand(() -> {lightSubsystem.isRainbowing = true;}));
 
-        NamedCommands.registerCommand("Shoot", new ShootPIDCmd(shooterSubsystem, ShooterConstants.kTopRPM));
+        NamedCommands.registerCommand("Shoot", new AutoShootPIDCmd(shooterSubsystem, ShooterConstants.kTopRPM));
         NamedCommands.registerCommand("IndexerToShooter", new RunIndexerCmd(indexerSubsystem, true));
         NamedCommands.registerCommand("IndexerToAmp", new RunIndexerCmd(indexerSubsystem, false));
         NamedCommands.registerCommand("RunIntake", new RunIntakeCmd(intakeSubsystem));

@@ -13,8 +13,6 @@ public class ManualElevatorCmd extends Command{
     public ManualElevatorCmd(ElevatorSubsystem elevator, Supplier<Double> power) {
         this.elevator = elevator;
         this.power = power;
-        
-        
         addRequirements(elevator);
     }
     

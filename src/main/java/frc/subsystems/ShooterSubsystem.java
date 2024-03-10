@@ -27,6 +27,7 @@ public class ShooterSubsystem extends SubsystemBase{
     public boolean controllerInterrupt = true;
     public double wristTarget;
     public double shootTarget;
+    public double setpoint = 3000;
     private DutyCycleEncoder wristAbsEncoder;
 
     // private final ProfiledPIDController pidWristController = new ProfiledPIDController(.5, 0, 0, backConstraints);
@@ -130,12 +131,18 @@ public class ShooterSubsystem extends SubsystemBase{
     }
 
     public void runShoot(double desiredRPM) {
+        setpoint = desiredRPM;
         topPidController.setReference(desiredRPM, CANSparkMax.ControlType.kVelocity);
         bottomPidController.setReference(desiredRPM, CANSparkMax.ControlType.kVelocity);
     }
     
     public void runWristUp(){
         wristController.set(wristSpeed);
+    }
+
+    public boolean isAtTargetRPM(double setpoint){
+        this.setpoint = setpoint;
+        return ((Math.abs(getTopSpeedRPM()-setpoint)<50)&&(Math.abs(getBottomSpeedRPM()-setpoint)<50));
     }
 
     public void runWristDown(){
@@ -189,6 +196,8 @@ public class ShooterSubsystem extends SubsystemBase{
     public void periodic(){
 
         SmartDashboard.putNumber("wristController Encoder ABS Position", getAbsWristPosition()); 
+
+        SmartDashboard.putBoolean("Is at Target RPM", isAtTargetRPM(setpoint));
 
         //Uncomment the below code to tune pid values in smartdashboard - you also need to uncommet the part in periodic
         // pidWristController.setP(SmartDashboard.getNumber("P Wrist", .055));

@@ -7,7 +7,8 @@ import frc.subsystems.ShooterSubsystem;
 public class SetWristCmd extends Command{
     ShooterSubsystem shooter;
     double angle = 0.85;
-    public SetWristCmd(ShooterSubsystem shooter){
+    public SetWristCmd(ShooterSubsystem shooter, double angle){
+        this.angle = angle;
         this.shooter = shooter;
         SmartDashboard.putNumber("Target Angle for SetWrist", angle);
         //addRequirements(shooter);

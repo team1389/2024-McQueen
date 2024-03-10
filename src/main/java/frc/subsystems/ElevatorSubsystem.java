@@ -12,6 +12,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkFlexExternalEncoder;
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.MathUtil;
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.RobotMap.ModuleConstants;
+import frc.robot.RobotMap.ShooterConstants;
 
 /** Add your docs here. */
 public class ElevatorSubsystem extends SubsystemBase{
@@ -36,17 +38,28 @@ public class ElevatorSubsystem extends SubsystemBase{
     private RelativeEncoder elevatorRelativeEncoder;
     private SparkAbsoluteEncoder elevatorAbsoluteEncoder;
     private final PIDController elevatorPid;
-    public boolean controllerInterrupt = false;
+    private SparkPIDController elevatorPidController;
+    public boolean controllerInterrupt = true;
 //set it to absolute mode
 
     public ElevatorSubsystem(){
         elevatorMotor = new CANSparkFlex(RobotMap.MotorPorts.ELEVATOR_MOTOR, MotorType.kBrushless);
         elevatorMotor.setSmartCurrentLimit(40);
+
+        elevatorRelativeEncoder = elevatorMotor.getEncoder();
+
+        elevatorPidController = elevatorMotor.getPIDController();
+        elevatorPidController.setFeedbackDevice(elevatorRelativeEncoder);
+
+        elevatorPidController.setP(0.1);
+        elevatorPidController.setI(0);
+        elevatorPidController.setD(0);
+        // bottomPidController.setIZone(0);
+        elevatorPidController.setOutputRange(-.3, .3);
         elevatorMotor.setIdleMode(IdleMode.kBrake);
         elevatorMotor.burnFlash();
         elevatorEncoder = new DutyCycleEncoder(RobotMap.MotorPorts.ELEVATOR_ENCODER);
         elevatorPid = new PIDController(0, 0, 0);
-        elevatorRelativeEncoder = elevatorMotor.getEncoder();
         elevatorAbsoluteEncoder = elevatorMotor.getAbsoluteEncoder(Type.kDutyCycle);
         elevatorEncoder.reset();
      //   elevatorRelativeEncoder.reset();
@@ -91,10 +104,10 @@ public class ElevatorSubsystem extends SubsystemBase{
     // }
 
     public void moveToTop(){
-        elevatorMotor.set(-speed);
+        elevatorMotor.set(0.3);
     }
     public void moveToBottom(){
-        elevatorMotor.set(speed);
+        elevatorMotor.set(-0.3);
     }
     public void stop(){
         elevatorMotor.set(0.0);
@@ -126,8 +139,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public void setElevator(double pos){
-        pos = MathUtil.clamp(pos, .01, 4.64); 
-        elevatorMotor.set(elevatorPid.calculate(getRelEncoderPos(), pos));
+        
     }
 
     @Override

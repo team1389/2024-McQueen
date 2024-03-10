@@ -12,9 +12,11 @@ import frc.robot.RobotMap.IntakeConstants;
 //1 motor that spins the intake thingies
 
 public class IntakeSubsystem extends SubsystemBase{
-    private final double intakeSpeed = 1;
+    private final double intakeSpeed = 1; //should be 1
     private CANSparkFlex intakeMotor;
     private AnalogPotentiometer intakeDistanceSensor;
+    private boolean isNoteIn = true;
+
     public IntakeSubsystem(){
     intakeMotor = new CANSparkFlex(RobotMap.MotorPorts.INTAKE_MOTOR, MotorType.kBrushless);
     intakeMotor.setSmartCurrentLimit(40);
@@ -22,6 +24,7 @@ public class IntakeSubsystem extends SubsystemBase{
     //The type of distance sensor we have in the intake, a 2m rev IR Distance Sensor, must be declared as an analog potentiometer
     intakeDistanceSensor = new AnalogPotentiometer(0, 100, 30); 
     SmartDashboard.putNumber("Intake Distance Sensor", intakeDistanceSensor.get());
+    SmartDashboard.putBoolean("isNoteIn", isNoteIn);
     }
     
     public void runIntake(){
@@ -29,12 +32,11 @@ public class IntakeSubsystem extends SubsystemBase{
     }
 
     public void runOuttake(){
-        intakeMotor.set(intakeSpeed);
+        intakeMotor.set(.05);
     }
 
     public boolean hitSensor(){ 
-        SmartDashboard.putNumber("Intake Distance Sensor", intakeDistanceSensor.get());
-        return IntakeConstants.kDistanceWithoutNode - intakeDistanceSensor.get() > 5;
+        return isNoteIn;
     }
 
     public void stop(){
@@ -43,6 +45,8 @@ public class IntakeSubsystem extends SubsystemBase{
 
     @Override
     public void periodic(){
+        isNoteIn = intakeDistanceSensor.get() > (IntakeConstants.kDistanceWithoutNode + 5);
         SmartDashboard.putNumber("Intake Distance Sensor", intakeDistanceSensor.get());
+        SmartDashboard.putBoolean("isNoteIn", hitSensor());
     }
 }

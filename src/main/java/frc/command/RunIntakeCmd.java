@@ -7,7 +7,6 @@ public class RunIntakeCmd extends Command{
     private IntakeSubsystem intake;
     public RunIntakeCmd(IntakeSubsystem intake){
         this.intake = intake;
-        // addRequirements(intake);
     }
 
     @Override
@@ -20,8 +19,8 @@ public class RunIntakeCmd extends Command{
         intake.stop();
     }
 
-    // @Override
-    // public boolean isFinished(){
-    //     return intake.hitSensor();
-    // }
+    @Override
+    public boolean isFinished(){
+        return intake.hitSensor();
+    }
 }

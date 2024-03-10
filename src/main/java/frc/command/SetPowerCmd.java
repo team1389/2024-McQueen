@@ -3,6 +3,7 @@ package frc.command;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.ShooterSubsystem;
 
+//used for tuning hold position command
 public class SetPowerCmd extends Command{
     ShooterSubsystem shooter;
     double power;
