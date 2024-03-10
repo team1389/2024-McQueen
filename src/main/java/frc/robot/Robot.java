@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
         
         pdh = new PowerDistribution();
 
-        drivetrain.PigeonConfig();
+       // drivetrain.PigeonConfig();
 
         oi.shooter.resetWristPos();
 

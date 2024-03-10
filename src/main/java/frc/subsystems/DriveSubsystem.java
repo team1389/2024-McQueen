@@ -325,7 +325,7 @@ public class DriveSubsystem extends SubsystemBase {
     pigeon.setYaw(0);
   }
 
-  public void PigeonConfig(){
+  public void PigeonConfig(){ // not neccesary
             Pigeon2Configuration configs = new Pigeon2Configuration();
             // mount X-up
             configs.MountPose.MountPoseYaw = 0;

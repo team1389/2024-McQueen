@@ -5,7 +5,7 @@ import frc.subsystems.Elevator;
 
 public class SetElevator extends Command{
     Elevator elevator;
-    double pos = .5;
+    double pos = 2;
 
     public SetElevator(Elevator elevator, double pos){
         this.elevator = elevator;
@@ -13,14 +13,25 @@ public class SetElevator extends Command{
     }
 
     @Override
-    public void execute(){
-      //  elevator.setSetpoint(pos);
-        elevator.setElevator(pos);
+    public void initialize(){
+        elevator.controllerInterrupt = false;
+        elevator.setTarget(pos);
     }
 
+    // @Override
+    // public void execute(){
+    //   //  elevator.setSetpoint(pos);
+    //     elevator.setElevator(pos);
+    // }
+
+    // @Override
+    // public void end(boolean interrupted){
+    //     elevator.stop();
+    // }
+
     @Override
-    public void end(boolean interrupted){
-        elevator.stop();
+    public boolean isFinished(){
+        return true;
     }
 
 }

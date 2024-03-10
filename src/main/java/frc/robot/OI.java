@@ -87,8 +87,8 @@ public class OI {
         // manipEllipsisButton.whileTrue(new RunIndexer(indexer, true)); // indexer to amp
         manipXButton.onTrue(new RunElevatorUp(elevator).andThen(new RunIntake(intake)).alongWith(new RunIndexer(indexer, false)));
          manipLeftTrigger.whileTrue(new RunIntake(intake));
-        //  manipLeftTrigger.onTrue(new SetElevator(elevator, .605)); //.605 //TODO
-        //  manipRightTrigger.onTrue(new SetElevator(elevator, .55)); //.511 //TODO
+        //  manipLeftTrigger.onTrue(new SetElevator(elevator, 4.6)); //.605 //TODO
+        //  manipRightTrigger.whileTrue(new SetElevator(elevator, 2)); //.511 //TODO
        // manipLeftTrigger.onTrue(new RunIntake(intake));
          manipRightTrigger.whileTrue(new RunOuttake(intake));
         // manipMenuButton.whileTrue(new RunOuttake(intake));

@@ -26,14 +26,14 @@ import frc.robot.RobotMap.ModuleConstants;
 public class Elevator extends SubsystemBase{
     double speed = 1;
     int count = 0;
-    public double pos = .5;
+    public double target = 2;
     private CANSparkFlex elevatorMotor;
     private DutyCycleEncoder elevatorEncoder;
     private SparkFlexExternalEncoder elevatorEncoder1;
     private RelativeEncoder elevatorRelativeEncoder;
     private SparkAbsoluteEncoder elevatorAbsoluteEncoder;
     private final PIDController elevatorPid;
-    public boolean controllerInterrupt = true;
+    public boolean controllerInterrupt = false;
 //set it to absolute mode
 
     public Elevator(){
@@ -45,17 +45,26 @@ public class Elevator extends SubsystemBase{
         elevatorPid = new PIDController(0, 0, 0);
         elevatorRelativeEncoder = elevatorMotor.getEncoder();
         elevatorAbsoluteEncoder = elevatorMotor.getAbsoluteEncoder(Type.kDutyCycle);
-        elevatorEncoder.reset();
+       // elevatorEncoder.reset();
        // elevatorMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
-        SmartDashboard.putNumber("P Elevator", 0.12);
-        SmartDashboard.putNumber("I Elevator", 0.005);
-        SmartDashboard.putNumber("D Elevator", 0.000);
+        SmartDashboard.putNumber("Elevator P", 0.12);
+        SmartDashboard.putNumber("Elevator I", 0.005);
+        SmartDashboard.putNumber("Elevator D", 0.000);
         
       //  SmartDashboard.putNumber("Elevator Encoder Abs Pos", 0);
 
         // elevatorRelativeEncoder.setPositionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor);
     }
+
+    public double setTarget(double pos) {
+        var temp = pos;
+        target = pos;
+        SmartDashboard.putNumber("Elevator Target", target);
+        return temp;
+    }
+
+
     public void moveElevator(double power){
         elevatorMotor.set(power);
     }
@@ -87,27 +96,33 @@ public class Elevator extends SubsystemBase{
     }
 
     public void setSetpoint(double setpoint){
-        pos = setpoint;
+        target = setpoint;
     }
 
     public void setElevator(double pos){
-        pos = MathUtil.clamp(pos, .511, .605); 
-        elevatorMotor.set(elevatorPid.calculate(getAbsElevatorPosition(), pos));
+        pos = MathUtil.clamp(pos, .01, 4.64); 
+        elevatorMotor.set(elevatorPid.calculate(getRelEncoderPos(), target));
     }
 
     @Override
     public void periodic() {
+
+        if(!controllerInterrupt){
+            elevatorMotor.set(elevatorPid.calculate(getRelEncoderPos(), target));
+        }
+
         SmartDashboard.putNumber("Elevator Encoder get", elevatorEncoder.get());
         SmartDashboard.putNumber("Elevator Encoder Abs Pos", getAbsElevatorPosition());
+        SmartDashboard.putNumber("Elevator Encoder position", getElevatorPosition());
 
         SmartDashboard.putNumber("Elevator Encoder Distance", elevatorEncoder.getDistance());
         SmartDashboard.putNumber("Elevator Pos Offset", elevatorEncoder.getPositionOffset());
 
         SmartDashboard.putNumber("Elevator Pos", getRelEncoderPos());
 
-        elevatorPid.setP(SmartDashboard.getNumber("P Elevator", .12));
-        elevatorPid.setI(SmartDashboard.getNumber("I Elevator", 0.005));
-        elevatorPid.setD(SmartDashboard.getNumber("D Elevator", 0.000));
+        elevatorPid.setP(SmartDashboard.getNumber("Elevator P", .12));
+        elevatorPid.setI(SmartDashboard.getNumber("Elevator I", 0.005));
+        elevatorPid.setD(SmartDashboard.getNumber("Elevator D", 0.000));
 
         // if (lastPos < FourBarConstants.SHOULDER_FLIP_MIN.getRadians() + 0.1 &&
         //     absoluteEncoder.getPosition() > FourBarConstants.SHOULDER_FLIP_MAX.getRadians() - 0.1) {
