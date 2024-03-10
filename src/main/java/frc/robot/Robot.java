@@ -49,11 +49,7 @@ public class Robot extends TimedRobot {
         // backRightTelemetry = new SwerveTelemetry(oi.drivetrain.backRight);
         
         pdh = new PowerDistribution();
-
-        drivetrain.PigeonConfig();
-
-        drivetrain.PigeonConfig();
-
+        //DO NOT RE-ADD PIGEON CONFIG
         oi.shooterSubsystem.resetWristPos();
 
 

@@ -324,19 +324,19 @@ public class DriveSubsystem extends SubsystemBase {
     pigeon.reset();
     pigeon.setYaw(0);
   }
-
-  public void PigeonConfig(){
-            Pigeon2Configuration configs = new Pigeon2Configuration();
-            // mount X-up
-            configs.MountPose.MountPoseYaw = 0;
-            configs.MountPose.MountPosePitch = 90;
-            configs.MountPose.MountPoseRoll = 0;
-            configs.Pigeon2Features.DisableNoMotionCalibration = false;
-            configs.Pigeon2Features.DisableTemperatureCompensation = false;
-            configs.Pigeon2Features.EnableCompass = false;
-            pigeon.setYaw(0);
-            pigeon.getConfigurator().apply(configs);
-        }
+//MIRA Recommends only configuring using phoenix tuner app
+  // public void PigeonConfig(){
+  //           Pigeon2Configuration configs = new Pigeon2Configuration();
+  //           // mount X-up
+  //           configs.MountPose.MountPoseYaw = 0;
+  //           configs.MountPose.MountPosePitch = 90;
+  //           configs.MountPose.MountPoseRoll = 0;
+  //           configs.Pigeon2Features.DisableNoMotionCalibration = false;
+  //           configs.Pigeon2Features.DisableTemperatureCompensation = false;
+  //           configs.Pigeon2Features.EnableCompass = false;
+  //           pigeon.setYaw(0);
+  //           pigeon.getConfigurator().apply(configs);
+  //       }
 
   /**
    * Returns the heading of the robot.
