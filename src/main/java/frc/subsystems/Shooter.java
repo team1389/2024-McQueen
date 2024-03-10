@@ -14,14 +14,15 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.RobotMap.ShooterConstants;
 
 public class Shooter extends SubsystemBase{
-    private double shootSpeed = 1; // percent of max motor speed
+    private double shootSpeed = 1; // percent of max motor speed -1 to 1
     private final double wristSpeed = .15; // percent of max motor speed
-    private CANSparkFlex shootLeft;
-    private CANSparkFlex shootRight;
-    private RelativeEncoder shootEncoderLeft;
-    private RelativeEncoder shootEncoderRight;
+    private CANSparkFlex shootBottomController;
+    private CANSparkFlex shootTopController;
+    private RelativeEncoder shootEncoderBottom;
+    private RelativeEncoder shootEncoderTop;
     private CANSparkFlex wrist;
     public boolean controllerInterrupt = true;
  //   private PIDController pidWrist;
@@ -36,35 +37,53 @@ public class Shooter extends SubsystemBase{
     private final PIDController pidWrist; //maybe sparkPidController
 
     private RelativeEncoder wristEncoder; // thru bore encoder
-    private final SparkPIDController leftPidController;
-    private final SparkPIDController rightPidController;
+    private final SparkPIDController bottomPidController;
+    private final SparkPIDController topPidController;
 
     public Shooter(){
-        shootLeft = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_LEFT, MotorType.kBrushless);
-        shootRight = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_RIGHT, MotorType.kBrushless);
+        shootBottomController = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_BOTTOM, MotorType.kBrushless);
+        shootTopController = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_TOP, MotorType.kBrushless);
         wrist = new CANSparkFlex(RobotMap.MotorPorts.WRIST_MOTOR, MotorType.kBrushless);
-       // shootRelativeEncoder = new RelativeEncoder();
-        shootLeft.setSmartCurrentLimit(40); // neo vortex specifications, 40 amp breaker, cannot exceed 40
-        shootLeft.setInverted(true);
-        shootLeft.setIdleMode(IdleMode.kCoast);
-        shootLeft.burnFlash();
-        shootRight.setSmartCurrentLimit(40);
-        shootRight.setInverted(true);
-        shootRight.setIdleMode(IdleMode.kCoast); // neo vortex specifications
-        shootRight.burnFlash();
+
+        shootEncoderBottom = shootBottomController.getEncoder(); //gets the build-in motor encoder
+        shootEncoderTop = shootTopController.getEncoder(); //gets the build-in motor encoder
+
+        shootBottomController.setSmartCurrentLimit(40); // neo vortex specifications, 40 amp breaker, cannot exceed 40
+        shootBottomController.setInverted(true);
+        shootBottomController.setIdleMode(IdleMode.kCoast);
+
+        bottomPidController = shootBottomController.getPIDController();
+        bottomPidController.setFeedbackDevice(shootEncoderBottom);
+
+        bottomPidController.setP(ShooterConstants.kBottom_P);
+        bottomPidController.setI(ShooterConstants.kBottom_I);
+        bottomPidController.setD(ShooterConstants.kBottom_D);
+        // bottomPidController.setIZone(0);
+        bottomPidController.setFF(0.000175);
+        bottomPidController.setOutputRange(0.3, 1); //min is reverse power minium, max is forward power maximum. This does not need to be tuned so far
+
+        shootBottomController.burnFlash();
+        shootTopController.setSmartCurrentLimit(40);
+        shootTopController.setInverted(true);
+        shootTopController.setIdleMode(IdleMode.kCoast); // neo vortex specifications
+    
+        topPidController = shootTopController.getPIDController();
+        topPidController.setFeedbackDevice(shootEncoderTop);
+
+        topPidController.setP(ShooterConstants.kTop_P);
+        topPidController.setI(ShooterConstants.kTop_I);
+        topPidController.setD(ShooterConstants.kTop_D);
+        // topPidController.setIZone(0);
+        topPidController.setFF(0.000175);
+        topPidController.setOutputRange(0.3,1); //min is reverse power minium, max is forward power maximum. This needs to be tuned 
+
+        shootTopController.burnFlash();
         wrist.setSmartCurrentLimit(40); // neo vortex specifications
         wrist.setIdleMode(IdleMode.kBrake);
         wrist.burnFlash();
         //trial and error
         wristEncoder = wrist.getEncoder(); //through bore encoder
-        shootEncoderLeft = shootLeft.getEncoder();
-        shootEncoderRight = shootRight.getEncoder();
         
-        leftPidController = shootLeft.getPIDController();
-        leftPidController.setFeedbackDevice(shootEncoderLeft);
-
-        rightPidController = shootRight.getPIDController();
-        rightPidController.setFeedbackDevice(shootEncoderRight);
         // wristPidController.setP(ModuleConstants.P_TURNING);
         // wristPidController.setI(ModuleConstants.I_TURNING);
         // wristPidController.setD(ModuleConstants.D_TURNING);
@@ -89,19 +108,9 @@ public class Shooter extends SubsystemBase{
         pidWrist.setI(.013);
         pidWrist.setD(0);
 
-        leftPidController.setP(.1);
-        leftPidController.setI(0);
-        leftPidController.setD(0);
-        // leftPidController.setIZone(0);
-        leftPidController.setFF(0.000175);
-        leftPidController.setOutputRange(0.4, 1);
+        
 
-        rightPidController.setP(.1);
-        rightPidController.setI(0);
-        rightPidController.setD(0);
-        // rightPidController.setIZone(0);
-        rightPidController.setFF(0.000175);
-        rightPidController.setOutputRange(-1, -.4);
+        
 
 
         madyannPos = 0.85;
@@ -110,16 +119,16 @@ public class Shooter extends SubsystemBase{
         SmartDashboard.putNumber("D Wrist", 0.000);
         SmartDashboard.putNumber("Wrist Motor Speed", 0.25);
 
-        SmartDashboard.putNumber("P Left Shooter", 0.1);
-        SmartDashboard.putNumber("I Left Shooter", 0.0);
-        SmartDashboard.putNumber("D Left Shooter", 0.000);
+        SmartDashboard.putNumber("P Bottom Shooter", 0.1);
+        SmartDashboard.putNumber("I Bottom Shooter", 0.0);
+        SmartDashboard.putNumber("D Bottom Shooter", 0.000);
 
-        SmartDashboard.putNumber("P Right Shooter", 0.1);
-        SmartDashboard.putNumber("I Right Shooter", 0.0);
-        SmartDashboard.putNumber("D Right Shooter", 0.000);
+        SmartDashboard.putNumber("P Top Shooter", 0.1);
+        SmartDashboard.putNumber("I Top Shooter", 0.0);
+        SmartDashboard.putNumber("D Top Shooter", 0.000);
+
         //correct value
-        wristAbsEncoder = new DutyCycleEncoder(8);
-
+        wristAbsEncoder = new DutyCycleEncoder(8); // this is a through bore encoder
     }
     
     // public void setWrist(double angle) {
@@ -171,24 +180,21 @@ public class Shooter extends SubsystemBase{
     }
 
     public void runShoot() {
-        shootLeft.set(-shootSpeed);
-        shootRight.set(-shootSpeed); //inversed the direction in rev
+        shootBottomController.set(-shootSpeed);
+        shootTopController.set(-shootSpeed); //inversed the direction in rev
     }
 
-    public void runShoot(double shooterRPM) {
-        // double leftShootPower = 0.5;
-        // leftShootPower = pidLeftShooter.calculate(getLeftSpeed(), 2000);
-        // SmartDashboard.putNumber("I hate Shuffeboard so much", leftShootPower);
-        // shootLeft.set(leftShootPower);
-        rightPidController.setReference(-shooterRPM, CANSparkMax.ControlType.kVelocity);
-        // leftPidController.setReference(shooterRPM, CANSparkMax.ControlType.kVelocity);
-        // shootRight.set(-shootSpeed1); //inversed the direction in rev
+    public void runShoot(double setpoint) {
+        // shootBottomController.set(.2); // positive power runs the note out of robot (wheels out), negative power runs the note in to the robot
+        // shootTopController.set(.2); // positive power runs the note out of robot (wheels in), negative power runs the note in to the robot
+        topPidController.setReference(setpoint, CANSparkMax.ControlType.kVelocity);
+        bottomPidController.setReference(setpoint, CANSparkMax.ControlType.kVelocity);
     }
 
     // public void runShoot(double shootSpeed1) {
     //     SmartDashboard.putNumber("Shooting Power for Tuning 1", -shootSpeed1);
-    //     shootLeft.set(-shootSpeed1);
-    //     shootRight.set(-shootSpeed1); //inversed the direction in rev
+    //     shootBottomController.set(-shootSpeed1);
+    //     shootTopController.set(-shootSpeed1); //inversed the direction in rev
     // }
     
 
@@ -205,8 +211,8 @@ public class Shooter extends SubsystemBase{
     }
 
     public void stop(){
-        shootLeft.set(0);
-        shootRight.set(0);
+        shootBottomController.set(0);
+        shootTopController.set(0);
     }
 
     public void resetWristPos() {
@@ -229,12 +235,12 @@ public class Shooter extends SubsystemBase{
         shootSpeed = 3.6 * (getRPM()/5252);
     }
 
-    public double getRightSpeed(){
-        return shootEncoderRight.getVelocity();
+    public double getTopSpeedRPM(){
+        return shootEncoderTop.getVelocity();
     }
 
-    public double getLeftSpeed(){
-        return shootEncoderLeft.getVelocity();
+    public double getBottomSpeedRPM(){
+        return shootEncoderBottom.getVelocity();
     }
 
     public void holdPosition(){
@@ -266,13 +272,13 @@ public class Shooter extends SubsystemBase{
         pidWrist.setI(SmartDashboard.getNumber("I Wrist", 0.013));
         pidWrist.setD(SmartDashboard.getNumber("D Wrist", 0.000));
 
-        leftPidController.setP(SmartDashboard.getNumber("P Left Shooter", 0.1));
-        leftPidController.setI(SmartDashboard.getNumber("I Left Shooter", 0));
-        leftPidController.setD(SmartDashboard.getNumber("D Left Shooter", 0.000));
+        bottomPidController.setP(SmartDashboard.getNumber("P Bottom Shooter", 0.1));
+        bottomPidController.setI(SmartDashboard.getNumber("I Bottom Shooter", 0));
+        bottomPidController.setD(SmartDashboard.getNumber("D Bottom Shooter", 0.000));
 
-        rightPidController.setP(SmartDashboard.getNumber("P Right Shooter", 0.1));
-        rightPidController.setI(SmartDashboard.getNumber("I Right Shooter", 0));
-        rightPidController.setD(SmartDashboard.getNumber("D Right Shooter", 0.000));
+        topPidController.setP(SmartDashboard.getNumber("P Top Shooter", 0.1));
+        topPidController.setI(SmartDashboard.getNumber("I Top Shooter", 0));
+        topPidController.setD(SmartDashboard.getNumber("D Top Shooter", 0.000));
         // SmartDashboard.putNumber("P Wrist", 0.25);
         // SmartDashboard.putNumber("I Wrist", 0.0000);
         // SmartDashboard.putNumber("D Wrist", 0.000);
@@ -285,11 +291,12 @@ public class Shooter extends SubsystemBase{
         wristTarget = SmartDashboard.getNumber("Wrist target", getWristPosition());
         // shootTarget = SmartDashboard.getNumber("Shoot target", getWristPosition());
 
-        SmartDashboard.putNumber("Shoot Left Encoder CPR", shootEncoderLeft.getCountsPerRevolution());
-        SmartDashboard.putNumber("Shoot Left RPM", getLeftSpeed());
-        SmartDashboard.putNumber("Shoot Left RPM", getLeftSpeed());
+        SmartDashboard.putNumber("Shoot Bottom Encoder CPR", shootEncoderBottom.getCountsPerRevolution());
+        SmartDashboard.putNumber("Shoot Bottom RPM", getBottomSpeedRPM());
+        SmartDashboard.putNumber("Shoot Bottom Encoder Position", shootEncoderBottom.getPosition());
 
-        SmartDashboard.putNumber("Shoot Right Encoder CPR", shootEncoderRight.getCountsPerRevolution());
-        SmartDashboard.putNumber("Shoot Right RPM", getRightSpeed());
+        SmartDashboard.putNumber("Shoot Top Encoder CPR", shootEncoderTop.getCountsPerRevolution());
+        SmartDashboard.putNumber("Shoot Top RPM", getTopSpeedRPM());
+        SmartDashboard.putNumber("Shoot Top Encoder Position", shootEncoderTop.getPosition());
     }
 }

@@ -25,7 +25,7 @@ public class ShootToSpeaker extends Command{
     public void execute(){
         shooter.runShoot();
         count++;
-        if(shooter.getLeftSpeed() > 0){
+        if(shooter.getBottomSpeedRPM() > 0){
             intake.runIntake();
             indexer.moveToShoot();
         }

@@ -116,8 +116,8 @@ public class RobotMap {
     // }
 
     public static final class MotorPorts{
-        public static final int SHOOT_LEFT = 11; 
-        public static final int SHOOT_RIGHT = 10; 
+        public static final int SHOOT_BOTTOM = 11; 
+        public static final int SHOOT_TOP = 10; 
         public static final int WRIST_MOTOR = 12; 
         public static final int INDEXER_MOTOR = 14; 
         public static final int INTAKE_MOTOR = 13;
@@ -138,6 +138,21 @@ public class RobotMap {
 
     }
 
+    public static final class ShooterConstants {
+        //Shooter Parameters
+
+        public static final double kTopRPM = 3000; //top
+        public static final double kBottomRPM = 3000; //bottom
+        
+        public static final double kTop_P = 1;
+        public static final double kTop_I = 0;
+        public static final double kTop_D = 0;
+
+        public static final double kBottom_P = 1;
+        public static final double kBottom_I = 0;
+        public static final double kBottom_D = 0;
+    }
+
     public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
@@ -147,6 +162,8 @@ public class RobotMap {
     public static final double kDirectionSlewRate = 10000; // radians per second //1.2, 10000
     public static final double kMagnitudeSlewRate = 10000; // percent per second (1 = 100%) //1.8, 10000
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
+
+    
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(19.625);

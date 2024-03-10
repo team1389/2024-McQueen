@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
         
         pdh = new PowerDistribution();
 
-        oi.shooter.resetWristPos();
+        oi.shooterSubsystem.resetWristPos();
 
 
     }

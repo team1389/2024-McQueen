@@ -11,6 +11,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 
 import frc.command.*;
 import frc.robot.RobotMap.OIConstants;
+import frc.robot.RobotMap.ShooterConstants;
 import frc.subsystems.*;
 import frc.util.DPadButton;
 import frc.util.DPadButton.Direction;
@@ -70,7 +71,7 @@ public class OI {
 
     public final Intake intake = new Intake();
     public final Lights light = new Lights();
-    public final Shooter shooter = new Shooter();
+    public final Shooter shooterSubsystem = new Shooter();
     public final Elevator elevator = new Elevator();
     public final LimelightVision limeLightVision = new LimelightVision();
     public final Vision vision = new Vision();
@@ -92,17 +93,17 @@ public class OI {
        // manipLeftTrigger.onTrue(new RunIntake(intake));
          manipRightTrigger.whileTrue(new RunOuttake(intake));
         // manipMenuButton.whileTrue(new RunOuttake(intake));
-        manipLeftBumper.whileTrue(new Shoot(shooter, intake).alongWith(new HoldPosition(shooter)));
+        manipLeftBumper.whileTrue(new ShootPIDCmd(shooterSubsystem, ShooterConstants.kTopRPM).alongWith(new HoldPositionCmd(shooterSubsystem)));
         manipRightBumper.whileTrue(new RunIntake(intake).alongWith(new RunIndexer(indexer, true)));
         // manipYButton.whileTrue(new AlignShooter(shooter, shooter));
        // manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
-        manipGoogle.whileTrue(new SetWrist(shooter));
+        manipGoogle.whileTrue(new SetWrist(shooterSubsystem));
         // manipFullscreen.whileTrue(new SetShoot(shooter));
-        manipEllipsisButton.whileTrue(new MoveShooter(shooter));
-        manipMenuButton.whileTrue(new MoveShooterDown(shooter));
+        manipEllipsisButton.whileTrue(new MoveShooter(shooterSubsystem));
+        manipMenuButton.whileTrue(new MoveShooterDown(shooterSubsystem));
 
        
-        manipYButton.whileTrue(new AlignShooter(shooter));
+        manipYButton.whileTrue(new AlignShooter(shooterSubsystem));
         // manipStadia.whileTrue(new AutoAlign(drivetrain, limeLightVision));
 
         // Cool new way to make a drive command by passing in Suppliers for the
@@ -135,7 +136,7 @@ public class OI {
 
         
         // shooter.setDefaultCommand(new ManualWrist(shooter, () -> -getManipLeftY()));
-        shooter.setDefaultCommand(new HoldPosition(shooter));
+        shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevator.setDefaultCommand(new ManualElevator(elevator, () -> -getManipRightY()));
         
 
@@ -148,7 +149,7 @@ public class OI {
 
         driveYButton.onTrue(new InstantCommand(() -> {light.isRainbowing = true;}));
 
-        NamedCommands.registerCommand("Shoot", new Shoot(shooter, intake));
+        NamedCommands.registerCommand("Shoot", new ShootPIDCmd(shooterSubsystem, ShooterConstants.kTopRPM));
         NamedCommands.registerCommand("IndexerToShooter", new RunIndexer(indexer, true));
         NamedCommands.registerCommand("IndexerToAmp", new RunIndexer(indexer, false));
         NamedCommands.registerCommand("RunIntake", new RunIntake(intake));
