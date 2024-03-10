@@ -9,7 +9,7 @@ import frc.robot.RobotMap.LightConstants;
 public class LightsSubsystem extends SubsystemBase {
     AddressableLED ledStrip;
     AddressableLEDBuffer buffer;
-    public int hueee = 0;
+    public int ledHue = 0; //TBD
     public boolean isRainbowing = true;
 
     public LightsSubsystem() {
@@ -38,7 +38,7 @@ public class LightsSubsystem extends SubsystemBase {
 
     
     public void rainbow() {
-        var firstPixelHue = hueee%180;
+        var firstPixelHue = ledHue%180;
 
         // For every pixel
         for (var i = 0; i < buffer.getLength(); i++) {

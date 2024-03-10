@@ -1,12 +1,9 @@
 package frc.subsystems;
 
 import com.revrobotics.CANSparkFlex;
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -16,14 +13,15 @@ import frc.robot.RobotMap;
 public class IntakeSubsystem extends SubsystemBase{
     private final double intakeSpeed = 1;
     private CANSparkFlex intakeMotor;
-    private AnalogPotentiometer pot;
-    private final double distanceWONode = 46.7; //change
+    private AnalogPotentiometer intakeDistanceSensor;
+    private final double distanceWONode = 46.7; //correct
     public IntakeSubsystem(){
     intakeMotor = new CANSparkFlex(RobotMap.MotorPorts.INTAKE_MOTOR,MotorType.kBrushless);
     intakeMotor.setSmartCurrentLimit(40);
     intakeMotor.burnFlash();
-    //incorrect port, needs to be moved to anolog from DIO
-    pot = new AnalogPotentiometer(0, 100, 30); //change parameters
+    //The type of distance sensor we have in the intake, a 2m rev IR Distance Sensor, must be declared as an analog potentiometer
+    intakeDistanceSensor = new AnalogPotentiometer(0, 100, 30); 
+    SmartDashboard.putNumber("Intake Distance Sensor", intakeDistanceSensor.get());
     }
     
     public void runIntake(){
@@ -37,8 +35,8 @@ public class IntakeSubsystem extends SubsystemBase{
 
 
     public boolean hitSensor(){ 
-        SmartDashboard.putNumber("Distance Sensor", pot.get());
-        return distanceWONode - pot.get() > 5;
+        SmartDashboard.putNumber("Intake Distance Sensor", intakeDistanceSensor.get());
+        return distanceWONode - intakeDistanceSensor.get() > 5;
     }
 
     public void stop(){
@@ -47,6 +45,6 @@ public class IntakeSubsystem extends SubsystemBase{
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("Distance Sensor 1", pot.get());
+        SmartDashboard.putNumber("Intake Distance Sensor", intakeDistanceSensor.get());
     }
 }
