@@ -5,17 +5,16 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotMap;
+import frc.robot.RobotMap.VisionConstants;
 import frc.util.LimelightHelpers;
 
-
-public class LimelightVision extends SubsystemBase{
+//try using robot oritented to find distance
+public class LimelightVisionSubsystem extends SubsystemBase{
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx1 = table.getEntry("tx");
     NetworkTableEntry ty1 = table.getEntry("ty");
     NetworkTableEntry ta1 = table.getEntry("ta");
-
-    final double LIMELIGHTHEIGHT = 24.5;
-    final double APRILTAGHEIGHT = 53.88;
     
     double tx = LimelightHelpers.getTX("");
     double ty = LimelightHelpers.getTY("");
@@ -24,7 +23,7 @@ public class LimelightVision extends SubsystemBase{
     double dist = -10.27749229*(Math.log(0.03008423*ty));
 
 
-    public LimelightVision(){
+    public LimelightVisionSubsystem(){
         LimelightHelpers.setLEDMode_PipelineControl("");
         LimelightHelpers.setLEDMode_ForceBlink("");
         LimelightHelpers.setCropWindow("",-1,1,-1,1);
@@ -58,7 +57,7 @@ public class LimelightVision extends SubsystemBase{
         SmartDashboard.putNumber("LimelightX1", x);
         SmartDashboard.putNumber("LimelightY2", y);
         SmartDashboard.putNumber("LimelightArea3", area);
-        SmartDashboard.putNumber("Distance From April Tag", getDist(y));
+        SmartDashboard.putNumber("Calculated Distance From April Tag (Formula)", getDist(y));
         
         SmartDashboard.putNumber("LimelightX", LimelightHelpers.getTX(""));
         SmartDashboard.putString("InsideAutoAlign", "success");

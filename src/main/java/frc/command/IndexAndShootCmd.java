@@ -2,14 +2,14 @@ package frc.command;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.subsystems.Indexer;
-import frc.subsystems.Intake;
+import frc.subsystems.IndexerSubsystem;
+import frc.subsystems.IntakeSubsystem;
 
-public class IndexAndShoot extends Command{
-     private Indexer indexer;
-     private Intake intake;
+public class IndexAndShootCmd extends Command{
+     private IndexerSubsystem indexer;
+     private IntakeSubsystem intake;
 
-    public IndexAndShoot(Indexer indexer, Intake intake){
+    public IndexAndShootCmd(IndexerSubsystem indexer, IntakeSubsystem intake){
         this.indexer = indexer;
         this.intake = intake;
         // addRequirements(intake, indexer);

@@ -5,12 +5,12 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.subsystems.Shooter;
+import frc.subsystems.ShooterSubsystem;
 import frc.util.LimelightHelpers;
 
-public class AlignShooter extends Command{
-     private Shooter shooter;
-    public AlignShooter(Shooter shooter){
+public class AlignShooterCmd extends Command{
+     private ShooterSubsystem shooter;
+    public AlignShooterCmd(ShooterSubsystem shooter){
         this.shooter = shooter;
         SmartDashboard.putNumber("Robot_Space X", 0);
         SmartDashboard.putNumber("Field_Space X", 0);

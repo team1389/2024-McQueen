@@ -2,22 +2,20 @@ package frc.command;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.subsystems.Elevator;
+import frc.subsystems.ElevatorSubsystem;
 
-//change so its automatic, currently it runs when the user holds it
-public class RunElevatorDown extends Command{
-    private Elevator elevator;
+public class RunElevatorUpCmd extends Command{
+    private ElevatorSubsystem elevator;
     Timer timer = new Timer();
-    double time = 15;
+    double time = 6.5;
     
- 
-    public RunElevatorDown(Elevator theelevator){
-        this.elevator = theelevator;
+    public RunElevatorUpCmd(ElevatorSubsystem elevator){
+        this.elevator = elevator;
         // addRequirements(elevator); 
     }
 
-    public RunElevatorDown(Elevator theelevator, double time){
-        this.elevator = theelevator;
+    public RunElevatorUpCmd(ElevatorSubsystem elevator, double time){
+        this.elevator = elevator;
         // addRequirements(elevator); 
         this.time = time;
     }
@@ -29,7 +27,7 @@ public class RunElevatorDown extends Command{
 
     @Override
     public void execute(){
-        elevator.moveToBottom();
+        elevator.moveToTop();
     }
 
     @Override

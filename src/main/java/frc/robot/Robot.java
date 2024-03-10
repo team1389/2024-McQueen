@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        oi.light.rainbow();
+        oi.lightSubsystem.rainbow();
 
         // frontLeftTelemetry = new SwerveTelemetry(oi.drivetrain.frontLeft);
         // backLeftTelemetry = new SwerveTelemetry(oi.drivetrain.backLeft);
@@ -49,10 +49,8 @@ public class Robot extends TimedRobot {
         // backRightTelemetry = new SwerveTelemetry(oi.drivetrain.backRight);
         
         pdh = new PowerDistribution();
-
-       // drivetrain.PigeonConfig();
-
-        oi.shooter.resetWristPos();
+        //DO NOT RE-ADD PIGEON CONFIG
+        oi.shooterSubsystem.resetWristPos();
 
 
     }

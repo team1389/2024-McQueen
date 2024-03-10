@@ -50,27 +50,27 @@ public class DriveSubsystem extends SubsystemBase {
     private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(getModuleTranslations());
 
   // Create MAXSwerveModules
-  private final MAXSwerveModule frontLeft = new MAXSwerveModule(
+  private final MAXSwerveModuleSubsystem frontLeft = new MAXSwerveModuleSubsystem(
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
       DriveConstants.kFrontLeftChassisAngularOffset);
 
-  private final MAXSwerveModule frontRight = new MAXSwerveModule(
+  private final MAXSwerveModuleSubsystem frontRight = new MAXSwerveModuleSubsystem(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
       DriveConstants.kFrontRightChassisAngularOffset);
 
-  private final MAXSwerveModule backLeft = new MAXSwerveModule(
+  private final MAXSwerveModuleSubsystem backLeft = new MAXSwerveModuleSubsystem(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
       DriveConstants.kBackLeftChassisAngularOffset);
 
-  private final MAXSwerveModule backRight = new MAXSwerveModule(
+  private final MAXSwerveModuleSubsystem backRight = new MAXSwerveModuleSubsystem(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset);
 
-    private MAXSwerveModule[] modules = new MAXSwerveModule[]{frontLeft, frontRight, backLeft, backRight};
+    private MAXSwerveModuleSubsystem[] modules = new MAXSwerveModuleSubsystem[]{frontLeft, frontRight, backLeft, backRight};
     private SwerveModuleState[] moduleStates = getModuleStates();
     public AprilTagFieldLayout at_field;
 
@@ -144,7 +144,7 @@ public class DriveSubsystem extends SubsystemBase {
             backRight.getPosition()
         });
        // m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
-    modules = new MAXSwerveModule[]{frontLeft, frontRight, backLeft, backRight};
+    modules = new MAXSwerveModuleSubsystem[]{frontLeft, frontRight, backLeft, backRight};
 
     SmartDashboard.putNumber("Robot Speed", modules[0].getVelocityDrive());
     SmartDashboard.putNumber("Robot Heading", getHeading());
@@ -324,19 +324,19 @@ public class DriveSubsystem extends SubsystemBase {
     pigeon.reset();
     pigeon.setYaw(0);
   }
-
-  public void PigeonConfig(){ // not neccesary
-            Pigeon2Configuration configs = new Pigeon2Configuration();
-            // mount X-up
-            configs.MountPose.MountPoseYaw = 0;
-            configs.MountPose.MountPosePitch = 90;
-            configs.MountPose.MountPoseRoll = 0;
-            configs.Pigeon2Features.DisableNoMotionCalibration = false;
-            configs.Pigeon2Features.DisableTemperatureCompensation = false;
-            configs.Pigeon2Features.EnableCompass = false;
-            pigeon.setYaw(0);
-            pigeon.getConfigurator().apply(configs);
-        }
+//MIRA Recommends only configuring using phoenix tuner app
+  // public void PigeonConfig(){
+  //           Pigeon2Configuration configs = new Pigeon2Configuration();
+  //           // mount X-up
+  //           configs.MountPose.MountPoseYaw = 0;
+  //           configs.MountPose.MountPosePitch = 90;
+  //           configs.MountPose.MountPoseRoll = 0;
+  //           configs.Pigeon2Features.DisableNoMotionCalibration = false;
+  //           configs.Pigeon2Features.DisableTemperatureCompensation = false;
+  //           configs.Pigeon2Features.EnableCompass = false;
+  //           pigeon.setYaw(0);
+  //           pigeon.getConfigurator().apply(configs);
+  //       }
 
   /**
    * Returns the heading of the robot.

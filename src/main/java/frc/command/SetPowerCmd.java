@@ -1,12 +1,12 @@
 package frc.command;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.subsystems.Shooter;
+import frc.subsystems.ShooterSubsystem;
 
-public class SetPower extends Command{
-    Shooter shooter;
+public class SetPowerCmd extends Command{
+    ShooterSubsystem shooter;
     double power;
-    public SetPower(Shooter shooter,double power){
+    public SetPowerCmd(ShooterSubsystem shooter,double power){
         this.shooter = shooter;
         this.power = power;
     }

@@ -1,11 +1,11 @@
 package frc.command;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.subsystems.Shooter;
+import frc.subsystems.ShooterSubsystem;
 
-public class TestShooter extends Command{
-    private Shooter shooter;
-    public TestShooter(Shooter shooter){
+public class TestShooterCmd extends Command{
+    private ShooterSubsystem shooter;
+    public TestShooterCmd(ShooterSubsystem shooter){
         this.shooter = shooter;
     }
 

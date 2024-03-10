@@ -1,21 +1,20 @@
 package frc.command;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.subsystems.Shooter;
+import frc.subsystems.ShooterSubsystem;
 
-public class MoveShooter extends Command{
-     private Shooter shooter;
+public class MoveShooterDownCmd extends Command{
+     private ShooterSubsystem shooter;
 
-    public MoveShooter(Shooter shooter){
+    public MoveShooterDownCmd(ShooterSubsystem shooter){
         this.shooter = shooter;
         // addRequirements(shooter);
     }
 
     @Override
     public void execute(){
-        shooter.runWristUp();
+        shooter.runWristDown();
  //       addCommand(new WaitCommand(5));
         
     }

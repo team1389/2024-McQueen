@@ -1,21 +1,21 @@
 package frc.command;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.subsystems.Indexer;
-import frc.subsystems.Intake;
+import frc.subsystems.IndexerSubsystem;
+import frc.subsystems.IntakeSubsystem;
 
-public class RunIndexer extends Command{
-    private Indexer indexer;
-    private Intake intake;
+public class RunIndexerCmd extends Command{
+    private IndexerSubsystem indexer;
+    private IntakeSubsystem intake;
     boolean isShoot = true;
 
 
-    public RunIndexer(Indexer indexer){
+    public RunIndexerCmd(IndexerSubsystem indexer){
         this.indexer = indexer;
         // addRequirements(indexer);
     }
 
-    public RunIndexer(Indexer indexer, boolean isShoot){
+    public RunIndexerCmd(IndexerSubsystem indexer, boolean isShoot){
         this.indexer = indexer;
         // addRequirements(indexer);
     }

@@ -4,13 +4,13 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.subsystems.Shooter;
+import frc.subsystems.ShooterSubsystem;
 
-public class ManualWrist extends Command{
-    Shooter shooter;
+public class ManualWristCmd extends Command{
+    ShooterSubsystem shooter;
     private final Supplier<Double> power;
 
-    public ManualWrist(Shooter shooter, Supplier<Double> power) {
+    public ManualWristCmd(ShooterSubsystem shooter, Supplier<Double> power) {
         this.shooter = shooter;
         this.power = power;
         shooter.controllerInterrupt = true;

@@ -14,54 +14,6 @@ public class RobotMap {
 
     
 
-    // public static final class ModuleConstants {
-    //     public static final double SPARK_FLEX_ENCODER_RESOLUTION = 7168 / 1; // 7168 counts per rev
-    //     public static final double SPARK_MAX_ENCODER_RESOLUTION = 7168 / 1; //42 counts per rev
-
-    //     // Not Updated
-    //     // Note: these are for the drive and turning motors
-        // public static final double WHEEL_DIAMETER_METERS = Units.inchesToMeters(3);
-        // public static final double DRIVE_GEAR_RATIO = 1 / 4.71; // 14T pinion
-        // public static final double TURN_GEAR_RATIO = 1 / (1); // this should be 1 this is correct 
-        // public static final double WRIST_GEAR_RATIO = 44.44 / 1; //TODO TBD 44.44 / 1 
-
-        // public static final double FREE_MOTOR_SPEED_RPS = 6784 / 60; // RPM/60 //confmried
-        // public static final double DRIVE_FREE_MAX_SPEED_MPS = (FREE_MOTOR_SPEED_RPS * WHEEL_DIAMETER_METERS * Math.PI)
-        //         / DRIVE_GEAR_RATIO;
-        // public static final double DRIVE_ROTATIONS_TO_METERS = DRIVE_GEAR_RATIO * Math.PI * WHEEL_DIAMETER_METERS;
-        // public static final double TURNING_ROTATIONS_TO_RAD = TURN_GEAR_RATIO * 2 * Math.PI;
-
-
-
-    //     public static final double DRIVE_RPM_TO_METERS_PER_SEC = DRIVE_ROTATIONS_TO_METERS / 60;
-    //     public static final double TURNING_RPM_TO_RAD_PER_SEC = TURNING_ROTATIONS_TO_RAD / 60;
-    //     public static final double P_TURNING = 0.075; // PID constant
-    //     public static final double I_TURNING = 0.000001; // PID Constant
-    //     public static final double D_TURNING = 0.00025; // PID constant
-    //     public static final double P_DRIVE = 0.25; // PID constant
-
-    //     public static final double P_WRIST = 0.075; // PID constant
-    //     public static final double I_WRIST = 0.000001; // PID Constant
-    //     public static final double D_WRIST = 0.00025; // PID constant
-
-    //     public static final int DRIVE_CURRENT_LIMIT = 50; // amps
-    //     public static final int TURN_CURRENT_LIMIT = 20;
-
-    //     public static final double FL_ANGLE_OFFSET = Math.PI / 2; //
-    //     public static final double FR_ANGLE_OFFSET = Math.PI; //
-    //     public static final double BL_ANGLE_OFFSET = 0;
-    //     public static final double BR_ANGLE_OFFSET = -Math.PI / 2; //
-
-    //     // public static final double FL_ANGLE_OFFSET = Math.PI / 2 - Math.PI/2;
-    //     // public static final double FR_ANGLE_OFFSET = Math.PI - Math.PI/2; //
-    //     // public static final double BL_ANGLE_OFFSET = 0 - Math.PI/2;
-    //     // public static final double BR_ANGLE_OFFSET = -Math.PI / 2 - Math.PI/2; //
-
-    //     public static final double CAMERA_ANGLE = 0;
-    //     public static final double SPEAKER_TAG_HEIGHT = 0;
-    // }
-    // // Not Updated
-    // // All the overall constants for the drivetrain
     // public static final class DriveConstants {
 
         // Distance between right and left wheels (meters)
@@ -116,8 +68,8 @@ public class RobotMap {
     // }
 
     public static final class MotorPorts{
-        public static final int SHOOT_LEFT = 11; 
-        public static final int SHOOT_RIGHT = 10; 
+        public static final int SHOOT_BOTTOM = 11; 
+        public static final int SHOOT_TOP = 10; 
         public static final int WRIST_MOTOR = 12; 
         public static final int INDEXER_MOTOR = 14; 
         public static final int INTAKE_MOTOR = 13;
@@ -130,12 +82,50 @@ public class RobotMap {
 
     }
 
-
+    public static final class IntakeConstants {
+        public static final double kDistanceWithoutNode = 46.7;
+    }
 
     public static final class LightConstants {
         public static final int LED_PORT = 7;
         public static final int COUNT = 60;
 
+    }
+
+    public static final class ShooterConstants {
+        //Shooter Parameters
+
+        public static final double kTopRPM = 3000; //top
+        public static final double kBottomRPM = 3000; //bottom
+        
+        public static final double kTop_P = .1;
+        public static final double kTop_I = 0;
+        public static final double kTop_D = 0;
+        public static final double kTop_FF = 0.000175;
+        public static final double kTop_MIN_OUTPUT = 0.3;
+        public static final double kTop_MAX_OUTPUT = 1;
+
+        public static final double kBottom_P = .1;
+        public static final double kBottom_I = 0;
+        public static final double kBottom_D = 0;
+        public static final double kBottom_FF = 0.000175;
+        public static final double kBottom_MIN_OUTPUT = 0.3;
+        public static final double kBottom_MAX_OUTPUT = 1;
+
+        public static final double kWrist_P = 0.055;
+        public static final double kWrist_I = 0.013;
+        public static final double kWrist_D = 0.0;
+
+        public static final double kMinWristAngle = 0.8;
+        public static final double kMaxWristAngle = 0.97;
+
+    }
+
+    public static final class VisionConstants {
+        //vision constants
+
+        public static final double kLimelightHeight = 24.5; //Vertical distance in inches from center of robot to center of limelight 
+        public static final double kSpeakerAprilTagHeight = 53.88; //Vertical distance in inches from floor to the central april tags on the speaker
     }
 
     public static final class DriveConstants {
@@ -147,6 +137,8 @@ public class RobotMap {
     public static final double kDirectionSlewRate = 10000; // radians per second //1.2, 10000
     public static final double kMagnitudeSlewRate = 10000; // percent per second (1 = 100%) //1.8, 10000
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
+
+    
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(19.625);
