@@ -1,13 +1,13 @@
 package frc.command;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.subsystems.Elevator;
+import frc.subsystems.ElevatorSubsystem;
 
-public class SetElevator extends Command{
-    Elevator elevator;
+public class SetElevatorCmd extends Command{
+    ElevatorSubsystem elevator;
     double pos = .5;
 
-    public SetElevator(Elevator elevator, double pos){
+    public SetElevatorCmd(ElevatorSubsystem elevator, double pos){
         this.elevator = elevator;
         this.pos = pos;
     }

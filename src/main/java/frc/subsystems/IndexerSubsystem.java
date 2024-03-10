@@ -9,11 +9,11 @@ import com.revrobotics.CANSparkMax;
 
 import frc.robot.RobotMap;
 
-public class Indexer extends SubsystemBase{
+public class IndexerSubsystem extends SubsystemBase{
     double speed = 0.2;
     private CANSparkFlex indexerMotor;
 
-    public Indexer(){
+    public IndexerSubsystem(){
         indexerMotor = new CANSparkFlex(RobotMap.MotorPorts.INDEXER_MOTOR, MotorType.kBrushless);
         indexerMotor.setSmartCurrentLimit(40);
         indexerMotor.burnFlash();

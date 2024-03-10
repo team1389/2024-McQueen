@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.util.LimelightHelpers;
 
 
-public class LimelightVision extends SubsystemBase{
+public class LimelightVisionSubsystem extends SubsystemBase{
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx1 = table.getEntry("tx");
     NetworkTableEntry ty1 = table.getEntry("ty");
@@ -24,7 +24,7 @@ public class LimelightVision extends SubsystemBase{
     double dist = -10.27749229*(Math.log(0.03008423*ty));
 
 
-    public LimelightVision(){
+    public LimelightVisionSubsystem(){
         LimelightHelpers.setLEDMode_PipelineControl("");
         LimelightHelpers.setLEDMode_ForceBlink("");
         LimelightHelpers.setCropWindow("",-1,1,-1,1);

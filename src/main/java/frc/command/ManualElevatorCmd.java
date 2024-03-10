@@ -4,13 +4,13 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.subsystems.Elevator;
+import frc.subsystems.ElevatorSubsystem;
 
-public class ManualElevator extends Command{
-    Elevator elevator;
+public class ManualElevatorCmd extends Command{
+    ElevatorSubsystem elevator;
     private Supplier<Double> power;
 
-    public ManualElevator(Elevator elevator, Supplier<Double> power) {
+    public ManualElevatorCmd(ElevatorSubsystem elevator, Supplier<Double> power) {
         this.elevator = elevator;
         this.power = power;
         

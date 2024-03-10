@@ -13,12 +13,12 @@ import frc.robot.RobotMap;
 
 //1 motor that spins the intake thingies
 
-public class Intake extends SubsystemBase{
+public class IntakeSubsystem extends SubsystemBase{
     private final double intakeSpeed = 1;
     private CANSparkFlex intakeMotor;
     private AnalogPotentiometer pot;
     private final double distanceWONode = 46.7; //change
-    public Intake(){
+    public IntakeSubsystem(){
     intakeMotor = new CANSparkFlex(RobotMap.MotorPorts.INTAKE_MOTOR,MotorType.kBrushless);
     intakeMotor.setSmartCurrentLimit(40);
     intakeMotor.burnFlash();

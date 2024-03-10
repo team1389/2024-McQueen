@@ -23,7 +23,7 @@ import frc.robot.RobotMap;
 import frc.robot.RobotMap.ModuleConstants;
 
 /** Add your docs here. */
-public class Elevator extends SubsystemBase{
+public class ElevatorSubsystem extends SubsystemBase{
     double speed = 1;
     int count = 0;
     public double pos = .5;
@@ -36,7 +36,7 @@ public class Elevator extends SubsystemBase{
     public boolean controllerInterrupt = true;
 //set it to absolute mode
 
-    public Elevator(){
+    public ElevatorSubsystem(){
         elevatorMotor = new CANSparkFlex(RobotMap.MotorPorts.ELEVATOR_MOTOR, MotorType.kBrushless);
         elevatorMotor.setSmartCurrentLimit(40);
         elevatorMotor.burnFlash();

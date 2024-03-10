@@ -2,12 +2,12 @@ package frc.command;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.subsystems.Shooter;
+import frc.subsystems.ShooterSubsystem;
 
-public class SetWrist extends Command{
-    Shooter shooter;
+public class SetWristCmd extends Command{
+    ShooterSubsystem shooter;
     double angle = 0.85;
-    public SetWrist(Shooter shooter){
+    public SetWristCmd(ShooterSubsystem shooter){
         this.shooter = shooter;
         SmartDashboard.putNumber("Target Angle for SetWrist", angle);
         //addRequirements(shooter);

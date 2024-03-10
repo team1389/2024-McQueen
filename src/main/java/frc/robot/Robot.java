@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         oi = new OI();
-        oi.light.rainbow();
+        oi.lightSubsystem.rainbow();
 
         // frontLeftTelemetry = new SwerveTelemetry(oi.drivetrain.frontLeft);
         // backLeftTelemetry = new SwerveTelemetry(oi.drivetrain.backLeft);

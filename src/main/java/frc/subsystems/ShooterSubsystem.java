@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.RobotMap.ShooterConstants;
 
-public class Shooter extends SubsystemBase{
+public class ShooterSubsystem extends SubsystemBase{
     private double shootSpeed = 1; // percent of max motor speed -1 to 1
     private final double wristSpeed = .15; // percent of max motor speed
     private CANSparkFlex shootBottomController;
@@ -40,7 +40,7 @@ public class Shooter extends SubsystemBase{
     private final SparkPIDController bottomPidController;
     private final SparkPIDController topPidController;
 
-    public Shooter(){
+    public ShooterSubsystem(){
         shootBottomController = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_BOTTOM, MotorType.kBrushless);
         shootTopController = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_TOP, MotorType.kBrushless);
         wrist = new CANSparkFlex(RobotMap.MotorPorts.WRIST_MOTOR, MotorType.kBrushless);

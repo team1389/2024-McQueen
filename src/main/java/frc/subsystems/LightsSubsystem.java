@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap.LightConstants;
 
-public class Lights extends SubsystemBase {
+public class LightsSubsystem extends SubsystemBase {
     AddressableLED ledStrip;
     AddressableLEDBuffer buffer;
     public int hueee = 0;
     public boolean isRainbowing = true;
 
-    public Lights() {
+    public LightsSubsystem() {
         ledStrip = new AddressableLED(LightConstants.LED_PORT);
         buffer = new AddressableLEDBuffer(LightConstants.COUNT);
 
