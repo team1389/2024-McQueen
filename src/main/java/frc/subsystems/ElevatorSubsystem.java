@@ -27,6 +27,9 @@ public class ElevatorSubsystem extends SubsystemBase{
     double speed = 1;
     int count = 0;
     public double target = 2;
+    public double low = .01;
+    public double high = 4.64;
+    public double middle = (high+low)/2;
     private CANSparkFlex elevatorMotor;
     private DutyCycleEncoder elevatorEncoder;
     private SparkFlexExternalEncoder elevatorEncoder1;
@@ -48,7 +51,7 @@ public class ElevatorSubsystem extends SubsystemBase{
        // elevatorEncoder.reset();
        // elevatorMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
-        SmartDashboard.putNumber("Elevator P", 0.12);
+        SmartDashboard.putNumber("Elevator P", 1.7);
         SmartDashboard.putNumber("Elevator I", 0.005);
         SmartDashboard.putNumber("Elevator D", 0.000);
         
@@ -99,9 +102,17 @@ public class ElevatorSubsystem extends SubsystemBase{
         target = setpoint;
     }
 
+    public void setElevatorPosBySpeed(double pos){
+         double value = ((pos-middle)/(middle*2));
+        // elevatorMotor.set(Math.cos(value)*.1);
+       // elevatorMotor.set((1-(pos-middle)/middle)*.1);
+        SmartDashboard.putNumber("Elevator value", value);
+    //    elevatorMotor.set(.1);
+    }
+
     public void setElevator(double pos){
         pos = MathUtil.clamp(pos, .01, 4.64); 
-        elevatorMotor.set(elevatorPid.calculate(getRelEncoderPos(), target));
+        elevatorMotor.set(elevatorPid.calculate(getRelEncoderPos(), pos));
     }
 
     @Override
@@ -117,6 +128,8 @@ public class ElevatorSubsystem extends SubsystemBase{
 
         SmartDashboard.putNumber("Elevator Encoder Distance", elevatorEncoder.getDistance());
         SmartDashboard.putNumber("Elevator Pos Offset", elevatorEncoder.getPositionOffset());
+
+       // SmartDashboard.putNumber("elevator speed", Math.cos(((2-middle)/(middle*2))));
 
         SmartDashboard.putNumber("Elevator Pos", getRelEncoderPos());
 

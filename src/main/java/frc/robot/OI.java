@@ -87,11 +87,11 @@ public class OI {
        //  manipYButton.onTrue(new ContinueIntake(intakeSubsystem).alongWith(new RunIndexer(indexerSubsystem, true).alongWith(new Shoot(shooter, intakeSubsystem)))); //TODO
         // manipEllipsisButton.whileTrue(new RunIndexer(indexerSubsystem, true)); // indexerSubsystem to amp
         manipXButton.onTrue(new RunElevatorUpCmd(elevatorSubsystem).andThen(new RunIntakeCmd(intakeSubsystem)).alongWith(new RunIndexerCmd(indexerSubsystem, false)));
-         manipLeftTrigger.whileTrue(new RunIntakeCmd(intakeSubsystem));
-        //  manipLeftTrigger.onTrue(new SetElevator(elevatorSubsystem, .605)); //.605 //TODO
-        //  manipRightTrigger.onTrue(new SetElevator(elevatorSubsystem, .55)); //.511 //TODO
+        // manipLeftTrigger.whileTrue(new RunIntakeCmd(intakeSubsystem));
+         manipLeftTrigger.onTrue(new SetElevatorCmd(elevatorSubsystem, 2)); //.605 //TODO
+         manipRightTrigger.onTrue(new SetElevatorCmd(elevatorSubsystem, 1.2)); //.511 //TODO
        // manipLeftTrigger.onTrue(new RunIntake(intakeSubsystem));
-         manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
+        // manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
         // manipMenuButton.whileTrue(new RunOuttake(intakeSubsystem));
         manipLeftBumper.whileTrue(new ShootPIDCmd(shooterSubsystem, ShooterConstants.kTopRPM).alongWith(new HoldPositionCmd(shooterSubsystem)));
         manipRightBumper.whileTrue(new RunIntakeCmd(intakeSubsystem).alongWith(new RunIndexerCmd(indexerSubsystem, true)));
