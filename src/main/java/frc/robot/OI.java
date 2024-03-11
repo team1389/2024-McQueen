@@ -84,17 +84,17 @@ public class OI {
 
         manipBButton.onTrue(new IntakeCmd(intakeSubsystem));
 
-        manipXButton.onTrue(new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
+        manipXButton.whileTrue(new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
 
         manipYButton.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
 
-        manipMenuButton.whileTrue(new RunElevatorDownCmd(elevatorSubsystem));
-        manipEllipsisButton.whileTrue(new RunElevatorUpCmd(elevatorSubsystem));
+        // manipMenuButton.whileTrue(new RunElevatorDownCmd(elevatorSubsystem));
+        // manipEllipsisButton.whileTrue(new RunElevatorUpCmd(elevatorSubsystem));
 
 
 
-        // manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
-        // manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));
+        manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
+        manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));
 
 
         // manipLeftTrigger.whileTrue(new RunIntakeCmd(intakeSubsystem).andThen(new PreAmpCmd(indexerSubsystem,intakeSubsystem)));

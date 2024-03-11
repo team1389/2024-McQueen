@@ -24,4 +24,10 @@ public class SetWristCmd extends Command{
     public void end(boolean interrupted){
         shooter.holdPosition();
     }
+
+    @Override
+    public boolean isFinished(){
+        return (Math.abs(angle - shooter.getWristPosition())<.002);
+    }
+    
 }

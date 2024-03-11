@@ -45,15 +45,9 @@ public class AutoAlignCmd extends Command{
 
         SmartDashboard.putNumber("Rotation Angle", Math.toDegrees(rotAngle));
 
-        if (Math.abs(rotAngle) < 0.5) {
-            ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0, 0, 0);
-            SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
-            drivetrainSubsystem.setModuleStates(moduleStates);
-        } else {
             ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0, 0, -(speed * rotAngle));
             SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
             drivetrainSubsystem.setModuleStates(moduleStates);
-        }
     }
 
     @Override
@@ -62,4 +56,11 @@ public class AutoAlignCmd extends Command{
         SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
         drivetrainSubsystem.setModuleStates(moduleStates);
     }
+
+    // @Override
+    // public boolean isFinished(){
+    //     return (Math.abs(LimelightHelpers.getTX("")) < 0.5);
+    // } 
+
+
 }
