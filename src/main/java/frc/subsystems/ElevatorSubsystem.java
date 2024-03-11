@@ -29,8 +29,8 @@ public class ElevatorSubsystem extends SubsystemBase{
     double speed = 1;
     int count = 0;
     public double target = 2;
-    public double low = .01;
-    public double high = 4.64;
+    public double low = -1.75;
+    public double high = low+4.6;
     public double middle = (high+low)/2;
     private CANSparkFlex elevatorMotor;
     private DutyCycleEncoder elevatorEncoder;
@@ -61,7 +61,8 @@ public class ElevatorSubsystem extends SubsystemBase{
         elevatorEncoder = new DutyCycleEncoder(RobotMap.MotorPorts.ELEVATOR_ENCODER);
         elevatorPid = new PIDController(0, 0, 0);
         elevatorAbsoluteEncoder = elevatorMotor.getAbsoluteEncoder(Type.kDutyCycle);
-       // elevatorEncoder.reset();
+        elevatorEncoder.reset();
+     //   elevatorRelativeEncoder.reset();
        // elevatorMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
         SmartDashboard.putNumber("Elevator P", 1.7);
@@ -84,6 +85,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     public void moveElevator(double power){
         elevatorMotor.set(power);
     }
+
     public double getElevatorPosition(){
         return elevatorEncoder.getAbsolutePosition() - elevatorEncoder.getPositionOffset();
     }
@@ -111,15 +113,28 @@ public class ElevatorSubsystem extends SubsystemBase{
         elevatorMotor.set(0.0);
     }
 
+    public boolean isPidFinished(double pos){
+        return Math.abs(getRelEncoderPos()-pos) < .01;
+    }
+
     public void setSetpoint(double setpoint){
         target = setpoint;
     }
 
     public void setElevatorPosBySpeed(double pos){
-         double value = ((pos-middle)/(middle*2));
-        // elevatorMotor.set(Math.cos(value)*.1);
+        //  double value = ((pos-middle)/(middle*2));
+        //  elevatorMotor.set(Math.cos(value)*.1);
        // elevatorMotor.set((1-(pos-middle)/middle)*.1);
-        SmartDashboard.putNumber("Elevator value", value);
+    //     MathUtil.clamp(elevator)
+    elevatorMotor.set(.2);
+       // SmartDashboard.putNumber("Elevator height", getRelEncoderPos());
+
+    //    if(pos < high/2 && pos > low/2){
+    //     elevatorMotor.set(.1);
+    //    } else{
+    //     stop();
+    //    }
+      //  SmartDashboard.putNumber("Elevator value", value);
     //    elevatorMotor.set(.1);
     }
 
@@ -129,6 +144,8 @@ public class ElevatorSubsystem extends SubsystemBase{
 
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("high", high/2);
+            SmartDashboard.putNumber("low", low/2);
 
         if(!controllerInterrupt){
             elevatorMotor.set(elevatorPid.calculate(getRelEncoderPos(), target));
@@ -141,7 +158,7 @@ public class ElevatorSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Elevator Encoder Distance", elevatorEncoder.getDistance());
         SmartDashboard.putNumber("Elevator Pos Offset", elevatorEncoder.getPositionOffset());
 
-       // SmartDashboard.putNumber("elevator speed", Math.cos(((2-middle)/(middle*2))));
+        SmartDashboard.putNumber("elevator speed", Math.cos(1/2));
 
         SmartDashboard.putNumber("Elevator Pos", getRelEncoderPos());
 
