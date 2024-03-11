@@ -32,11 +32,12 @@ public class ElevatorSubsystem extends SubsystemBase{
     public double low = -1.75;
     public double high = low+4.6;
     public double middle = (high+low)/2;
+    public double encoderPos;
     private CANSparkFlex elevatorMotor;
     private DutyCycleEncoder elevatorEncoder;
     private SparkFlexExternalEncoder elevatorEncoder1;
     private RelativeEncoder elevatorRelativeEncoder;
-    private SparkAbsoluteEncoder elevatorAbsoluteEncoder;
+    // private SparkAbsoluteEncoder elevatorAbsoluteEncoder;
     private final PIDController elevatorPid;
     private SparkPIDController elevatorPidController;
     public boolean controllerInterrupt = true;
@@ -60,7 +61,7 @@ public class ElevatorSubsystem extends SubsystemBase{
         elevatorMotor.burnFlash();
         elevatorEncoder = new DutyCycleEncoder(RobotMap.MotorPorts.ELEVATOR_ENCODER);
         elevatorPid = new PIDController(0, 0, 0);
-        elevatorAbsoluteEncoder = elevatorMotor.getAbsoluteEncoder(Type.kDutyCycle);
+        // elevatorAbsoluteEncoder = elevatorMotor.getAbsoluteEncoder(Type.kDutyCycle);
         elevatorEncoder.reset();
      //   elevatorRelativeEncoder.reset();
        // elevatorMotor.getAbsoluteEncoder(Type.kDutyCycle);
@@ -68,6 +69,8 @@ public class ElevatorSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Elevator P", 1.7);
         SmartDashboard.putNumber("Elevator I", 0.005);
         SmartDashboard.putNumber("Elevator D", 0.000);
+
+      elevatorRelativeEncoder.setPosition(elevatorEncoder.getAbsolutePosition());
         
       //  SmartDashboard.putNumber("Elevator Encoder Abs Pos", 0);
 
@@ -90,9 +93,9 @@ public class ElevatorSubsystem extends SubsystemBase{
         return elevatorEncoder.getAbsolutePosition() - elevatorEncoder.getPositionOffset();
     }
 
-    public double getAbsElevatorPosition(){
-        return elevatorAbsoluteEncoder.getPosition();
-    }
+    // public double getAbsElevatorPosition(){
+    //     return elevatorAbsoluteEncoder.getPosition();
+    // }
 
     public double getRelEncoderPos(){
         return elevatorRelativeEncoder.getPosition();
@@ -139,8 +142,15 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public void setElevator(double pos){
-        
+        elevatorMotor.set(elevatorPid.calculate(getRelEncoderPos(), target));
     }
+
+    public double getElevatorEncoderCount() { //encoder count - test
+        double pos = elevatorEncoder.getAbsolutePosition();
+        return (pos < 0.5) ? pos + (2*Math.PI) : pos;
+    }
+
+
 
     @Override
     public void periodic() {
@@ -151,14 +161,17 @@ public class ElevatorSubsystem extends SubsystemBase{
             elevatorMotor.set(elevatorPid.calculate(getRelEncoderPos(), target));
         }
 
-        SmartDashboard.putNumber("Elevator Encoder get", elevatorEncoder.get());
-        SmartDashboard.putNumber("Elevator Encoder Abs Pos", getAbsElevatorPosition());
+        SmartDashboard.putNumber("Elevator Rel Encoder", elevatorRelativeEncoder.getPosition());
+        SmartDashboard.putNumber("Elevator Abs Encoder", elevatorEncoder.getAbsolutePosition());
+        SmartDashboard.putNumber("Elevator Encoder Distance", elevatorEncoder.getDistance());
+
+      //  SmartDashboard.putNumber("Elevator Encoder Abs Pos", getAbsElevatorPosition());
         SmartDashboard.putNumber("Elevator Encoder position", getElevatorPosition());
 
-        SmartDashboard.putNumber("Elevator Encoder Distance", elevatorEncoder.getDistance());
         SmartDashboard.putNumber("Elevator Pos Offset", elevatorEncoder.getPositionOffset());
 
         SmartDashboard.putNumber("elevator speed", Math.cos(1/2));
+        SmartDashboard.putNumber("Elevator Encoder Count", getElevatorEncoderCount());
 
         SmartDashboard.putNumber("Elevator Pos", getRelEncoderPos());
 
