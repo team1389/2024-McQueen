@@ -16,17 +16,15 @@ public class ShootCmd extends SequentialCommandGroup{
 
     public ShootCmd(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, LimelightVisionSubsystem limelightVisionSubsystem){
         addCommands(
-            new AutoAlignCmd(driveSubsystem, limelightVisionSubsystem),
             Commands.parallel(
-              new SetWristCmd(shooterSubsystem,0.85),
-                Commands.parallel(
+              new SetWristCmd(shooterSubsystem,0.9),
                     new HoldPositionCmd(shooterSubsystem),
+                    new AutoAlignCmd(driveSubsystem, limelightVisionSubsystem),
                     Commands.sequence(
                         new AutoShootPIDCmd(shooterSubsystem, 3000),
                         new PreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem)
                 )
-                )  
-            )
+            )  
         );
     }
 }

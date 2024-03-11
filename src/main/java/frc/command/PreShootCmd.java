@@ -15,7 +15,7 @@ public class PreShootCmd extends Command{
     public PreShootCmd(IndexerSubsystem indexer, IntakeSubsystem intake, ShooterSubsystem shooter){
         this.indexer = indexer;
         this.intake = intake;
-        shooter = shooter;
+        this.shooter = shooter;
 
         // addRequirements(intake, indexer, shooter);
     }
