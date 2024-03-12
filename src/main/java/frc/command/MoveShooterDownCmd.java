@@ -21,6 +21,6 @@ public class MoveShooterDownCmd extends Command{
 
     @Override
     public void end(boolean interrupted){
-        shooter.stop();
+        shooter.stopWrist();
     }
 }

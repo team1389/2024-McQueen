@@ -95,9 +95,9 @@ public class ShooterSubsystem extends SubsystemBase{
         pidWristController.setD(ShooterConstants.kWrist_D);
 
         //Uncomment the below code to tune pid values in smartdashboard - you also need to uncommet the part in periodic
-        // SmartDashboard.putNumber("P Wrist", 0.055);
-        // SmartDashboard.putNumber("I Wrist", 0.013);
-        // SmartDashboard.putNumber("D Wrist", 0.000);
+        SmartDashboard.putNumber("P Wrist", 0.055);
+        SmartDashboard.putNumber("I Wrist", 0.013);
+        SmartDashboard.putNumber("D Wrist", 0.000);
         // SmartDashboard.putNumber("Wrist Motor Speed", 0.25);
 
         // SmartDashboard.putNumber("P Bottom Shooter", 0.1);
@@ -188,7 +188,9 @@ public class ShooterSubsystem extends SubsystemBase{
 
     public void holdPosition(){
         // calculated line of best fit from tested points
-        moveWrist(-0.1401*getAbsWristPosition() + 0.141);
+        if(getAbsWristPosition()<0.955){
+            moveWrist(-0.075*getAbsWristPosition() + 0.0914);
+        }
         // SmartDashboard.putBoolean("Inside hold position", true);
     }
     
@@ -200,9 +202,9 @@ public class ShooterSubsystem extends SubsystemBase{
         SmartDashboard.putBoolean("Is at Target RPM", isAtTargetRPM(setpoint));
 
         //Uncomment the below code to tune pid values in smartdashboard - you also need to uncommet the part in periodic
-        // pidWristController.setP(SmartDashboard.getNumber("P Wrist", .055));
-        // pidWristController.setI(SmartDashboard.getNumber("I Wrist", 0.013));
-        // pidWristController.setD(SmartDashboard.getNumber("D Wrist", 0.000));
+        pidWristController.setP(SmartDashboard.getNumber("P Wrist", .055));
+        pidWristController.setI(SmartDashboard.getNumber("I Wrist", 0.013));
+        pidWristController.setD(SmartDashboard.getNumber("D Wrist", 0.000));
 
         // bottomPidController.setP(SmartDashboard.getNumber("P Bottom Shooter", 0.1));
         // bottomPidController.setI(SmartDashboard.getNumber("I Bottom Shooter", 0));

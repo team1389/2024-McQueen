@@ -117,7 +117,7 @@ public class RobotMap {
         public static final double kWrist_D = 0.0;
 
         public static final double kMinWristAngle = 0.8;
-        public static final double kMaxWristAngle = 0.97;
+        public static final double kMaxWristAngle = 0.96;
 
     }
 

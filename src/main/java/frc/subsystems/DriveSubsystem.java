@@ -4,6 +4,8 @@
 
 package frc.subsystems;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -32,6 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.RobotMap.DriveConstants;
+import frc.util.LimelightHelpers;
 import frc.util.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -40,10 +43,14 @@ public class DriveSubsystem extends SubsystemBase {
 
 
      public final SwerveDrivePoseEstimator poseEstimator;
+
+     private final LimelightVisionSubsystem limelightVisionSubsystem;
             
     private static final double TRACK_WIDTH_X = Units.inchesToMeters(24.0);
     
     private static final double TRACK_WIDTH_Y = Units.inchesToMeters(24.0);
+
+    public double alignTx;
     
     private final Field2d m_field = new Field2d();
     
@@ -102,7 +109,7 @@ public class DriveSubsystem extends SubsystemBase {
       new Pose2d(0, 0, new Rotation2d(0)));
 
   /** Creates a new DriveSubsystem. */
-  public DriveSubsystem() {
+  public DriveSubsystem(LimelightVisionSubsystem limelightVisionSubsystem){
     poseEstimator = new SwerveDrivePoseEstimator(RobotMap.driveKinematics,
             new Rotation2d(0), getModulePositions(), new Pose2d());
     AutoBuilder.configureHolonomic(
@@ -129,11 +136,15 @@ public class DriveSubsystem extends SubsystemBase {
               return false;
             },
             this // Reference to this subsystem to set requirements
-    ); 
+    );
+    this.limelightVisionSubsystem = limelightVisionSubsystem;  
   }
 
   @Override
   public void periodic() {
+
+    //limelight
+    alignTx = LimelightHelpers.getTX("");
     // Update the odometry in the periodic block
     m_odometry.update(
         Rotation2d.fromDegrees(-pigeon.getAngle()),
@@ -145,6 +156,7 @@ public class DriveSubsystem extends SubsystemBase {
         });
        // m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
     modules = new MAXSwerveModuleSubsystem[]{frontLeft, frontRight, backLeft, backRight};
+
 
     SmartDashboard.putNumber("Robot Speed", modules[0].getVelocityDrive());
     SmartDashboard.putNumber("Robot Heading", getHeading());
@@ -217,7 +229,7 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    * @param rateLimit     Whether to enable rate limiting for smoother control.
    */
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit) {
+  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit, Supplier<Boolean> isAutoAlign) {
     
     double xSpeedCommanded;
     double ySpeedCommanded;
@@ -270,10 +282,16 @@ public class DriveSubsystem extends SubsystemBase {
       m_currentRotation = rot;
     }
 
+
+
     // Convert the commanded speeds into the correct units for the drivetrain
     double xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond;
     double ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond;
     double rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed;
+
+    if(isAutoAlign.get()){
+      rotDelivered = -(0.1 * alignTx);
+    }
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative

@@ -18,16 +18,19 @@ public class SetWristCmd extends Command{
     public void execute(){
         angle = SmartDashboard.getNumber("Target Angle for SetWrist", angle);
         shooter.setWrist(angle);
+        SmartDashboard.putBoolean("IsFishied", Math.abs(angle - shooter.getWristPosition())<.0025);
+        SmartDashboard.putNumber("Is Ria a Fish", Math.abs(angle - shooter.getWristPosition()));
     }
 
     @Override
     public void end(boolean interrupted){
-        shooter.holdPosition();
+        shooter.stopWrist();
     }
 
     @Override
     public boolean isFinished(){
-        return (Math.abs(angle - shooter.getWristPosition())<.002);
+        SmartDashboard.putBoolean("IsFishied", Math.abs(angle - shooter.getWristPosition())<.0025);
+        SmartDashboard.putNumber("Is Ria a Fish", Math.abs(angle - shooter.getWristPosition()));
+        return (Math.abs(angle - shooter.getAbsWristPosition())<.001);
     }
-    
 }
