@@ -1,5 +1,6 @@
 package frc.subsystems;
 
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -15,6 +16,13 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     NetworkTableEntry tx1 = table.getEntry("tx");
     NetworkTableEntry ty1 = table.getEntry("ty");
     NetworkTableEntry ta1 = table.getEntry("ta");
+
+    Pose3d botPose = LimelightHelpers.getBotPose3d("");
+
+    double botXPose = botPose.getX();
+    double botYPose = botPose.getY();
+
+   // double botPose = li
     
     double tx = LimelightHelpers.getTX("");
     double ty = LimelightHelpers.getTY("") * (Math.PI/180);
@@ -26,6 +34,10 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     private double limelightHeight = RobotMap.ShooterConstants.LimelightHeight; //h1
     private double tagToSpeakerHeight = RobotMap.ShooterConstants.TagToSpeakerHeight; //s
     private double limelightAngle = RobotMap.ShooterConstants.LimelightAngle; //a1
+    private double SpeakerXDistfromCenter = RobotMap.ShooterConstants.SpeakerXDistfromCenter;
+    private double SpeakerYDistfromCenter = RobotMap.ShooterConstants.SpeakerYDistfromCenter;
+    private double XOffset = RobotMap.ShooterConstants.XOffset;
+    private double YOffset = RobotMap.ShooterConstants.YOffset;
 
     double rpm = 0;
     double distance = 0;
@@ -52,8 +64,11 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     }
 
     public double getAngleToShoot(){
-        angle = Math.atan((tagToSpeakerHeight+aprilTagHeight-limelightHeight)/getXDistance());
         return angle;
+    }
+
+    public double toEncoderVal(){
+        return .98-((1.39-getAngleToShoot())/1.39)*(.98-.803);
     }
 
     public double getDist(double ty){
@@ -75,13 +90,44 @@ public class LimelightVisionSubsystem extends SubsystemBase{
         return rpm;
 
     }
+
+    public double shooterEquation(){
+        return 9.58*Math.pow(Math.E, -0.0672*ty);
+    }
+
+    public double getXPoseSpeaker(){
+        return (SpeakerXDistfromCenter-Math.abs(botXPose) + XOffset) * 3.2808399;
+    }
+
+    public double getYPoseSpeaker(){
+        return (SpeakerYDistfromCenter+YOffset-botYPose) * 3.2808399;
+    }
     
+    public double getDistanceSpeaker(){
+        return Math.sqrt(Math.pow(getXPoseSpeaker(),2) + Math.pow(getYPoseSpeaker(), 2));
+    }
+    
+
     @Override
     public void periodic() {
+        angle = Math.atan((tagToSpeakerHeight+aprilTagHeight-limelightHeight)/getDistanceSpeaker());
+        botPose = LimelightHelpers.getBotPose3d("");
+        botXPose = botPose.getX();
+        botYPose = botPose.getY();
         //read values periodically
         double x = tx1.getDouble(0.0);
         double y = ty1.getDouble(0.0);
         double area = ta1.getDouble(0.0);
+
+        SmartDashboard.putNumber("Bot Pose X", botPose.getX());
+        SmartDashboard.putNumber("Bot Pose Y", botPose.getY());
+        SmartDashboard.putNumber("Bot Pose Z", botPose.getZ());
+    //    SmartDashboard.putNumber("Bot Pose Rotation", botPose.getRotation());
+
+        SmartDashboard.putNumber("X Pose Speaker", getXPoseSpeaker());
+        SmartDashboard.putNumber("Y Pose Speaker", getYPoseSpeaker());
+        SmartDashboard.putNumber("Dist Pose Speaker", getDistanceSpeaker());
+
 
         ty = LimelightHelpers.getTY("") * (Math.PI/180);
 
@@ -89,6 +135,9 @@ public class LimelightVisionSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("RPM for vision", rpm);
         SmartDashboard.putNumber("X Distance from AprilTag", distance);
         SmartDashboard.putNumber("Angle to shoot (rad)", angle);
+
+        SmartDashboard.putNumber("Shooter Equation Angle", shooterEquation());
+        SmartDashboard.putNumber("Encoder Val", toEncoderVal());
 
         SmartDashboard.putNumber("LimelightX1", x);
         SmartDashboard.putNumber("LimelightY2", y);

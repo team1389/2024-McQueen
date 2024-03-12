@@ -123,20 +123,22 @@ public class OI {
         // manipFullscreen.whileTrue(new SetShoot(shooter));
         
         // manipStadia.whileTrue(new AutoAlign(drivetrainSubsystem, limeLightVisionSubsystem));
+
+        manipRightBumper.whileTrue(new AlignShoot(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
  
         shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
 
-        //     drivetrainSubsystem.setDefaultCommand(
-        // // The left stick controls translation of the robot.
-        // // Turning is controlled by the X axis of the right stick.
-        // new RunCommand(
-        //     () -> drivetrainSubsystem.drive(
-        //         -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
-        //         -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
-        //         -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
-        //         true, true, () -> manipLeftBumper.getAsBoolean()),
-        //     drivetrainSubsystem));
+            drivetrainSubsystem.setDefaultCommand(
+        // The left stick controls translation of the robot.
+        // Turning is controlled by the X axis of the right stick.
+        new RunCommand(
+            () -> drivetrainSubsystem.drive(
+                -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
+                true, true, () -> manipLeftBumper.getAsBoolean()),
+            drivetrainSubsystem));
 
         // Press A button -> zero gyro headingq
         driveAButton.onTrue(new InstantCommand(() -> drivetrainSubsystem.zeroHeading()));
