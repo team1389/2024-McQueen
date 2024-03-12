@@ -8,7 +8,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": null
           }
         },
         {
@@ -30,7 +30,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "2 Top Alliance Side"
+                  "pathName": null
                 }
               },
               {
@@ -56,7 +56,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "Shoot"
+                              "name": null
                             }
                           }
                         ]

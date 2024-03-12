@@ -17,7 +17,7 @@ public class ShootCmd extends SequentialCommandGroup{
     public ShootCmd(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, LimelightVisionSubsystem limelightVisionSubsystem){
         addCommands(
             Commands.parallel(
-              new SetWristCmd(shooterSubsystem,0.945),
+              new SetWristCmd(shooterSubsystem,0.9),
                     Commands.sequence(
                         new AutoShootPIDCmd(shooterSubsystem, 3000),
                         new PreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem)

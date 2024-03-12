@@ -417,7 +417,7 @@ public void driveRobotRelative(ChassisSpeeds speeds){
  ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
  SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
  SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, MAX_DRIVE_SPEED);
-
+ setModuleStates(setpointStates);
 }
 
       public static Translation2d[] getModuleTranslations() {

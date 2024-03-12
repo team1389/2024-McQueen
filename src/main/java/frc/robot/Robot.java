@@ -104,7 +104,7 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         //Example of setting auto: Scheduler.getInstance().add(YOUR AUTO);
         m_autonomousCommand = oi.getAutonomousCommand();
-
+        CommandScheduler.getInstance().schedule(m_autonomousCommand);
     }
 
     /**

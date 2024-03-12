@@ -1,6 +1,9 @@
 package frc.subsystems;
 
 import com.revrobotics.CANSparkBase.IdleMode;
+
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
@@ -38,6 +41,7 @@ public class ShooterSubsystem extends SubsystemBase{
     private final SparkPIDController topPidController;
 
     public ShooterSubsystem(){
+        SmartDashboard.putBoolean("Is setting wrist", false);
         shootBottomController = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_BOTTOM, MotorType.kBrushless);
         shootTopController = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_TOP, MotorType.kBrushless);
         wristController = new CANSparkFlex(RobotMap.MotorPorts.WRIST_MOTOR, MotorType.kBrushless);
@@ -96,7 +100,7 @@ public class ShooterSubsystem extends SubsystemBase{
 
         //Uncomment the below code to tune pid values in smartdashboard - you also need to uncommet the part in periodic
         SmartDashboard.putNumber("P Wrist", 0.055);
-        SmartDashboard.putNumber("I Wrist", 0.013);
+        SmartDashboard.putNumber("I Wrist", 0.01);
         SmartDashboard.putNumber("D Wrist", 0.000);
         // SmartDashboard.putNumber("Wrist Motor Speed", 0.25);
 
@@ -113,6 +117,7 @@ public class ShooterSubsystem extends SubsystemBase{
     }
 
     public void setWrist(double desiredAngle){
+        SmartDashboard.putBoolean("Is setting wrist", true);
         desiredAngle = MathUtil.clamp(desiredAngle, ShooterConstants.kMinWristAngle, ShooterConstants.kMaxWristAngle);
         //needs to be multiplied by 100 otherwise the pidloop cancels as the difference between two value is quite small
         double wristPower = pidWristController.calculate(getAbsWristPosition()*100, desiredAngle*100);
@@ -203,7 +208,7 @@ public class ShooterSubsystem extends SubsystemBase{
 
         //Uncomment the below code to tune pid values in smartdashboard - you also need to uncommet the part in periodic
         pidWristController.setP(SmartDashboard.getNumber("P Wrist", .055));
-        pidWristController.setI(SmartDashboard.getNumber("I Wrist", 0.013));
+        pidWristController.setI(SmartDashboard.getNumber("I Wrist", 0.01));
         pidWristController.setD(SmartDashboard.getNumber("D Wrist", 0.000));
 
         // bottomPidController.setP(SmartDashboard.getNumber("P Bottom Shooter", 0.1));

@@ -18,6 +18,8 @@ import frc.util.DPadButton.Direction;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -76,8 +78,11 @@ public class OI {
     public final LimelightVisionSubsystem limeLightVisionSubsystem = new LimelightVisionSubsystem();
     public final DriveSubsystem drivetrainSubsystem = new DriveSubsystem(limeLightVisionSubsystem);
     public final PhotonVisionSubsystem photonVisionSubsystem = new PhotonVisionSubsystem();
+    private final SendableChooser<String> m_chooser = new SendableChooser<>();
+
 
     public OI() {
+        SmartDashboard.putBoolean("Ran Get auto", false);
 
         initControllers();
 
@@ -85,7 +90,7 @@ public class OI {
 
         manipBButton.onTrue(new IntakeCmd(intakeSubsystem));
 
-        manipLeftBumper.whileTrue(new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
+        manipLeftBumper.onTrue(new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
 
         manipYButton.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
 
@@ -127,16 +132,16 @@ public class OI {
         shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
 
-        //     drivetrainSubsystem.setDefaultCommand(
-        // // The left stick controls translation of the robot.
-        // // Turning is controlled by the X axis of the right stick.
-        // new RunCommand(
-        //     () -> drivetrainSubsystem.drive(
-        //         -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
-        //         -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
-        //         -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
-        //         true, true, () -> manipLeftBumper.getAsBoolean()),
-        //     drivetrainSubsystem));
+            drivetrainSubsystem.setDefaultCommand(
+        // The left stick controls translation of the robot.
+        // Turning is controlled by the X axis of the right stick.
+        new RunCommand(
+            () -> drivetrainSubsystem.drive(
+                -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
+                true, true, () -> manipLeftBumper.getAsBoolean()),
+            drivetrainSubsystem));
 
         // Press A button -> zero gyro headingq
         driveAButton.onTrue(new InstantCommand(() -> drivetrainSubsystem.zeroHeading()));
@@ -146,13 +151,11 @@ public class OI {
 
         driveYButton.onTrue(new InstantCommand(() -> {lightSubsystem.isRainbowing = true;}));
 
-        NamedCommands.registerCommand("Shoot", new AutoShootPIDCmd(shooterSubsystem, ShooterConstants.kTopRPM));
-        NamedCommands.registerCommand("IndexerToShooter", new RunIndexerCmd(indexerSubsystem, true));
-        NamedCommands.registerCommand("IndexerToAmp", new RunIndexerCmd(indexerSubsystem, false));
-        NamedCommands.registerCommand("RunIntake", new RunIntakeCmd(intakeSubsystem));
+        NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
+        NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
+        NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
+        NamedCommands.registerCommand("Move to Shooter", new PreAmpCmd(indexerSubsystem));
         
-        getAutonomousCommand();
-
         // Create a path following command using AutoBuilder. This will also trigger event markers.
     }
 
@@ -229,8 +232,11 @@ public class OI {
     }
 
     public Command getAutonomousCommand() {
-    return new PathPlannerAuto("Top Drive Shoot");
+    SmartDashboard.putBoolean("Ran Get auto", true);
+        return new PathPlannerAuto("Test run");
+        // PathPlannerPath path = PathPlannerPath.fromPathFile("Test Run one");
+
+        // // Create a path following command using AutoBuilder. This will also trigger event markers.
+        // return AutoBuilder.followPath(path);
   }
-
-
 }
