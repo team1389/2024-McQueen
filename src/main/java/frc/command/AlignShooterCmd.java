@@ -16,7 +16,7 @@ public class AlignShooterCmd extends Command{
         SmartDashboard.putNumber("Field_Space X", 0);
         SmartDashboard.putNumber("Target_Space X", 0);
         SmartDashboard.putBoolean("Is Align", false);
-        // addRequirements(shooter);
+        // addRequirements(shooter);  
     }
 
     @Override
@@ -52,7 +52,7 @@ public class AlignShooterCmd extends Command{
         double goalHeightInches = 60.0; 
 
         double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-        double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+        double angleToGoalRadians = angleToGoalDegrees * (Math.PI / 180.0);
 
         //calculate distance
         double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);

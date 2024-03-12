@@ -191,6 +191,7 @@ public class ShooterSubsystem extends SubsystemBase{
         moveWrist(-0.1401*getAbsWristPosition() + 0.141);
         // SmartDashboard.putBoolean("Inside hold position", true);
     }
+
     
     @Override
     public void periodic(){

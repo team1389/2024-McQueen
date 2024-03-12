@@ -17,10 +17,20 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     NetworkTableEntry ta1 = table.getEntry("ta");
     
     double tx = LimelightHelpers.getTX("");
-    double ty = LimelightHelpers.getTY("");
+    double ty = LimelightHelpers.getTY("") * (Math.PI/180);
     double ta = LimelightHelpers.getTA(""); //area
     // double dist = (APRILTAGHEIGHT-LIMELIGHTHEIGHT)/ (Math.tan(ty) * Math.cos(tx));
     double dist = -10.27749229*(Math.log(0.03008423*ty));
+
+    private double aprilTagHeight = RobotMap.ShooterConstants.AprilTagHeight; //h2
+    private double limelightHeight = RobotMap.ShooterConstants.LimelightHeight; //h1
+    private double tagToSpeakerHeight = RobotMap.ShooterConstants.TagToSpeakerHeight; //s
+    private double limelightAngle = RobotMap.ShooterConstants.LimelightAngle; //a1
+
+    double rpm = 0;
+    double distance = 0;
+    double angle = 0;
+
 
 
     public LimelightVisionSubsystem(){
@@ -34,10 +44,17 @@ public class LimelightVisionSubsystem extends SubsystemBase{
             // pid loop to return yaw (and then turn the robot) (from pigeon)
             // use x,y,area and pid loop to move robot from current point to set point
             // move angle and shoot
-            
-
-
         }
+
+    public double getXDistance(){
+        distance = (aprilTagHeight - limelightHeight) / (Math.tan(ty + limelightAngle));
+        return distance;
+    }
+
+    public double getAngleToShoot(){
+        angle = Math.atan((tagToSpeakerHeight+aprilTagHeight-limelightHeight)/getXDistance());
+        return angle;
+    }
 
     public double getDist(double ty){
         return -10.27749229*(Math.log(0.03008423*ty));
@@ -45,6 +62,19 @@ public class LimelightVisionSubsystem extends SubsystemBase{
 
     // poseEstimator.updateWithTime(Timer.getFPGATimestamp(), getRotation2d(), getModulePositions());
     // updateFieldPose();
+
+    public double rpmTableForShoot(){
+        double distance = getXDistance();
+        if(distance < 5){
+            rpm = 3000;
+        } else if(distance < 10){
+            rpm = 4000;
+        } else if(distance <= 16){
+            rpm = 6000;
+        }
+        return rpm;
+
+    }
     
     @Override
     public void periodic() {
@@ -53,7 +83,13 @@ public class LimelightVisionSubsystem extends SubsystemBase{
         double y = ty1.getDouble(0.0);
         double area = ta1.getDouble(0.0);
 
+        ty = LimelightHelpers.getTY("") * (Math.PI/180);
+
         // //post to smart dashboard periodically
+        SmartDashboard.putNumber("RPM for vision", rpm);
+        SmartDashboard.putNumber("X Distance from AprilTag", distance);
+        SmartDashboard.putNumber("Angle to shoot (rad)", angle);
+
         SmartDashboard.putNumber("LimelightX1", x);
         SmartDashboard.putNumber("LimelightY2", y);
         SmartDashboard.putNumber("LimelightArea3", area);
