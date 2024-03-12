@@ -119,10 +119,16 @@ public class RobotMap {
         public static final double kMinWristAngle = 0.8;
         public static final double kMaxWristAngle = 0.97;
 
-        public static final double AprilTagHeight = 0; // height of the center of the speaker apriltag to ground //h2
-        public static final double LimelightHeight = 0; // distance from the center of the limelight lens to ground //h1
-        public static final double TagToSpeakerHeight = 0; // height from center of apriltag to center of speaker //s
-        public static final double LimelightAngle = 0 * (Math.PI/180); // how many degrees back is the limelight rotated from perfectly vertical (rad) //a1
+        public static final double AprilTagHeight = 4.697916667; // height of the center of the speaker apriltag to ground (ft) //h2
+        public static final double LimelightHeight = 26/12; // distance from the center of the limelight lens to ground //h1
+        public static final double TagToSpeakerHeight = 1.896192542; // height from center of apriltag to center of speaker //s
+        public static final double LimelightAngle = 22.5 * (Math.PI/180); // how many degrees back is the limelight rotated from perfectly vertical (rad) //a1
+
+        public static final double SpeakerXDistfromCenter = 8.270621; 
+        public static final double SpeakerYDistfromCenter = 1.442212;
+        public static final double XOffset = 0.0254;
+        public static final double YOffset = 0.0889;
+
 
     }
 

@@ -128,6 +128,8 @@ public class OI {
         // manipFullscreen.whileTrue(new SetShoot(shooter));
         
         // manipStadia.whileTrue(new AutoAlign(drivetrainSubsystem, limeLightVisionSubsystem));
+
+        manipRightBumper.whileTrue(new AlignShoot(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
  
         shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
