@@ -29,12 +29,11 @@ public class AutoShootPIDCmd extends Command{
 
     @Override
     public void end(boolean interrupted){
-        shooterSubsytem.runShoot(shootingRPM);        
+        shooterSubsytem.runShoot(shootingRPM);      
     }
 
     @Override
     public boolean isFinished(){
-        // return !intake.hitSensor();
         return shooterSubsytem.isAtTargetRPM(shootingRPM);
     }
 }

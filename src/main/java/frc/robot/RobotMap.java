@@ -117,7 +117,7 @@ public class RobotMap {
         public static final double kWrist_D = 0.0;
 
         public static final double kMinWristAngle = 0.8;
-        public static final double kMaxWristAngle = 0.96;
+        public static final double kMaxWristAngle = 0.97;
 
         public static final double AprilTagHeight = 4.697916667; // height of the center of the speaker apriltag to ground (ft) //h2
         public static final double LimelightHeight = 26/12; // distance from the center of the limelight lens to ground //h1
