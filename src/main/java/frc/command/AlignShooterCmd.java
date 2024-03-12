@@ -5,18 +5,21 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.subsystems.LimelightVisionSubsystem;
 import frc.subsystems.ShooterSubsystem;
 import frc.util.LimelightHelpers;
 
 public class AlignShooterCmd extends Command{
      private ShooterSubsystem shooter;
-    public AlignShooterCmd(ShooterSubsystem shooter){
+     private LimelightVisionSubsystem limelight;
+    public AlignShooterCmd(ShooterSubsystem shooter,LimelightVisionSubsystem limelight){
         this.shooter = shooter;
+        this.limelight = limelight;
         SmartDashboard.putNumber("Robot_Space X", 0);
         SmartDashboard.putNumber("Field_Space X", 0);
         SmartDashboard.putNumber("Target_Space X", 0);
         SmartDashboard.putBoolean("Is Align", false);
-        // addRequirements(shooter);
+        // addRequirements(shooter);  
     }
 
     @Override
@@ -38,24 +41,10 @@ public class AlignShooterCmd extends Command{
         
         //get distance time 
 
-        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        NetworkTableEntry tyDistance = table.getEntry("ty");
-        double targetOffsetAngle_Vertical = tyDistance.getDouble(0.0);
-
-        // how many degrees back is your limelight rotated from perfectly vertical?
-        double limelightMountAngleDegrees = 25.0; 
-    
-        // distance from the center of the Limelight lens to the floor
-        double limelightLensHeightInches = 20.0; 
-
-        // distance from the target to the floor
-        double goalHeightInches = 60.0; 
-
-        double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-        double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+        double getDistance = limelight.getXDistance();
 
         //calculate distance
-        double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+        double distanceFromLimelightToGoalInches = getDistance;
         
 
         //USE TX VALUE FROM MEGATAG INSTEAD TO GET DISTANCE
@@ -64,7 +53,7 @@ public class AlignShooterCmd extends Command{
         
 
         //now calculate shooting angle from distance and height
-        double speakerHeight = 78; //change to speakerheight in inches
+        double speakerHeight = 67; 
         double targetAngleInRadians = Math.atan(speakerHeight/distanceFromLimelightToGoalInches);
         double targetAngleInWeirdUnits = 0.97-(((1.4833-targetAngleInRadians)*0.17)/1.396);
         shooter.setWrist(targetAngleInWeirdUnits);

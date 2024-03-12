@@ -119,6 +119,11 @@ public class RobotMap {
         public static final double kMinWristAngle = 0.8;
         public static final double kMaxWristAngle = 0.97;
 
+        public static final double AprilTagHeight = 0; // height of the center of the speaker apriltag to ground //h2
+        public static final double LimelightHeight = 0; // distance from the center of the limelight lens to ground //h1
+        public static final double TagToSpeakerHeight = 0; // height from center of apriltag to center of speaker //s
+        public static final double LimelightAngle = 0 * (Math.PI/180); // how many degrees back is the limelight rotated from perfectly vertical (rad) //a1
+
     }
 
     public static final class VisionConstants {
@@ -253,5 +258,6 @@ public class RobotMap {
   public static final class VortexMotorConstants {
     public static final double kFreeSpeedRpm = 6784; //5676 for neo
   }
+
   
 }

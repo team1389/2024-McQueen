@@ -28,7 +28,7 @@ public class AutoAlignCmd extends Command{
 //https://docs.limelightvision.io/docs/docs-limelight/tutorials/tutorial-getting-in-range
 //https://docs.limelightvision.io/docs/docs-limelight/pipeline-apriltag/apriltag-3d#point-of-interest-tracking
     @Override
-    public void execute() {        
+    public void execute() {
         alignTx = LimelightHelpers.getTX("");
         // //needs to be fixed. Plug into limelight try and find the best way to find dist through robotPose type
         // LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("");
@@ -39,6 +39,8 @@ public class AutoAlignCmd extends Command{
         // var tz = robotPose.getZ();        
         
         double speed = 0.1;
+
+        double offset = 0; // rad/sec
 
         //math
         double rotAngle = alignTx;
