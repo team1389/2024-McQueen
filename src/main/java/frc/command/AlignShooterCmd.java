@@ -64,7 +64,7 @@ public class AlignShooterCmd extends Command{
         
 
         //now calculate shooting angle from distance and height
-        double speakerHeight = 78; //change to speakerheight in inches
+        double speakerHeight = 67; 
         double targetAngleInRadians = Math.atan(speakerHeight/distanceFromLimelightToGoalInches);
         double targetAngleInWeirdUnits = 0.97-(((1.4833-targetAngleInRadians)*0.17)/1.396);
         shooter.setWrist(targetAngleInWeirdUnits);
