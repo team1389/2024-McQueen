@@ -29,7 +29,7 @@ public class AutoShootPIDCmd extends Command{
 
     @Override
     public void end(boolean interrupted){
-        shooterSubsytem.runShoot(shootingRPM);      
+        shooterSubsytem.stop();      
     }
 
     @Override
