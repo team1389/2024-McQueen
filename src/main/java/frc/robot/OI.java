@@ -65,7 +65,7 @@ public class OI {
     private Trigger manipRight;
     
 
-    public final DriveSubsystem drivetrainSubsystem = new DriveSubsystem();
+    
     
     public final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
 
@@ -74,6 +74,7 @@ public class OI {
     public final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
     public final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
     public final LimelightVisionSubsystem limeLightVisionSubsystem = new LimelightVisionSubsystem();
+    public final DriveSubsystem drivetrainSubsystem = new DriveSubsystem(limeLightVisionSubsystem);
     public final PhotonVisionSubsystem photonVisionSubsystem = new PhotonVisionSubsystem();
 
     public OI() {
@@ -84,9 +85,13 @@ public class OI {
 
         manipBButton.onTrue(new IntakeCmd(intakeSubsystem));
 
-        manipXButton.whileTrue(new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
+        manipLeftBumper.whileTrue(new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
 
         manipYButton.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
+
+        manipXButton.whileTrue(new SetWristCmd(shooterSubsystem,.92));
+
+        // manipXButton.whileTrue(new SetPowerCmd(shooterSubsystem));
 
         // manipMenuButton.whileTrue(new RunElevatorDownCmd(elevatorSubsystem));
         // manipEllipsisButton.whileTrue(new RunElevatorUpCmd(elevatorSubsystem));
@@ -104,34 +109,34 @@ public class OI {
         //  manipYButton.whileTrue(new ShootToSpeaker(shooter, indexerSubsystem, intakeSubsystem));
        //  manipYButton.onTrue(new ContinueIntake(intakeSubsystem).alongWith(new RunIndexer(indexerSubsystem, true).alongWith(new Shoot(shooter, intakeSubsystem)))); //TODO
         // manipEllipsisButton.whileTrue(new RunIndexer(indexerSubsystem, true)); // indexerSubsystem to amp
-        manipXButton.onTrue(new RunElevatorUpCmd(elevatorSubsystem).andThen(new RunIntakeCmd(intakeSubsystem)).alongWith(new RunIndexerCmd(indexerSubsystem, false)));
+        // manipXButton.onTrue(new RunElevatorUpCmd(elevatorSubsystem).andThen(new RunIntakeCmd(intakeSubsystem)).alongWith(new RunIndexerCmd(indexerSubsystem, false)));
         // manipLeftTrigger.whileTrue(new RunIntakeCmd(intakeSubsystem));
-         manipLeftTrigger.onTrue(new SetElevatorCmd(elevatorSubsystem, 2, true)); //.605 //TODO
-         manipRightTrigger.onTrue(new SetElevatorCmd(elevatorSubsystem, 1.2, true)); //.511 //TODO
+        //  manipLeftTrigger.onTrue(new SetElevatorCmd(elevatorSubsystem, 2, true)); //.605 //TODO
+        //  manipRightTrigger.onTrue(new SetElevatorCmd(elevatorSubsystem, 1.2, true)); //.511 //TODO
        // manipLeftTrigger.onTrue(new RunIntake(intakeSubsystem));
         // manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
         // manipMenuButton.whileTrue(new RunOuttake(intakeSubsystem));
-        manipLeftBumper.whileTrue(new ShootPIDCmd(shooterSubsystem, ShooterConstants.kTopRPM).alongWith(new HoldPositionCmd(shooterSubsystem)));
-        manipRightBumper.whileTrue(new RunIntakeCmd(intakeSubsystem).alongWith(new RunIndexerCmd(indexerSubsystem, true)));
+        // manipLeftBumper.whileTrue(new ShootPIDCmd(shooterSubsystem, ShooterConstants.kTopRPM).alongWith(new HoldPositionCmd(shooterSubsystem)));
+        // manipRightBumper.whileTrue(new RunIntakeCmd(intakeSubsystem).alongWith(new RunIndexerCmd(indexerSubsystem, true)));
         // manipYButton.whileTrue(new AlignShooter(shooter, shooter));
        // manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
         // manipFullscreen.whileTrue(new SetShoot(shooter));
         
         // manipStadia.whileTrue(new AutoAlign(drivetrainSubsystem, limeLightVisionSubsystem));
-
+ 
         shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
 
-            drivetrainSubsystem.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
-        new RunCommand(
-            () -> drivetrainSubsystem.drive(
-                -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
-                true, true),
-            drivetrainSubsystem));
+        //     drivetrainSubsystem.setDefaultCommand(
+        // // The left stick controls translation of the robot.
+        // // Turning is controlled by the X axis of the right stick.
+        // new RunCommand(
+        //     () -> drivetrainSubsystem.drive(
+        //         -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
+        //         -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
+        //         -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
+        //         true, true, () -> manipLeftBumper.getAsBoolean()),
+        //     drivetrainSubsystem));
 
         // Press A button -> zero gyro headingq
         driveAButton.onTrue(new InstantCommand(() -> drivetrainSubsystem.zeroHeading()));
@@ -201,6 +206,10 @@ public class OI {
     
     private double getDriveLeftY() {
         return -driveController.getRawAxis(1);
+    }
+
+    private double getManipLeftBumper(){
+        return manipController.getRawAxis(4);
     }
     
     private double getDriveRightX() {

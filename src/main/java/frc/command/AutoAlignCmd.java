@@ -1,5 +1,7 @@
 package frc.command;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -47,9 +49,12 @@ public class AutoAlignCmd extends Command{
 
         SmartDashboard.putNumber("Rotation Angle", Math.toDegrees(rotAngle));
 
-            ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0, 0, -(speed * rotAngle) + offset);
+        
+        if(!(Math.abs(rotAngle) < 0.2)) {
+            ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0, 0, -(speed * rotAngle));
             SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
             drivetrainSubsystem.setModuleStates(moduleStates);
+        }
     }
 
     @Override
@@ -59,10 +64,10 @@ public class AutoAlignCmd extends Command{
         drivetrainSubsystem.setModuleStates(moduleStates);
     }
 
-    // @Override
-    // public boolean isFinished(){
-    //     return (Math.abs(LimelightHelpers.getTX("")) < 0.5);
-    // } 
+    @Override
+    public boolean isFinished(){
+        return (Math.abs(LimelightHelpers.getTX("")) < 0.5);
+    } 
 
 
 }

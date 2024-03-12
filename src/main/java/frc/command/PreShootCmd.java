@@ -33,6 +33,7 @@ public class PreShootCmd extends Command{
         indexer.stop();
         intake.stop();
         shooter.stop();
+        shooter.stopWrist();
         // timer = 0;
     }
 
