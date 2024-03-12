@@ -16,7 +16,6 @@ public class MoveShooterCmd extends Command{
     @Override
     public void execute(){
         shooter.runWristUp();
- //       addCommand(new WaitCommand(5));
         
     }
 
