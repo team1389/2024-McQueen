@@ -25,7 +25,7 @@ public class ShootPIDCmd extends Command{
         shootingRPM = SmartDashboard.getNumber("Shooting RPM for Tuning", shootingRPM);
         // shooterSubsytem.runShoot(shootingRPM);
         shooterSubsytem.runShoot(shootingRPM);  
-        shooterSubsytem.holdPosition();      
+        // shooterSubsytem.holdPosition();      
     }
 
     @Override

@@ -193,8 +193,11 @@ public class ShooterSubsystem extends SubsystemBase{
 
     public void holdPosition(){
         // calculated line of best fit from tested points
-        if(getAbsWristPosition()<0.955){
+        if(getAbsWristPosition()<0.95){
             moveWrist(-0.075*getAbsWristPosition() + 0.0914);
+        }
+        else{
+            wristController.set(0);
         }
         // SmartDashboard.putBoolean("Inside hold position", true);
     }
