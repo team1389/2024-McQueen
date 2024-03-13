@@ -93,13 +93,16 @@ public class OI {
 
         manipBButton.onTrue(new IntakeCmd(intakeSubsystem));
 
-        manipLeftBumper.onTrue(new AlignShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
+       // manipLeftBumper.onTrue(new AlignShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
 
-        manipYButton.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
+        manipRightBumper.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
 
         manipXButton.whileTrue(new SetWristCmd(shooterSubsystem, limeLightVisionSubsystem.calculateShooterAngle(), limeLightVisionSubsystem));
 
-        manipRightBumper.whileTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+        manipLeftBumper.onTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+
+        manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem));
+        manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
 
         // manipXButton.whileTrue(new SetPowerCmd(shooterSubsystem));
 

@@ -45,7 +45,7 @@ public class AlignShootCmd extends SequentialCommandGroup{
                     Commands.sequence(
                         new AutoShootPIDCmd(shooterSubsystem, limelightVisionSubsystem.rpmTableForShoot() ,limelightVisionSubsystem), //limelightVisionSubsystem.rpmTableForShoot()
                         new PreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem)
-            )    
+            )
             )
         );
     }
