@@ -5,32 +5,32 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.ShooterSubsystem;
 
 public class SetWristCmd extends Command{
-    ShooterSubsystem shooter;
+    ShooterSubsystem shooterSubsystem;
     double angle = 0.85;
-    public SetWristCmd(ShooterSubsystem shooter, double angle){
+    int timer = 0;
+    public SetWristCmd(ShooterSubsystem shooterSubsystem, double angle){
         this.angle = angle;
-        this.shooter = shooter;
+        this.shooterSubsystem = shooterSubsystem;
         SmartDashboard.putNumber("Target Angle for SetWrist", angle);
-        //addRequirements(shooter);
+        //addRequirements(shooterSubsystem);
     }
 
     @Override
     public void execute(){
+        timer++;
         // angle = SmartDashboard.getNumber("Target Angle for SetWrist", angle);
-        shooter.setWrist(angle);
-        SmartDashboard.putBoolean("IsFishied", Math.abs(angle - shooter.getWristPosition())<.0025);
-        SmartDashboard.putNumber("Is Ria a Fish", Math.abs(angle - shooter.getWristPosition()));
+        shooterSubsystem.setWrist(angle);
     }
 
     @Override
     public void end(boolean interrupted){
-        shooter.setWrist(angle);
+        timer = 0;
+        shooterSubsystem.holdPosition();
     }
 
     @Override
     public boolean isFinished(){
-        SmartDashboard.putBoolean("IsFishied", Math.abs(angle - shooter.getWristPosition())<.0025);
-        SmartDashboard.putNumber("Is Ria a Fish", Math.abs(angle - shooter.getWristPosition()));
-        return (Math.abs(angle - shooter.getAbsWristPosition())<.0025);
+        return (timer>50);
+        // return (timer>30 && Math.abs(angle-shooterSubsystem.getAbsWristPosition())<.0025);
     }
 }

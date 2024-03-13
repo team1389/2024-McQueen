@@ -13,26 +13,24 @@ public class ShootPIDCmd extends Command{
 
     public ShootPIDCmd(ShooterSubsystem shooterSubsytem, double setpoint){
         this.shooterSubsytem = shooterSubsytem;
-        // this.intakeSubsytem = intakeSubsytem;
         shootingRPM = setpoint;
         SmartDashboard.putNumber("Shooting RPM for Tuning", shootingRPM);
-        // addRequirements(shooterSubsystem);
     }
 
 
     @Override
     public void execute(){
         shootingRPM = SmartDashboard.getNumber("Shooting RPM for Tuning", shootingRPM);
-        // shooterSubsytem.runShoot(shootingRPM);
-        shooterSubsytem.runShoot(shootingRPM);  
-        shooterSubsytem.holdPosition();      
+        shooterSubsytem.runShoot(shootingRPM);        
     }
 
     @Override
     public void end(boolean interrupted){
-        shooterSubsytem.stop();    
-        shooterSubsytem.stopWrist();    
+        shooterSubsytem.stop();      
     }
 
-    
+    @Override
+    public boolean isFinished(){
+        return shooterSubsytem.isAtTargetRPM(shootingRPM);
+    }
 }

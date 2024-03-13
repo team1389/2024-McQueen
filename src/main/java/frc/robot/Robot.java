@@ -1,17 +1,12 @@
 package frc.robot;
 
 
-import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.subsystems.DriveSubsystem;
-import frc.subsystems.ElevatorSubsystem;
-//import frc.util.SwerveTelemetry;
-import frc.util.SwerveUtils;
 
 /**
  * Don't change the name of this class since the VM is set up to run this
@@ -53,7 +48,6 @@ public class Robot extends TimedRobot {
         pdh = new PowerDistribution();
         //DO NOT RE-ADD PIGEON CONFIG
         oi.shooterSubsystem.resetWristPos();
-
 
     }
 
@@ -102,9 +96,11 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        //Example of setting auto: Scheduler.getInstance().add(YOUR AUTO);
         m_autonomousCommand = oi.getAutonomousCommand();
-        CommandScheduler.getInstance().schedule(m_autonomousCommand);
+        // schedule the autonomous command (example)
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.schedule();
+        }
     }
 
     /**

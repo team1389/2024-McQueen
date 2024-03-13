@@ -5,20 +5,20 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.ShooterSubsystem;
 
 public class HoldPositionCmd extends Command{
-    ShooterSubsystem shooter;
+    ShooterSubsystem shooterSubsystem;
 
-    public HoldPositionCmd(ShooterSubsystem shooter){
-        this.shooter = shooter;
-        addRequirements(shooter);
+    public HoldPositionCmd(ShooterSubsystem shooterSubsystem){
+        this.shooterSubsystem = shooterSubsystem;
+        addRequirements(shooterSubsystem);
     }
     
     @Override
     public void execute(){
-        shooter.holdPosition();
+        shooterSubsystem.holdPosition();
     }
 
     @Override
     public void end(boolean interrupted){
-        shooter.stopWrist();
+        shooterSubsystem.stopWrist();
     }
 }

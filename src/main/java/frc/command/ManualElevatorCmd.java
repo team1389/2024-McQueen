@@ -7,23 +7,23 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.ElevatorSubsystem;
 
 public class ManualElevatorCmd extends Command{
-    ElevatorSubsystem elevator;
+    ElevatorSubsystem elevatorSubystem;
     private Supplier<Double> power;
 
-    public ManualElevatorCmd(ElevatorSubsystem elevator, Supplier<Double> power) {
-        this.elevator = elevator;
+    public ManualElevatorCmd(ElevatorSubsystem elevatorSubystem, Supplier<Double> power) {
+        this.elevatorSubystem = elevatorSubystem;
         this.power = power;
-        addRequirements(elevator);
+        addRequirements(elevatorSubystem);
     }
     
     @Override
     public void execute() {
-        elevator.controllerInterrupt = true;
-        elevator.moveElevator(MathUtil.clamp(power.get(), -1, 1));
+        elevatorSubystem.controllerInterrupt = true;
+        elevatorSubystem.moveElevator(MathUtil.clamp(power.get(), -1, 1));
     }
 
     @Override
     public void end(boolean interrupted) {
-        elevator.moveElevator(0);
+        elevatorSubystem.moveElevator(0);
     }
 }

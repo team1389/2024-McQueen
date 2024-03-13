@@ -5,18 +5,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.ElevatorSubsystem;
 
 public class RunElevatorUpCmd extends Command{
-    private ElevatorSubsystem elevator;
+    private ElevatorSubsystem elevatorSubsystem;
     Timer timer = new Timer();
     double time = 6.5;
     
-    public RunElevatorUpCmd(ElevatorSubsystem elevator){
-        this.elevator = elevator;
-        // addRequirements(elevator); 
+    public RunElevatorUpCmd(ElevatorSubsystem elevatorSubsystem){
+        this.elevatorSubsystem = elevatorSubsystem;
+        // addRequirements(elevatorSubsystem); 
     }
 
-    public RunElevatorUpCmd(ElevatorSubsystem elevator, double time){
-        this.elevator = elevator;
-        // addRequirements(elevator); 
+    public RunElevatorUpCmd(ElevatorSubsystem elevatorSubsystem, double time){
+        this.elevatorSubsystem = elevatorSubsystem;
+        // addRequirements(elevatorSubsystem); 
         this.time = time;
     }
 
@@ -27,12 +27,12 @@ public class RunElevatorUpCmd extends Command{
 
     @Override
     public void execute(){
-        elevator.moveToTop();
+        elevatorSubsystem.moveToTop();
     }
 
     @Override
     public void end(boolean interrupted){
-        elevator.stop();
+        elevatorSubsystem.stop();
     }
     // @Override
     // public boolean isFinished(){

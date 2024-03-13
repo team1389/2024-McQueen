@@ -5,33 +5,34 @@ import frc.subsystems.IndexerSubsystem;
 import frc.subsystems.IntakeSubsystem;
 
 public class ShootAmpCmd extends Command{
-    private IndexerSubsystem indexer;
+    private IndexerSubsystem indexerSubsystem;
     private IntakeSubsystem intakeSubsystem;
     private double timer = 0;
 
-    public ShootAmpCmd(IndexerSubsystem indexer, IntakeSubsystem intake){
-        this.indexer = indexer;
+    public ShootAmpCmd(IndexerSubsystem indexerSubsystem, IntakeSubsystem intake){
+        this.indexerSubsystem = indexerSubsystem;
         this.intakeSubsystem = intake;
-        // addRequirements(indexer);
+        // addRequirements(indexerSubsystem);
     }
 
     @Override
     public void execute(){
         intakeSubsystem.runIntake();
-        indexer.moveToShoot();
+        indexerSubsystem.moveToShoot();
         timer += 1;
     }
 
     @Override
     public void end(boolean interrupted){
-        indexer.stop();
+        indexerSubsystem.stop();
         intakeSubsystem.stop();
         timer = 0;
     }
 
     @Override
     public boolean isFinished(){
-        return (timer>20);
+        return (timer>25);
+        // return !intakeSubsystem.hitSensor();
     }
 
 }

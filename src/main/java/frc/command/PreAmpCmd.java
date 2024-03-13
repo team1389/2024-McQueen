@@ -5,30 +5,30 @@ import frc.subsystems.IndexerSubsystem;
 import frc.subsystems.IntakeSubsystem;
 
 public class PreAmpCmd extends Command{
-    private IndexerSubsystem indexer;
+    private IndexerSubsystem indexerSubsystem;
     private IntakeSubsystem intakeSubsystem;
 
 
-    public PreAmpCmd(IndexerSubsystem indexer){
-        this.indexer = indexer;
-        // addRequirements(indexer);
+    public PreAmpCmd(IndexerSubsystem indexerSubsystem){
+        this.indexerSubsystem = indexerSubsystem;
+        // addRequirements(indexerSubsystem);
     }
 
-    public PreAmpCmd(IndexerSubsystem indexer, IntakeSubsystem intake){
-        this.indexer = indexer;
-        this.intakeSubsystem = intake;
-        // addRequirements(indexer);
+    public PreAmpCmd(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem){
+        this.indexerSubsystem = indexerSubsystem;
+        this.intakeSubsystem = intakeSubsystem;
+        // addRequirements(indexerSubsystem);
     }
 
     @Override
     public void execute(){
-        indexer.moveToAmp();
+        indexerSubsystem.moveToAmp();
         intakeSubsystem.runIntake();
     }
 
     @Override
     public void end(boolean interrupted){
-        indexer.stop();
+        indexerSubsystem.stop();
         intakeSubsystem.stop();
     }
 

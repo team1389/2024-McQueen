@@ -5,21 +5,21 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.subsystems.ShooterSubsystem;
 
 public class MoveShooterDownCmd extends Command{
-     private ShooterSubsystem shooter;
+     private ShooterSubsystem shooterSubsystem;
 
-    public MoveShooterDownCmd(ShooterSubsystem shooter){
-        this.shooter = shooter;
-        // addRequirements(shooter);
+    public MoveShooterDownCmd(ShooterSubsystem shooterSubsystem){
+        this.shooterSubsystem = shooterSubsystem;
+        // addRequirements(shooterSubsystem);
     }
 
     @Override
     public void execute(){
-        shooter.runWristDown();
+        shooterSubsystem.runWristDown();
         
     }
 
     @Override
     public void end(boolean interrupted){
-        shooter.stopWrist();
+        shooterSubsystem.stopWrist();
     }
 }

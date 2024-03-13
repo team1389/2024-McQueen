@@ -10,22 +10,22 @@ import frc.subsystems.ShooterSubsystem;
 import frc.util.LimelightHelpers;
 
 public class AlignShooterCmd extends Command{
-     private ShooterSubsystem shooter;
-     private LimelightVisionSubsystem limelight;
-    public AlignShooterCmd(ShooterSubsystem shooter,LimelightVisionSubsystem limelight){
-        this.shooter = shooter;
-        this.limelight = limelight;
+     private ShooterSubsystem shooterSubsystem;
+     private LimelightVisionSubsystem limelightVisionSubsystem;
+    public AlignShooterCmd(ShooterSubsystem shooterSubsystem,LimelightVisionSubsystem limelightVisionSubsystem){
+        this.shooterSubsystem = shooterSubsystem;
+        this.limelightVisionSubsystem = limelightVisionSubsystem;
         SmartDashboard.putNumber("Robot_Space X", 0);
         SmartDashboard.putNumber("Field_Space X", 0);
         SmartDashboard.putNumber("Target_Space X", 0);
         SmartDashboard.putBoolean("Is Align", false);
-        // addRequirements(shooter);  
+        // addRequirements(shooterSubsystem);  
     }
 
     @Override
     public void execute(){
         var tx = LimelightHelpers.getTX("");
-        //needs to be fixed. Plug into limelight try and find the best way to find dist through robotPose type
+        //needs to be fixed. Plug into limelightVisionSubsystem try and find the best way to find dist through robotPose type
         LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("");
         var rrResults = llresults.targetingResults.targets_Retro[0];
         tx = rrResults.tx;
@@ -41,7 +41,7 @@ public class AlignShooterCmd extends Command{
         
         //get distance time 
 
-        double getDistance = limelight.getXDistance();
+        double getDistance = limelightVisionSubsystem.getXDistance();
 
         //calculate distance
         double distanceFromLimelightToGoalInches = getDistance;
@@ -56,7 +56,7 @@ public class AlignShooterCmd extends Command{
         double speakerHeight = 67; 
         double targetAngleInRadians = Math.atan(speakerHeight/distanceFromLimelightToGoalInches);
         double targetAngleInWeirdUnits = 0.97-(((1.4833-targetAngleInRadians)*0.17)/1.396);
-        shooter.setWrist(targetAngleInWeirdUnits);
+        shooterSubsystem.setWrist(targetAngleInWeirdUnits);
         // wrist.runWristDown();
         // addCommand(new WaitCommand(5)); 
         
@@ -64,6 +64,6 @@ public class AlignShooterCmd extends Command{
 
     @Override
     public void end(boolean interrupted){
-        shooter.stop();
+        shooterSubsystem.stop();
     }
 }

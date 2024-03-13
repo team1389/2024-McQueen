@@ -71,6 +71,12 @@ public class LimelightVisionSubsystem extends SubsystemBase{
         return .98-((1.39-getAngleToShoot())/1.39)*(.98-.803);
     }
 
+    public double calculateShooterAngle(){
+        //needs to be measured
+        double dis_LL_to_bumpers = 0; 
+        return 0.984*Math.pow(Math.E, (-0.0125 * (getXDistance()-dis_LL_to_bumpers)));
+    }
+
     public double getDist(double ty){
         return -10.27749229*(Math.log(0.03008423*ty));
     }
@@ -88,7 +94,6 @@ public class LimelightVisionSubsystem extends SubsystemBase{
             rpm = 6000;
         }
         return rpm;
-
     }
 
     public double shooterEquation(){

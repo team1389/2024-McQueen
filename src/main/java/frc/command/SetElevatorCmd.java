@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.ElevatorSubsystem;
 
 public class SetElevatorCmd extends Command{
-    ElevatorSubsystem elevator;
+    ElevatorSubsystem elevatorSubsystem;
     double pos = 2;
     boolean check = true;
 
-    public SetElevatorCmd(ElevatorSubsystem elevator, double pos, boolean check){
-        this.elevator = elevator;
+    public SetElevatorCmd(ElevatorSubsystem elevatorSubsystem, double pos, boolean check){
+        this.elevatorSubsystem = elevatorSubsystem;
         this.pos = pos;
         this.check = check;
 
@@ -19,29 +19,29 @@ public class SetElevatorCmd extends Command{
     @Override
     public void initialize(){
         SmartDashboard.putBoolean("check", check);
-      //  elevator.controllerInterrupt = false;
-     //   elevator.setElevator(pos);
+      //  elevatorSubsystem.controllerInterrupt = false;
+     //   elevatorSubsystem.setElevator(pos);
         
     }
 
     @Override
     public void execute(){
-      //  elevator.setElevatorPosBySpeed(pos);
-      //  elevator.setSetpoint(pos);
-       // elevator.setElevator(pos);
+      //  elevatorSubsystem.setElevatorPosBySpeed(pos);
+      //  elevatorSubsystem.setSetpoint(pos);
+       // elevatorSubsystem.setElevator(pos);
        if (check){
-        if(elevator.getRelEncoderPos() < elevator.high/2){
+        if(elevatorSubsystem.getRelEncoderPos() < elevatorSubsystem.high/2){
             
-            SmartDashboard.putNumber("Elevator height", elevator.getRelEncoderPos());
-            elevator.moveElevator(.1);
+            SmartDashboard.putNumber("elevatorSubsystem height", elevatorSubsystem.getRelEncoderPos());
+            elevatorSubsystem.moveElevator(.1);
             SmartDashboard.putBoolean("check", check);
 
 
        } else{
-        SmartDashboard.putNumber("Elevator height", 0);
+        SmartDashboard.putNumber("elevatorSubsystem height", 0);
         check = false;
         SmartDashboard.putBoolean("check", check);
-        elevator.stop();
+        elevatorSubsystem.stop();
        }
     }
 }
@@ -49,14 +49,14 @@ public class SetElevatorCmd extends Command{
     @Override
     public void end(boolean interrupted){
         SmartDashboard.putBoolean("check", check);
-        elevator.stop();
+        elevatorSubsystem.stop();
     }
 
     // @Override
     // public boolean isFinished(){
     //     //if()
-    //     return elevator.isPidFinished(pos);
-    //     // elevator.controllerInterrupt = true;
+    //     return elevatorSubsystem.isPidFinished(pos);
+    //     // elevatorSubsystem.controllerInterrupt = true;
     //     // return true;
     // }
 

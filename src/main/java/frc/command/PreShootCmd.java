@@ -9,32 +9,31 @@ import frc.subsystems.IndexerSubsystem;
 import frc.subsystems.IntakeSubsystem;
 
 public class PreShootCmd extends Command{
-     private ShooterSubsystem shooter;
-     private IndexerSubsystem indexer;
-     private IntakeSubsystem intake;
+     private ShooterSubsystem shooterSubsystem;
+     private IndexerSubsystem indexerSubsystem;
+     private IntakeSubsystem intakeSubsystem;
      int timer = 0;
-    public PreShootCmd(IndexerSubsystem indexer, IntakeSubsystem intake, ShooterSubsystem shooter){
-        this.indexer = indexer;
-        this.intake = intake;
-        this.shooter = shooter;
+    public PreShootCmd(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem){
+        this.indexerSubsystem = indexerSubsystem;
+        this.intakeSubsystem = intakeSubsystem;
+        this.shooterSubsystem = shooterSubsystem;
 
-        // addRequirements(intake, indexer, shooter);
+        // addRequirements(intakeSubsystem, indexerSubsystem, shooterSubsystem);
     }
 
     @Override
     public void execute(){
-        indexer.moveToShoot();
-        intake.runIntake();
+        indexerSubsystem.moveToShoot();
+        intakeSubsystem.runIntake();
         // timer += 1;
         //addCommand(new WaitCommand(5));        
     }
 
     @Override
     public void end(boolean interrupted){
-        indexer.stop();
-        intake.stop();
-        shooter.stop();
-        shooter.stopWrist();
+        indexerSubsystem.stop();
+        intakeSubsystem.stop();
+        shooterSubsystem.stopWrist();
         // timer = 0;
     }
 
@@ -42,7 +41,7 @@ public class PreShootCmd extends Command{
     public boolean isFinished(){
         // return (timer>20);
         SmartDashboard.putBoolean("IsFinished PreeShoot", true);
-        return !(intake.hitSensor());
+        return !(intakeSubsystem.hitSensor());
     }
 
 }

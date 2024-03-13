@@ -10,6 +10,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import frc.command.*;
+import frc.robot.RobotMap.AutoConstants;
 import frc.robot.RobotMap.OIConstants;
 import frc.robot.RobotMap.ShooterConstants;
 import frc.subsystems.*;
@@ -78,7 +79,9 @@ public class OI {
     public final LimelightVisionSubsystem limeLightVisionSubsystem = new LimelightVisionSubsystem();
     public final DriveSubsystem drivetrainSubsystem = new DriveSubsystem(limeLightVisionSubsystem);
     public final PhotonVisionSubsystem photonVisionSubsystem = new PhotonVisionSubsystem();
-    private final SendableChooser<String> m_chooser = new SendableChooser<>();
+    private final SendableChooser<Command> m_chooser = new SendableChooser<>();
+    private final Command m_simpleAuto = new PathPlannerAuto("Test run");
+    
 
 
     public OI() {
@@ -90,11 +93,13 @@ public class OI {
 
         manipBButton.onTrue(new IntakeCmd(intakeSubsystem));
 
-        manipLeftBumper.onTrue(new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
+        manipLeftBumper.onTrue(new AlignShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
 
         manipYButton.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
 
         manipXButton.whileTrue(new SetWristCmd(shooterSubsystem,.92));
+
+        manipRightBumper.whileTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         // manipXButton.whileTrue(new SetPowerCmd(shooterSubsystem));
 
@@ -103,8 +108,8 @@ public class OI {
 
 
 
-        manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
-        manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));
+        // manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
+        // manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));
 
 
         // manipLeftTrigger.whileTrue(new RunIntakeCmd(intakeSubsystem).andThen(new PreAmpCmd(indexerSubsystem,intakeSubsystem)));
@@ -129,9 +134,8 @@ public class OI {
         
         // manipStadia.whileTrue(new AutoAlign(drivetrainSubsystem, limeLightVisionSubsystem));
 
-        manipRightBumper.whileTrue(new AlignShoot(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
  
-        shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
+        shooterSubsystem.setDefaultCommand(new ManualWristCmd(shooterSubsystem, () -> getManipLeftY()));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
 
             drivetrainSubsystem.setDefaultCommand(
@@ -158,7 +162,13 @@ public class OI {
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
         NamedCommands.registerCommand("Move to Shooter", new PreAmpCmd(indexerSubsystem));
         
-        // Create a path following command using AutoBuilder. This will also trigger event markers.
+
+        m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
+        
+        SmartDashboard.putData(m_chooser);
+        // m_chooser.addOption("Complex Auto", m_complexAuto);
+
+         
     }
 
     /**
@@ -234,8 +244,7 @@ public class OI {
     }
 
     public Command getAutonomousCommand() {
-    SmartDashboard.putBoolean("Ran Get auto", true);
-        return new PathPlannerAuto("Test run");
+        return m_chooser.getSelected();
         // PathPlannerPath path = PathPlannerPath.fromPathFile("Test Run one");
 
         // // Create a path following command using AutoBuilder. This will also trigger event markers.

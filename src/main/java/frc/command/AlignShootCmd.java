@@ -12,9 +12,9 @@ import frc.subsystems.LimelightVisionSubsystem;
 import frc.subsystems.ShooterSubsystem;
 import frc.util.LimelightHelpers;
 
-public class AlignShoot extends SequentialCommandGroup{
+public class AlignShootCmd extends SequentialCommandGroup{
 //     public ShooterSubsystem shooter;
-//     public LimelightVisionSubsystem limelight;
+//     public LimelightVisionSubsystem limelightVisionSubsystem;
 //    // private double ty;
 //     private double xDistance; // x distance from robot to speaker
 //     private double offset;
@@ -23,27 +23,27 @@ public class AlignShoot extends SequentialCommandGroup{
     // private double tagToSpeakerHeight = RobotMap.ShooterConstants.TagToSpeakerHeight; //s
     // private double limelightAngle = RobotMap.ShooterConstants.LimelightAngle; //a1
 
-    // public AlignShoot(ShooterSubsystem shooter, LimelightVisionSubsystem limelight){
+    // public AlignShoot(ShooterSubsystem shooter, LimelightVisionSubsystem limelightVisionSubsystem){
     //     this.shooter = shooter;
-    //     this.limelight = limelight;
+    //     this.limelightVisionSubsystem = limelightVisionSubsystem;
     //    // ty = LimelightHelpers.getTY("");
     //     xDistance = 5; //use distance to calcute rpm readings
     // }
 
     // @Override
     // public void execute(){
-    //     shooter.setWrist(limelight.getAngleToShoot());
-    //     shooter.runShoot(limelight.rpmTableForShoot());
+    //     shooter.setWrist(limelightVisionSubsystem.getAngleToShoot());
+    //     shooter.runShoot(limelightVisionSubsystem.rpmTableForShoot());
     //     // ty = LimelightHelpers.getTY("");
     //     // xDistance = (aprilTagHeight - limelightHeight) / (Math.tan(ty + limelightAngle));
     // }
 
-    public AlignShoot(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, LimelightVisionSubsystem limelight){
+    public AlignShootCmd(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, LimelightVisionSubsystem limelightVisionSubsystem){
         addCommands(
             Commands.parallel(
-              new SetWristCmd(shooterSubsystem, limelight.toEncoderVal()),
+              new SetWristCmd(shooterSubsystem, limelightVisionSubsystem.calculateShooterAngle()),
                     Commands.sequence(
-                        new AutoShootPIDCmd(shooterSubsystem, 3750),
+                        new AutoShootPIDCmd(shooterSubsystem, limelightVisionSubsystem.rpmTableForShoot()),
                         new PreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem)
             )    
             )

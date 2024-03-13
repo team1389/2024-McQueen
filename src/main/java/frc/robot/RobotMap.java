@@ -113,7 +113,7 @@ public class RobotMap {
         public static final double kBottom_MAX_OUTPUT = 1;
 
         public static final double kWrist_P = 0.055;
-        public static final double kWrist_I = 0.013;
+        public static final double kWrist_I = 0.01;
         public static final double kWrist_D = 0.0;
 
         public static final double kMinWristAngle = 0.8;

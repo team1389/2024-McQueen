@@ -6,21 +6,21 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.subsystems.ShooterSubsystem;
 
 public class MoveShooterCmd extends Command{
-     private ShooterSubsystem shooter;
+     private ShooterSubsystem shooterSubsystem;
 
-    public MoveShooterCmd(ShooterSubsystem shooter){
-        this.shooter = shooter;
-        // addRequirements(shooter);
+    public MoveShooterCmd(ShooterSubsystem shooterSubsystem){
+        this.shooterSubsystem = shooterSubsystem;
+        // addRequirements(shooterSubsystem);
     }
 
     @Override
     public void execute(){
-        shooter.runWristUp();
+        shooterSubsystem.runWristUp();
         
     }
 
     @Override
     public void end(boolean interrupted){
-        shooter.stopWrist();
+        shooterSubsystem.stopWrist();
     }
 }

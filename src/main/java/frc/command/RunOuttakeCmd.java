@@ -4,28 +4,27 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.IntakeSubsystem;
 
 public class RunOuttakeCmd extends Command{
-    private IntakeSubsystem intake;
-    private double timer = 0;
-    public RunOuttakeCmd(IntakeSubsystem intake){
-        this.intake = intake;
+    private IntakeSubsystem intakeSubsystem;
+    // private double timer = 0;
+    public RunOuttakeCmd(IntakeSubsystem intakeSubsystem){
+        this.intakeSubsystem = intakeSubsystem;
 
-        // addRequirements(intake);
+        // addRequirements(intakeSubsystem);
     }
 
     @Override
     public void execute(){
-        intake.runOuttake();
-        timer += 1;
+        intakeSubsystem.runOuttake();
+        // timer += 1;
     }
 
     @Override
     public void end(boolean interrupted){
-        timer = 0;
-        intake.stop();
+        intakeSubsystem.stop();
     }
 
     @Override
     public boolean isFinished(){
-        return (!intake.hitSensor() && timer<25);
+        return (!intakeSubsystem.hitSensor());
     }
 }
