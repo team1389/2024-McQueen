@@ -79,7 +79,7 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     // updateFieldPose();
 
     public double rpmTableForShoot(){
-        double distance = getXDistance();
+        double distance = getDistanceSpeaker();
         if(distance < 5){
             rpm = 3000;
         } else if(distance < 10){

@@ -175,13 +175,13 @@ public class ShooterSubsystem extends SubsystemBase{
         return wristAbsEncoder.getAbsolutePosition();
     }
 
-    public double getRPM(){
-        return wristAbsEncoder.getFrequency() * 60;
-    }
+    // public double getRPM(){
+    //     return wristAbsEncoder.getFrequency() * 60;
+    // }
 
-    public void setSpeed(){
-        shootSpeed = 3.6 * (getRPM()/5252);
-    }
+    // public void setSpeed(){
+    //     shootSpeed = 3.6 * (getRPM()/5252);
+    // }
 
     public double getTopSpeedRPM(){
         return shootEncoderTop.getVelocity();
@@ -193,7 +193,7 @@ public class ShooterSubsystem extends SubsystemBase{
 
     public void holdPosition(){
         // calculated line of best fit from tested points
-        if(getAbsWristPosition()<0.955){
+        if(getAbsWristPosition()<0.955){ //actual limit of encoder is .98
             moveWrist(-0.075*getAbsWristPosition() + 0.0914);
         }
         // SmartDashboard.putBoolean("Inside hold position", true);
