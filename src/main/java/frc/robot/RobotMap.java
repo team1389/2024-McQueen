@@ -128,6 +128,7 @@ public class RobotMap {
         public static final double SpeakerYDistfromCenter = 1.442212;
         public static final double XOffset = 0.0254;
         public static final double YOffset = 0.0889;
+        public static final double dis_LL_to_bumpers = 1.333;// ft
 
 
     }

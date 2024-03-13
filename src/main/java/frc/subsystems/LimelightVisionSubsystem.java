@@ -38,10 +38,12 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     private double SpeakerYDistfromCenter = RobotMap.ShooterConstants.SpeakerYDistfromCenter;
     private double XOffset = RobotMap.ShooterConstants.XOffset;
     private double YOffset = RobotMap.ShooterConstants.YOffset;
+    private double dis_LL_to_bumpers = RobotMap.ShooterConstants.dis_LL_to_bumpers;
 
     double rpm = 0;
     double distance = 0;
-    double angle = 0;
+    double angle = .87;
+    double zachAngle = .87;
 
 
 
@@ -72,9 +74,8 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     }
 
     public double calculateShooterAngle(){
-        //needs to be measured
-        double dis_LL_to_bumpers = 0; 
-        return 0.984*Math.pow(Math.E, (-0.0125 * (getXDistance()-dis_LL_to_bumpers)));
+        //needs to be measured        
+        return zachAngle;
     }
 
     public double getDist(double ty){
@@ -86,12 +87,14 @@ public class LimelightVisionSubsystem extends SubsystemBase{
 
     public double rpmTableForShoot(){
         double distance = getDistanceSpeaker();
-        if(distance < 5){
+        if(distance < 5.5){
             rpm = 3000;
+        } else if(distance < 8){
+            rpm = 3500;
         } else if(distance < 10){
+            rpm = 3750;
+        } else if (distance <= 16){
             rpm = 4000;
-        } else if(distance <= 16){
-            rpm = 6000;
         }
         return rpm;
     }
@@ -115,6 +118,7 @@ public class LimelightVisionSubsystem extends SubsystemBase{
 
     @Override
     public void periodic() {
+        zachAngle =  0.984*Math.pow(Math.E, (-0.0125 * (getDistanceSpeaker()-dis_LL_to_bumpers)));
         angle = Math.atan((tagToSpeakerHeight+aprilTagHeight-limelightHeight)/getDistanceSpeaker());
         botPose = LimelightHelpers.getBotPose3d("");
         botXPose = botPose.getX();
@@ -132,6 +136,8 @@ public class LimelightVisionSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("X Pose Speaker", getXPoseSpeaker());
         SmartDashboard.putNumber("Y Pose Speaker", getYPoseSpeaker());
         SmartDashboard.putNumber("Dist Pose Speaker", getDistanceSpeaker());
+
+        SmartDashboard.putNumber("Zach Shooter Angle", calculateShooterAngle());
 
 
         ty = LimelightHelpers.getTY("") * (Math.PI/180);

@@ -93,7 +93,7 @@ public class OI {
 
         manipYButton.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
 
-        manipXButton.whileTrue(new SetWristCmd(shooterSubsystem,.92));
+        manipXButton.whileTrue(new SetWristCmd(shooterSubsystem, limeLightVisionSubsystem.calculateShooterAngle(), limeLightVisionSubsystem));
 
         manipRightBumper.onTrue(new ShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
