@@ -95,6 +95,7 @@ public class DriveSubsystem extends SubsystemBase {
   private double m_prevTime = WPIUtilJNI.now() * 1e-6;
 
   Pose2d pose = new Pose2d();
+  public boolean commandAlign;
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -110,6 +111,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem(LimelightVisionSubsystem limelightVisionSubsystem){
+    commandAlign = false;
     poseEstimator = new SwerveDrivePoseEstimator(RobotMap.driveKinematics,
             new Rotation2d(0), getModulePositions(), new Pose2d());
     AutoBuilder.configureHolonomic(
@@ -289,7 +291,7 @@ public class DriveSubsystem extends SubsystemBase {
     double ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond;
     double rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed;
 
-    if(isAutoAlign.get()){
+    if(isAutoAlign.get() || commandAlign){
       rotDelivered = -(0.1 * alignTx);
     }
 

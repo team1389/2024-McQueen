@@ -16,7 +16,7 @@ public class AutoAlignCmd extends Command{
     private final DriveSubsystem drivetrainSubsystem;
     private final LimelightVisionSubsystem limelightVisionSubsystem;
     double alignTx;
-        
+    
      public AutoAlignCmd(DriveSubsystem drivetrainSubsystem, LimelightVisionSubsystem limeLightVisionSubsystem) {
         this.drivetrainSubsystem = drivetrainSubsystem;
         this.limelightVisionSubsystem = limeLightVisionSubsystem;

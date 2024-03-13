@@ -2,8 +2,6 @@ package frc.robot;
 
 import java.util.HashMap;
 
-import org.photonvision.PhotonCamera;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -83,9 +81,7 @@ public class OI {
     private final Command m_simpleAuto = new PathPlannerAuto("Test run");
     
 
-
     public OI() {
-        SmartDashboard.putBoolean("Ran Get auto", false);
 
         initControllers();
 
@@ -99,7 +95,7 @@ public class OI {
 
         manipXButton.whileTrue(new SetWristCmd(shooterSubsystem,.92));
 
-        manipRightBumper.whileTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+        manipRightBumper.onTrue(new ShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         // manipXButton.whileTrue(new SetPowerCmd(shooterSubsystem));
 
@@ -134,11 +130,13 @@ public class OI {
         
         // manipStadia.whileTrue(new AutoAlign(drivetrainSubsystem, limeLightVisionSubsystem));
 
+        
+
  
-        shooterSubsystem.setDefaultCommand(new ManualWristCmd(shooterSubsystem, () -> getManipLeftY()));
+        shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
 
-            drivetrainSubsystem.setDefaultCommand(
+        drivetrainSubsystem.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
@@ -167,8 +165,6 @@ public class OI {
         
         SmartDashboard.putData(m_chooser);
         // m_chooser.addOption("Complex Auto", m_complexAuto);
-
-         
     }
 
     /**
@@ -244,7 +240,7 @@ public class OI {
     }
 
     public Command getAutonomousCommand() {
-        return m_chooser.getSelected();
+        return new PathPlannerAuto("Test run");
         // PathPlannerPath path = PathPlannerPath.fromPathFile("Test Run one");
 
         // // Create a path following command using AutoBuilder. This will also trigger event markers.
