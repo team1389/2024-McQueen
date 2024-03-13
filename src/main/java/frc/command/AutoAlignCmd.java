@@ -51,7 +51,7 @@ public class AutoAlignCmd extends Command{
 
         
         if(!(Math.abs(rotAngle) < 0.2)) {
-            ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0, 0, -(speed * rotAngle));
+            ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0, 0, -(speed * rotAngle + offset));
             SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
             drivetrainSubsystem.setModuleStates(moduleStates);
         }
