@@ -97,7 +97,7 @@ public class OI {
 
         manipYButton.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
 
-        manipXButton.whileTrue(new SetWristCmd(shooterSubsystem,.92));
+        manipXButton.whileTrue(new SetWristCmd(shooterSubsystem,.92, limeLightVisionSubsystem));
 
         manipRightBumper.whileTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
@@ -135,7 +135,7 @@ public class OI {
         // manipStadia.whileTrue(new AutoAlign(drivetrainSubsystem, limeLightVisionSubsystem));
 
  
-        shooterSubsystem.setDefaultCommand(new ManualWristCmd(shooterSubsystem, () -> getManipLeftY()));
+        shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
 
             drivetrainSubsystem.setDefaultCommand(
