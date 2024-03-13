@@ -169,13 +169,13 @@ public class ShooterSubsystem extends SubsystemBase{
         return wristAbsEncoder.getAbsolutePosition();
     }
 
-    public double getRPM(){
-        return wristAbsEncoder.getFrequency() * 60;
-    }
+    // public double getRPM(){
+    //     return wristAbsEncoder.getFrequency() * 60;
+    // }
 
-    public void setSpeed(){
-        shootSpeed = 3.6 * (getRPM()/5252);
-    }
+    // public void setSpeed(){
+    //     shootSpeed = 3.6 * (getRPM()/5252);
+    // }
 
     public double getTopSpeedRPM(){
         return shootEncoderTop.getVelocity();
