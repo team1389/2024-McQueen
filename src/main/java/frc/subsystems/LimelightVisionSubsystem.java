@@ -7,7 +7,6 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.RobotMap.VisionConstants;
 import frc.util.LimelightHelpers;
 
 //try using robot oritented to find distance
@@ -17,7 +16,11 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     NetworkTableEntry ty1 = table.getEntry("ty");
     NetworkTableEntry ta1 = table.getEntry("ta");
 
+    Pose3d blueBotPose = LimelightHelpers.getBotPose3d_wpiBlue("");
     Pose3d botPose = LimelightHelpers.getBotPose3d("");
+
+    double blueBotXPose = blueBotPose.getX();
+    double blueBotYPose = blueBotPose.getY();
 
     double botXPose = botPose.getX();
     double botYPose = botPose.getY();
@@ -54,11 +57,14 @@ public class LimelightVisionSubsystem extends SubsystemBase{
         LimelightHelpers.getTX("");
         
     }
-    public void updatePose(){
-            // pid loop to return yaw (and then turn the robot) (from pigeon)
-            // use x,y,area and pid loop to move robot from current point to set point
-            // move angle and shoot
-        }
+
+    public double getRobotPoseX(){
+        return blueBotPose.getX();
+    }
+
+    public double getRobotPoseY(){
+        return blueBotPose.getY();
+    }
 
     public double getXDistance(){
         distance = (aprilTagHeight - limelightHeight) / (Math.tan(ty + limelightAngle));

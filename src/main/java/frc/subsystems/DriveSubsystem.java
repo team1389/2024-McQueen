@@ -98,7 +98,12 @@ public class DriveSubsystem extends SubsystemBase {
   public boolean commandAlign;
 
   // Odometry class for tracking robot pose
-  SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
+  SwerveDriveOdometry m_odometry;
+
+  /** Creates a new DriveSubsystem. */
+  public DriveSubsystem(LimelightVisionSubsystem limelightVisionSubsystem){
+
+      m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
       Rotation2d.fromDegrees(-pigeon.getAngle()),
       new SwerveModulePosition[] {
@@ -107,10 +112,9 @@ public class DriveSubsystem extends SubsystemBase {
           backLeft.getPosition(),
           backRight.getPosition()
       },
-      new Pose2d(0, 0, new Rotation2d(0)));
+      //x mid is 8.3 IF YOU DELETE THIS I WILL FIND YOU
+      new Pose2d(limelightVisionSubsystem.getRobotPoseX(), limelightVisionSubsystem.getRobotPoseY(), new Rotation2d(0)));
 
-  /** Creates a new DriveSubsystem. */
-  public DriveSubsystem(LimelightVisionSubsystem limelightVisionSubsystem){
     commandAlign = false;
     poseEstimator = new SwerveDrivePoseEstimator(RobotMap.driveKinematics,
             new Rotation2d(0), getModulePositions(), new Pose2d());
@@ -144,6 +148,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    SmartDashboard.putNumber("Rbot pose x", getPose().getX());
+    SmartDashboard.putNumber("Rbot pose y", getPose().getY());
 
     //limelight
     alignTx = LimelightHelpers.getTX("");
