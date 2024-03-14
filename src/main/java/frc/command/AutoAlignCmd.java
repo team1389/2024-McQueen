@@ -40,10 +40,10 @@ public class AutoAlignCmd extends Command{
         
         double speed = 0.1;
 
-        double offset = 0; // rad/sec
+        double offset = Math.toRadians(20); // rad
 
         //math
-        double rotAngle = alignTx;
+        double rotAngle = alignTx + offset;
 
        // rotAngle = tx;
 
@@ -51,7 +51,7 @@ public class AutoAlignCmd extends Command{
 
         
         if(!(Math.abs(rotAngle) < 0.2)) {
-            ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0, 0, -(speed * rotAngle + offset));
+            ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0, 0, -(speed * rotAngle));
             SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
             drivetrainSubsystem.setModuleStates(moduleStates);
         }

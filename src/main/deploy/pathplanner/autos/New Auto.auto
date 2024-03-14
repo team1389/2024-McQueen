@@ -2,7 +2,7 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.75,
+      "x": 1.592881570392136,
       "y": 7.0
     },
     "rotation": 0
@@ -20,25 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Mid drive shoot 1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Mid drive shoot 2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Mid drive shoot 3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
+            "pathName": "3 close piece"
           }
         }
       ]

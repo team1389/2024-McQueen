@@ -87,7 +87,7 @@ public class OI {
 
         manipAButton.whileTrue(new AutoAlignCmd(drivetrainSubsystem, limeLightVisionSubsystem));
 
-        manipBButton.onTrue(new IntakeCmd(intakeSubsystem));
+      //  manipBButton.onTrue(new IntakeCmd(intakeSubsystem));
 
        // manipLeftBumper.onTrue(new AlignShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
 
@@ -96,6 +96,7 @@ public class OI {
         manipXButton.whileTrue(new SetWristCmd(shooterSubsystem, limeLightVisionSubsystem.calculateShooterAngle(), limeLightVisionSubsystem));
 
         manipLeftBumper.onTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+      //  .onFalse(new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
 
         manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem));
         manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
@@ -138,6 +139,9 @@ public class OI {
  
         shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
+        
+       // shooterSubsystem.setDefaultCommand(new ManualWristCmd(shooterSubsystem, () -> -getManipLeftY()));
+
 
         drivetrainSubsystem.setDefaultCommand(
         // The left stick controls translation of the robot.
