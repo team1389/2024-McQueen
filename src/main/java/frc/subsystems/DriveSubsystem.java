@@ -109,6 +109,8 @@ public class DriveSubsystem extends SubsystemBase {
       },
       new Pose2d(0, 0, new Rotation2d(0)));
 
+
+
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem(LimelightVisionSubsystem limelightVisionSubsystem){
     commandAlign = false;
@@ -172,6 +174,10 @@ public class DriveSubsystem extends SubsystemBase {
     m_field.setRobotPose(getPose());
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("rotation", getPose().getRotation().getDegrees());
+
+    SmartDashboard.putNumber("robot pose X", getPose().getX());
+    SmartDashboard.putNumber("robot pose Y", getPose().getY());
+
     //SmartDashboard.putNumber("Speed", m_poseEstimator);
     SmartDashboard.putData("Field", m_field);
     SmartDashboard.putNumberArray(
