@@ -250,7 +250,7 @@ public class OI {
 
     public Command getAutonomousCommand() {
         return new PathPlannerAuto("Test run");
-        return autoChooser.getSelected();   
+      //  return autoChooser.getSelected();   
         // PathPlannerPath path = PathPlannerPath.fromPathFile("Test Run one");
 
         // // Create a path following command using AutoBuilder. This will also trigger event markers.
