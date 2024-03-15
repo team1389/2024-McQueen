@@ -97,8 +97,12 @@ public class DriveSubsystem extends SubsystemBase {
   Pose2d pose = new Pose2d();
   public boolean commandAlign;
 
-  // Odometry class for tracking robot pose
-  SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
+  SwerveDriveOdometry m_odometry;
+
+  /** Creates a new DriveSubsystem. */
+  public DriveSubsystem(LimelightVisionSubsystem limelightVisionSubsystem){
+
+      m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
       Rotation2d.fromDegrees(-pigeon.getAngle()),
       new SwerveModulePosition[] {
@@ -107,10 +111,9 @@ public class DriveSubsystem extends SubsystemBase {
           backLeft.getPosition(),
           backRight.getPosition()
       },
-      new Pose2d(0, 0, new Rotation2d(0)));
+      //x mid is 8.3 IF YOU DELETE THIS I WILL FIND YOU
+      new Pose2d(limelightVisionSubsystem.getRobotPoseX(), limelightVisionSubsystem.getRobotPoseY(), new Rotation2d(0)));
 
-  /** Creates a new DriveSubsystem. */
-  public DriveSubsystem(LimelightVisionSubsystem limelightVisionSubsystem){
     commandAlign = false;
     poseEstimator = new SwerveDrivePoseEstimator(RobotMap.driveKinematics,
             new Rotation2d(0), getModulePositions(), new Pose2d());
@@ -172,6 +175,10 @@ public class DriveSubsystem extends SubsystemBase {
     m_field.setRobotPose(getPose());
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("rotation", getPose().getRotation().getDegrees());
+
+    SmartDashboard.putNumber("robot pose X", getPose().getX());
+    SmartDashboard.putNumber("robot pose Y", getPose().getY());
+
     //SmartDashboard.putNumber("Speed", m_poseEstimator);
     SmartDashboard.putData("Field", m_field);
     SmartDashboard.putNumberArray(
