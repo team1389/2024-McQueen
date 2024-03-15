@@ -163,8 +163,11 @@ public class OI {
         driveYButton.onTrue(new InstantCommand(() -> {lightSubsystem.isRainbowing = true;}));
 
         NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
-        // NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
-        NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));    
+        NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
+        NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
+        NamedCommands.registerCommand("Move to Shooter", new PreAmpCmd(indexerSubsystem));
+        NamedCommands.registerCommand("Align & Shoot", new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+
         
         autoChooser = AutoBuilder.buildAutoChooser();
 
