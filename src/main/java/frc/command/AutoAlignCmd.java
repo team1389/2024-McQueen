@@ -38,19 +38,21 @@ public class AutoAlignCmd extends Command{
         // var robotPose = rrResults.getTargetPose_RobotSpace();
         // var tz = robotPose.getZ();        
         
-        double speed = 0.1;
+        double speed = 0.4;
 
-        double offset = Math.toRadians(20); // rad
+        //double offset = Math.toRadians(90); // rad
 
+        double offset = 0;
         //math
         double rotAngle = alignTx + offset;
 
        // rotAngle = tx;
-
+              
         SmartDashboard.putNumber("Rotation Angle", Math.toDegrees(rotAngle));
 
         
-        if(!(Math.abs(rotAngle) < 0.2)) {
+        
+        if(!(((Math.abs(rotAngle)+80) < .2))) {
             ChassisSpeeds chassisSpeeds = new ChassisSpeeds(0, 0, -(speed * rotAngle));
             SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
             drivetrainSubsystem.setModuleStates(moduleStates);
@@ -66,7 +68,7 @@ public class AutoAlignCmd extends Command{
 
     @Override
     public boolean isFinished(){
-        return (Math.abs(LimelightHelpers.getTX("")) < 0.5);
+        return ((Math.abs(LimelightHelpers.getTX(""))) < 0.5);
     } 
 
 

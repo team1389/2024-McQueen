@@ -292,7 +292,7 @@ public class DriveSubsystem extends SubsystemBase {
     double rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed;
 
     if(isAutoAlign.get() || commandAlign){
-      rotDelivered = -(0.1 * alignTx);
+      rotDelivered = -(0.1 * alignTx) + Math.toDegrees(5); //fix offset
     }
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(

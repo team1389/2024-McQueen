@@ -93,8 +93,12 @@ public class LimelightVisionSubsystem extends SubsystemBase{
             rpm = 3500;
         } else if(distance < 10){
             rpm = 3750;
-        } else if (distance <= 16){
+        } else if (distance < 14){
             rpm = 4000;
+        } else if (distance <= 16){
+            rpm = 4250;
+        } else if (distance > 16) {
+            rpm = 4250;
         }
         return rpm;
     }
@@ -118,7 +122,8 @@ public class LimelightVisionSubsystem extends SubsystemBase{
 
     @Override
     public void periodic() {
-        zachAngle =  0.984*Math.pow(Math.E, (-0.0125 * (getDistanceSpeaker()-dis_LL_to_bumpers)));
+        //zachAngle =  0.984*Math.pow(Math.E, (-0.0125 * (getDistanceSpeaker()-dis_LL_to_bumpers)));
+        zachAngle =  0.981*Math.pow(Math.E, (-0.0121 * (getDistanceSpeaker()-dis_LL_to_bumpers)));
         angle = Math.atan((tagToSpeakerHeight+aprilTagHeight-limelightHeight)/getDistanceSpeaker());
         botPose = LimelightHelpers.getBotPose3d("");
         botXPose = botPose.getX();
@@ -153,7 +158,7 @@ public class LimelightVisionSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("LimelightX1", x);
         SmartDashboard.putNumber("LimelightY2", y);
         SmartDashboard.putNumber("LimelightArea3", area);
-        SmartDashboard.putNumber("Calculated Distance From April Tag (Formula)", getDist(y));
+        //SmartDashboard.putNumber("Calculated Distance From April Tag (Formula)", getDist(y));
         
         SmartDashboard.putNumber("LimelightX", LimelightHelpers.getTX(""));
         SmartDashboard.putString("InsideAutoAlign", "success");
