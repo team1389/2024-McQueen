@@ -1,10 +1,22 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 1.4662605074140238,
+      "y": 5.386984811059493
+    },
+    "rotation": 0
+  },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
         {
           "type": "parallel",
           "data": {
@@ -12,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Mid drive shoot 1"
+                  "pathName": "Test Run one"
                 }
               },
               {
@@ -35,6 +47,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Align & Shoot"
           }
         }
       ]

@@ -166,6 +166,8 @@ public class OI {
         NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
         NamedCommands.registerCommand("Move to Shooter", new PreAmpCmd(indexerSubsystem));
+        NamedCommands.registerCommand("Align & Shoot", new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+
         
 
         m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
@@ -248,6 +250,7 @@ public class OI {
 
     public Command getAutonomousCommand() {
         return new PathPlannerAuto("Test run");
+        return autoChooser.getSelected();   
         // PathPlannerPath path = PathPlannerPath.fromPathFile("Test Run one");
 
         // // Create a path following command using AutoBuilder. This will also trigger event markers.
