@@ -8,15 +8,18 @@ import frc.subsystems.IntakeSubsystem;
 import frc.subsystems.LimelightVisionSubsystem;
 import frc.subsystems.ShooterSubsystem;
 
-public class AutoShootPIDCmd extends Command{
+public class AutonomousShootPIDCmd extends Command{
      private ShooterSubsystem shooterSubsytem;
      private LimelightVisionSubsystem limelightSubsystem;
+     private DriveSubsystem driveSubsystem;
     //  private Intake intakeSubsytem; TBD
      private double shootingRPM;
 
-    public AutoShootPIDCmd(ShooterSubsystem shooterSubsytem, double rpm, LimelightVisionSubsystem limelightSubsystem){
+    public AutonomousShootPIDCmd(ShooterSubsystem shooterSubsytem, double rpm, LimelightVisionSubsystem limelightSubsystem, DriveSubsystem driveSubsystem){
         this.shooterSubsytem = shooterSubsytem;
         this.limelightSubsystem = limelightSubsystem;
+        this.driveSubsystem = driveSubsystem;
+        driveSubsystem.toggleCommandAlign();
         // this.intakeSubsytem = intakeSubsytem;
         SmartDashboard.putNumber("Shooting RPM for Tuning", shootingRPM);
         // addRequirements(shooterSubsystem);
@@ -34,6 +37,7 @@ public class AutoShootPIDCmd extends Command{
     @Override
     public void end(boolean interrupted){
         // shooterSubsytem.runShoot(shootingRPM);
+        driveSubsystem.toggleCommandAlign();
         shooterSubsytem.stop();
     }
 

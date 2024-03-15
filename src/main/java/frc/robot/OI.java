@@ -108,8 +108,8 @@ public class OI {
 
 
 
-        // manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
-        // manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));
+        manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
+        manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));
 
 
         // manipLeftTrigger.whileTrue(new RunIntakeCmd(intakeSubsystem).andThen(new PreAmpCmd(indexerSubsystem,intakeSubsystem)));
@@ -165,8 +165,7 @@ public class OI {
         NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
         NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
-        NamedCommands.registerCommand("Move to Shooter", new PreAmpCmd(indexerSubsystem));
-        NamedCommands.registerCommand("Align & Shoot", new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+        NamedCommands.registerCommand("Align & Shoot", new AutonomousAlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         
         autoChooser = AutoBuilder.buildAutoChooser();
