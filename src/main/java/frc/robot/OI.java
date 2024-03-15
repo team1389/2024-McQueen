@@ -78,7 +78,7 @@ public class OI {
     public final DriveSubsystem drivetrainSubsystem = new DriveSubsystem(limeLightVisionSubsystem);
     public final PhotonVisionSubsystem photonVisionSubsystem = new PhotonVisionSubsystem();
     private final SendableChooser<Command> m_chooser = new SendableChooser<>();
-    private final Command m_simpleAuto = new PathPlannerAuto("Test run");
+    private final SendableChooser<Command> autoChooser;
     
 
     public OI() {
@@ -163,14 +163,13 @@ public class OI {
         driveYButton.onTrue(new InstantCommand(() -> {lightSubsystem.isRainbowing = true;}));
 
         NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
-        NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
-        NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
-        NamedCommands.registerCommand("Move to Shooter", new PreAmpCmd(indexerSubsystem));
+        // NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
+        NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));    
         
+        autoChooser = AutoBuilder.buildAutoChooser();
 
-        m_chooser.setDefaultOption("Simple Auto", m_simpleAuto);
-        
-        SmartDashboard.putData(m_chooser);
+        SmartDashboard.putData("Auto Chooser", autoChooser);
+
         // m_chooser.addOption("Complex Auto", m_complexAuto);
     }
 
@@ -247,7 +246,7 @@ public class OI {
     }
 
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("Test run");
+        return autoChooser.getSelected();
         // PathPlannerPath path = PathPlannerPath.fromPathFile("Test Run one");
 
         // // Create a path following command using AutoBuilder. This will also trigger event markers.
