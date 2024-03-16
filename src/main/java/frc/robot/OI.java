@@ -101,6 +101,8 @@ public class OI {
         manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem));
         manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
 
+        manipStadia.onTrue(new HoldElevator(elevatorSubsystem));
+
         // manipXButton.whileTrue(new SetPowerCmd(shooterSubsystem));
 
         // manipMenuButton.whileTrue(new RunElevatorDownCmd(elevatorSubsystem));
