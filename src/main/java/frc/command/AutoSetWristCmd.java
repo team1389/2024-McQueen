@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.LimelightVisionSubsystem;
 import frc.subsystems.ShooterSubsystem;
 
-public class SetWristCmd extends Command{
+public class AutoSetWristCmd extends Command{
     ShooterSubsystem shooterSubsystem;
     double angle = 0.85;
     LimelightVisionSubsystem limelight;
     int timer = 0;
-    public SetWristCmd(ShooterSubsystem shooterSubsystem, double angle, LimelightVisionSubsystem limelight){
+    public AutoSetWristCmd(ShooterSubsystem shooterSubsystem, double angle, LimelightVisionSubsystem limelight){
         this.angle = angle;
         this.shooterSubsystem = shooterSubsystem;
         this.limelight = limelight;
@@ -21,7 +21,7 @@ public class SetWristCmd extends Command{
     @Override
     public void execute(){
         timer++;
-        angle = limelight.calculateShooterAngle();
+        // angle = limelight.calculateShooterAngle();
         // angle = SmartDashboard.getNumber("Target Angle for SetWrist", angle);
         shooterSubsystem.setWrist(angle);
     }

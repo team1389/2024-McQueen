@@ -14,6 +14,7 @@ import frc.robot.RobotMap.ShooterConstants;
 import frc.subsystems.*;
 import frc.util.DPadButton;
 import frc.util.DPadButton.Direction;
+import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -77,8 +78,6 @@ public class OI {
     public final LimelightVisionSubsystem limeLightVisionSubsystem = new LimelightVisionSubsystem();
     public final DriveSubsystem drivetrainSubsystem = new DriveSubsystem(limeLightVisionSubsystem);
     public final PhotonVisionSubsystem photonVisionSubsystem = new PhotonVisionSubsystem();
-    private final SendableChooser<Command> m_chooser = new SendableChooser<>();
-    private final SendableChooser<Command> autoChooser;
     
 
     public OI() {
@@ -87,19 +86,22 @@ public class OI {
 
         manipAButton.whileTrue(new AutoAlignCmd(drivetrainSubsystem, limeLightVisionSubsystem));
 
+        manipBButton.whileTrue(new OverridePreShootCmd(indexerSubsystem,intakeSubsystem));
+
       //  manipBButton.onTrue(new IntakeCmd(intakeSubsystem));
 
        // manipLeftBumper.onTrue(new AlignShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
 
         manipRightBumper.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
 
-        manipXButton.whileTrue(new SetWristCmd(shooterSubsystem, limeLightVisionSubsystem.calculateShooterAngle(), limeLightVisionSubsystem));
+        manipXButton.whileTrue(new AutoSetWristCmd(shooterSubsystem, limeLightVisionSubsystem.calculateShooterAngle(), limeLightVisionSubsystem));
 
-        manipLeftBumper.onTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+       // manipLeftBumper.onTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
       //  .onFalse(new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
+        manipLeftBumper.whileTrue(new ShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem));
-        manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
+        manipRightTrigger.whileTrue(new ManualSetWrist(shooterSubsystem));
 
         // manipXButton.whileTrue(new SetPowerCmd(shooterSubsystem));
 
@@ -110,9 +112,7 @@ public class OI {
 
         manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
         manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));
-        manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
-        manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));
-
+        
 
         // manipLeftTrigger.whileTrue(new RunIntakeCmd(intakeSubsystem).andThen(new PreAmpCmd(indexerSubsystem,intakeSubsystem)));
 
@@ -153,7 +153,7 @@ public class OI {
                 -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
-                true, true, () -> manipLeftBumper.getAsBoolean()),
+                true, true, true),
             drivetrainSubsystem));
 
         // Press A button -> zero gyro headingq
@@ -168,11 +168,6 @@ public class OI {
         NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
         NamedCommands.registerCommand("Align & Shoot", new AutonomousAlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
-
-        
-        autoChooser = AutoBuilder.buildAutoChooser();
-
-        SmartDashboard.putData("Auto Chooser", autoChooser);
 
         // m_chooser.addOption("Complex Auto", m_complexAuto);
     }
@@ -250,10 +245,11 @@ public class OI {
     }
 
     public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
+        return new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+        // return new TheOnePiece(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // PathPlannerPath path = PathPlannerPath.fromPathFile("Test Run one");
 
-        // // Create a path following command using AutoBuilder. This will also trigger event markers.
+        // Create a path following command using AutoBuilder. This will also trigger event markers.
         // return AutoBuilder.followPath(path);
   }
 }
