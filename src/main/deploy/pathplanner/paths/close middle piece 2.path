@@ -3,32 +3,48 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2035933130247611,
-        "y": 7.0
+        "x": 2.49,
+        "y": 5.38
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.203593313024765,
-        "y": 7.0
+        "x": 2.539172260249767,
+        "y": 5.389060288181357
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.64,
-        "y": 7.0
+        "x": 2.5,
+        "y": 4.2389166008477615
       },
       "prevControl": {
-        "x": 1.1927752106005924,
-        "y": 7.0
+        "x": 1.5000000000000004,
+        "y": 4.2389166008477615
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -39,14 +55,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -0.43486321831397456,
+    "rotation": -17.513273618501607,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "close piece auto paths",
   "previewStartingState": {
-    "rotation": 52.21249868187294,
-    "velocity": 0.0
+    "rotation": 0,
+    "velocity": 0
   },
   "useDefaultConstraints": true
 }

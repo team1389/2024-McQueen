@@ -112,7 +112,7 @@ public class DriveSubsystem extends SubsystemBase {
           backRight.getPosition()
       },
       //x mid is 8.3 IF YOU DELETE THIS I WILL FIND YOU
-      new Pose2d(limelightVisionSubsystem.getRobotPoseX(), limelightVisionSubsystem.getRobotPoseY(), new Rotation2d(0)));
+      new Pose2d(limelightVisionSubsystem.getRobotPoseX(), limelightVisionSubsystem.getRobotPoseY(), new Rotation2d(180)));
 
     commandAlign = false;
     poseEstimator = new SwerveDrivePoseEstimator(RobotMap.driveKinematics,
@@ -299,7 +299,7 @@ public class DriveSubsystem extends SubsystemBase {
     double rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed;
 
     if(isAutoAlign.get() || commandAlign){
-      rotDelivered = -(0.1 * alignTx) + Math.toDegrees(5); //fix offset
+      rotDelivered = -(0.1 * alignTx); //+ Math.toRadians(5); //fix offset
     }
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(

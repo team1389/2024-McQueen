@@ -110,11 +110,12 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     }
 
     public double shooterEquation(){
+
         return 9.58*Math.pow(Math.E, -0.0672*ty);
     }
 
     public double getXPoseSpeaker(){
-        return (SpeakerXDistfromCenter-Math.abs(botXPose) + XOffset) * 3.2808399;
+        return (SpeakerXDistfromCenter-Math.abs(botXPose)) * 3.2808399;
     }
 
     public double getYPoseSpeaker(){
@@ -122,14 +123,16 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     }
     
     public double getDistanceSpeaker(){
-        return Math.sqrt(Math.pow(getXPoseSpeaker(),2) + Math.pow(getYPoseSpeaker(), 2));
+        return Math.sqrt(Math.pow(getXPoseSpeaker(),2) + Math.pow(getYPoseSpeaker(), 2)) + 1;
     }
     
 
     @Override
     public void periodic() {
         //zachAngle =  0.984*Math.pow(Math.E, (-0.0125 * (getDistanceSpeaker()-dis_LL_to_bumpers)));
-        zachAngle =  0.981*Math.pow(Math.E, (-0.0121 * (getDistanceSpeaker()-dis_LL_to_bumpers)));
+       // zachAngle =  0.981*Math.pow(Math.E, (-0.0121 * (getDistanceSpeaker()-dis_LL_to_bumpers)));
+        zachAngle = 1.09 - .0877 * Math.log(getDistanceSpeaker());
+
         angle = Math.atan((tagToSpeakerHeight+aprilTagHeight-limelightHeight)/getDistanceSpeaker());
         botPose = LimelightHelpers.getBotPose3d("");
         botXPose = botPose.getX();

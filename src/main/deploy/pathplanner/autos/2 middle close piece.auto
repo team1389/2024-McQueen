@@ -8,7 +8,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Align & Shoot"
           }
         },
         {
@@ -18,26 +18,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Test Run one"
+                  "pathName": "close middle piece 1"
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Intake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Shoot"
-                      }
-                    }
-                  ]
+                  "name": "Intake"
                 }
               }
             ]
