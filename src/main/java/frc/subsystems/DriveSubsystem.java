@@ -211,6 +211,10 @@ public class DriveSubsystem extends SubsystemBase {
     return m_odometry.getPoseMeters();
   }
 
+  public void toggleCommandAlign(){
+    commandAlign = !commandAlign;
+  }
+
   /**
    * Resets the odometry to the specified pose.
    *
@@ -298,6 +302,7 @@ public class DriveSubsystem extends SubsystemBase {
     double ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond;
     double rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed;
 
+    //add offset for blue and red
     if(isAutoAlign.get() || commandAlign){
       rotDelivered = -(0.1 * alignTx); //+ Math.toRadians(5); //fix offset
     }
