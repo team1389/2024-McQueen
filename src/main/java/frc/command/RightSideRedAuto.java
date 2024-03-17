@@ -24,11 +24,15 @@ public class RightSideRedAuto extends SequentialCommandGroup{
             new AutoSetWristCmd(shooterSubsystem, .95, limelight),
             new AutoShootPIDCmd(shooterSubsystem, limelight.rpmTableForShoot(),limelight),
             new PreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem),
+            new DriveBackFromSideCmdPartOne(driveSubsystem),
+            new RedRightRotateAwayAuto(driveSubsystem),
             Commands.parallel(
-                new DriveBackFromRightRedCmd(driveSubsystem),
+                new DriveBackFromSideCmdPartTwo(driveSubsystem),
                 new IntakeCmd(intakeSubsystem)
             ),
-            new DriveTowardsRightRedCmd(driveSubsystem),
+            new DriveTowardSideCmdPartOne(driveSubsystem),
+            new RedRightRotateTowardAuto(driveSubsystem),
+            new DriveTowardSideCmdPartTwo(driveSubsystem),
             new AutoShootPIDCmd(shooterSubsystem, limelight.rpmTableForShoot(),limelight),
             new PreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem)
         );
