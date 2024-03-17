@@ -147,7 +147,7 @@ public class RobotMap {
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     public static final double kDirectionSlewRate = 10000; // radians per second //1.2, 10000
-    public static final double kMagnitudeSlewRate = 10000; // percent per second (1 = 100%) //1.8, 10000
+    public static final double kMagnitudeSlewRate = 2; // percent per second (1 = 100%) //1.8, 10000
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
     
