@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 
+
 public class OI {
 
 
@@ -79,6 +80,7 @@ public class OI {
     public final DriveSubsystem drivetrainSubsystem = new DriveSubsystem(limeLightVisionSubsystem);
     public final PhotonVisionSubsystem photonVisionSubsystem = new PhotonVisionSubsystem();
     
+    SendableChooser<Command> chooser = new SendableChooser<>();
 
     public OI() {
 
@@ -170,6 +172,14 @@ public class OI {
         NamedCommands.registerCommand("Align & Shoot", new AutonomousAlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         // m_chooser.addOption("Complex Auto", m_complexAuto);
+
+        final Command frontSpeaker2P = new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+      //  final Command quickBalanceCone = new QuickBalanceCone(drivetrain, arm, intake, autoMap);
+
+        chooser.addOption("front speaker 2P", frontSpeaker2P);
+       // chooser.addOption("right blue", quickBalanceCone);
+
+       SmartDashboard.putData("Auto choices", chooser);
     }
 
     /**
