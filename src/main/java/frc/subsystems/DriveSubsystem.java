@@ -242,7 +242,7 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    * @param rateLimit     Whether to enable rate limiting for smoother control.
    */
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit, Supplier<Boolean> isAutoAlign) {
+  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit, boolean isAutoAlign) {
     
     double xSpeedCommanded;
     double ySpeedCommanded;
@@ -303,7 +303,7 @@ public class DriveSubsystem extends SubsystemBase {
     double rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed;
 
     //add offset for blue and red
-    if(isAutoAlign.get() || commandAlign){
+    if(isAutoAlign || commandAlign){
       rotDelivered = -(0.1 * alignTx) + Math.toRadians(15); //fix offset
     }
 
