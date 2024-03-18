@@ -12,6 +12,7 @@ import frc.robot.RobotMap.AutoConstants;
 import frc.robot.RobotMap.OIConstants;
 import frc.robot.RobotMap.ShooterConstants;
 import frc.subsystems.*;
+import frc.util.AutoSelector;
 import frc.util.DPadButton;
 import frc.util.DPadButton.Direction;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
@@ -70,7 +71,6 @@ public class OI {
     
     
     public final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
-
     public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     public final LightsSubsystem lightSubsystem = new LightsSubsystem();
     public final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -78,6 +78,9 @@ public class OI {
     public final LimelightVisionSubsystem limeLightVisionSubsystem = new LimelightVisionSubsystem();
     public final DriveSubsystem drivetrainSubsystem = new DriveSubsystem(limeLightVisionSubsystem);
     public final PhotonVisionSubsystem photonVisionSubsystem = new PhotonVisionSubsystem();
+    private final SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+    public AutoSelector autoSelector = new AutoSelector(drivetrainSubsystem, indexerSubsystem, intakeSubsystem, shooterSubsystem);
     
 
     public OI() {
@@ -101,7 +104,9 @@ public class OI {
         manipLeftBumper.whileTrue(new ShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem));
-        manipRightTrigger.whileTrue(new ManualSetWrist(shooterSubsystem));
+        manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
+
+        manipStadia.onTrue(new HoldElevator(elevatorSubsystem));
 
         // manipXButton.whileTrue(new SetPowerCmd(shooterSubsystem));
 
@@ -244,9 +249,13 @@ public class OI {
         return !driveController.getRawButton(6);
     }
 
+    /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   */
     public Command getAutonomousCommand() {
-        return new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
-        // return new TheOnePiece(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+        return autoSelector.getSelected();
         // PathPlannerPath path = PathPlannerPath.fromPathFile("Test Run one");
 
         // Create a path following command using AutoBuilder. This will also trigger event markers.

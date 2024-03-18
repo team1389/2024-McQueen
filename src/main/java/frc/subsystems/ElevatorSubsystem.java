@@ -41,6 +41,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     private final PIDController elevatorPid;
     private SparkPIDController elevatorPidController;
     public boolean controllerInterrupt = true;
+    public SparkPIDController elevatorSparkPid;
 //set it to absolute mode
 
     public ElevatorSubsystem(){
@@ -148,6 +149,10 @@ public class ElevatorSubsystem extends SubsystemBase{
     public double getElevatorEncoderCount() { //encoder count - test
         double pos = elevatorEncoder.getAbsolutePosition();
         return (pos < 0.5) ? pos + (2*Math.PI) : pos;
+    }
+
+    public void HoldElevator(){
+        elevatorSparkPid.setReference(getRelEncoderPos(), CANSparkMax.ControlType.kPosition);
     }
 
 

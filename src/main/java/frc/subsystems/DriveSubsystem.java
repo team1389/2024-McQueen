@@ -115,7 +115,7 @@ public class DriveSubsystem extends SubsystemBase {
       new Pose2d(limelightVisionSubsystem.getRobotPoseX(), limelightVisionSubsystem.getRobotPoseY(), new Rotation2d(180)));
 
     commandAlign = false;
-    poseEstimator = new SwerveDrivePoseEstimator(RobotMap.driveKinematics,
+    poseEstimator = new SwerveDrivePoseEstimator(RobotMap.DriveConstants.kDriveKinematics,
             new Rotation2d(0), getModulePositions(), new Pose2d());
     AutoBuilder.configureHolonomic(
             this::getPose, // Robot pose supplier
@@ -304,7 +304,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     //add offset for blue and red
     if(isAutoAlign || commandAlign){
-      // rotDelivered = -(0.1 * alignTx); //+ Math.toRadians(5); //fix offset
+      rotDelivered = -(0.1 * alignTx) + Math.toRadians(15); //fix offset
     }
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
@@ -356,19 +356,6 @@ public class DriveSubsystem extends SubsystemBase {
     pigeon.reset();
     pigeon.setYaw(0);
   }
-//MIRA Recommends only configuring using phoenix tuner app
-  // public void PigeonConfig(){
-  //           Pigeon2Configuration configs = new Pigeon2Configuration();
-  //           // mount X-up
-  //           configs.MountPose.MountPoseYaw = 0;
-  //           configs.MountPose.MountPosePitch = 90;
-  //           configs.MountPose.MountPoseRoll = 0;
-  //           configs.Pigeon2Features.DisableNoMotionCalibration = false;
-  //           configs.Pigeon2Features.DisableTemperatureCompensation = false;
-  //           configs.Pigeon2Features.EnableCompass = false;
-  //           pigeon.setYaw(0);
-  //           pigeon.getConfigurator().apply(configs);
-  //       }
 
   /**
    * Returns the heading of the robot.
@@ -441,6 +428,10 @@ public void driveRobotRelative(ChassisSpeeds speeds){
           new Translation2d(-TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0),
           new Translation2d(-TRACK_WIDTH_X / 2.0, -TRACK_WIDTH_Y / 2.0)
         };
+      }
+
+      public ChassisSpeeds getChassisSpeeds(){
+        return this.kinematics.toChassisSpeeds(getModuleStates());
       }
 
 }
