@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 
+
 public class OI {
 
 
@@ -82,6 +83,7 @@ public class OI {
 
     public AutoSelector autoSelector = new AutoSelector(drivetrainSubsystem, indexerSubsystem, intakeSubsystem, shooterSubsystem);
     
+    SendableChooser<Command> chooser = new SendableChooser<>();
 
     public OI() {
 
@@ -175,6 +177,14 @@ public class OI {
         NamedCommands.registerCommand("Align & Shoot", new AutonomousAlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         // m_chooser.addOption("Complex Auto", m_complexAuto);
+
+        final Command frontSpeaker2P = new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+      //  final Command quickBalanceCone = new QuickBalanceCone(drivetrain, arm, intake, autoMap);
+
+        chooser.addOption("front speaker 2P", frontSpeaker2P);
+       // chooser.addOption("right blue", quickBalanceCone);
+
+       SmartDashboard.putData("Auto choices", chooser);
     }
 
     /**
@@ -255,7 +265,10 @@ public class OI {
    * @return the command to run in autonomous
    */
     public Command getAutonomousCommand() {
-        return autoSelector.getSelected();
+        return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+        // return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+        // return new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+        // return new TheOnePiece(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // PathPlannerPath path = PathPlannerPath.fromPathFile("Test Run one");
 
         // Create a path following command using AutoBuilder. This will also trigger event markers.
