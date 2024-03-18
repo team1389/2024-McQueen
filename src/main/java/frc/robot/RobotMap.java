@@ -12,8 +12,6 @@ import edu.wpi.first.math.util.Units;
  */
 public class RobotMap {
 
-    
-
     // public static final class DriveConstants {
 
         // Distance between right and left wheels (meters)
@@ -28,44 +26,6 @@ public class RobotMap {
                 new Translation2d(ROBOT_LENGTH / 2, ROBOT_WIDTH / 2),
                 new Translation2d(-ROBOT_LENGTH / 2, -ROBOT_WIDTH / 2),
                 new Translation2d(-ROBOT_LENGTH / 2, ROBOT_WIDTH / 2));
-
-    //     // FL is front left, BR is back right, etc.
-
-    //     public static final int FL_DRIVE_PORT = 2;
-    //     public static final int BL_DRIVE_PORT = 4;
-    //     public static final int FR_DRIVE_PORT = 6;
-    //     public static final int BR_DRIVE_PORT = 8;
-
-    //     public static final int FL_TURN_PORT = 3;
-    //     public static final int BL_TURN_PORT = 5;
-    //     public static final int FR_TURN_PORT = 7;
-    //     public static final int BR_TURN_PORT = 9;
-
-    //     // Sometimes encoders are mounted backwards based on robot design, this fixes
-    //     // that although it's not a thing on stargazer
-    //     public static final boolean FL_TURN_REVERSED = false;
-    //     public static final boolean BL_TURN_REVERSED = false;
-    //     public static final boolean FR_TURN_REVERSED = false;
-    //     public static final boolean BR_TURN_REVERSED = false;
-
-    //     public static final boolean FL_DRIVE_REVERSED = true;
-    //     public static final boolean BL_DRIVE_REVERSED = true;
-    //     public static final boolean FR_DRIVE_REVERSED = true;
-    //     public static final boolean BR_DRIVE_REVERSED = true;
-
-    //     public static final boolean FL_ABS_REVERSED = true;
-    //     public static final boolean BL_ABS_REVERSED = true;
-    //     public static final boolean FR_ABS_REVERSED = true;
-    //     public static final boolean BR_ABS_REVERSED = true;
-
-    //     // The physical max if motors go full speed
-    //     public static final double MAX_METERS_PER_SEC = 10; 
-    //     public static final double MAX_RADIANS_PER_SEC = 12; 
-
-    //     public static final double MAX_LINEAR_ACCEL = 20; // m/s/s  
-    //     public static final double MAX_ANGULAR_ACCEL = 23; // rad/s/s 
-
-    // }
 
     public static final class MotorPorts{
         public static final int SHOOT_BOTTOM = 11; 
