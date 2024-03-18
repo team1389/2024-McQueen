@@ -12,6 +12,7 @@ import frc.robot.RobotMap.AutoConstants;
 import frc.robot.RobotMap.OIConstants;
 import frc.robot.RobotMap.ShooterConstants;
 import frc.subsystems.*;
+import frc.util.AutoSelector;
 import frc.util.DPadButton;
 import frc.util.DPadButton.Direction;
 import edu.wpi.first.math.MathUtil;
@@ -69,7 +70,6 @@ public class OI {
     
     
     public final IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
-
     public final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     public final LightsSubsystem lightSubsystem = new LightsSubsystem();
     public final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -79,6 +79,8 @@ public class OI {
     public final PhotonVisionSubsystem photonVisionSubsystem = new PhotonVisionSubsystem();
     private final SendableChooser<Command> m_chooser = new SendableChooser<>();
     private final SendableChooser<Command> autoChooser;
+
+    public AutoSelector autoSelector = new AutoSelector(drivetrainSubsystem, indexerSubsystem, intakeSubsystem, shooterSubsystem);
     
 
     public OI() {
@@ -251,8 +253,13 @@ public class OI {
         return !driveController.getRawButton(6);
     }
 
+    /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   */
     public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
+        return autoSelector.getSelected();
         // PathPlannerPath path = PathPlannerPath.fromPathFile("Test Run one");
 
         // // Create a path following command using AutoBuilder. This will also trigger event markers.

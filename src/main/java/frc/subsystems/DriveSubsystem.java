@@ -115,7 +115,7 @@ public class DriveSubsystem extends SubsystemBase {
       new Pose2d(limelightVisionSubsystem.getRobotPoseX(), limelightVisionSubsystem.getRobotPoseY(), new Rotation2d(180)));
 
     commandAlign = false;
-    poseEstimator = new SwerveDrivePoseEstimator(RobotMap.driveKinematics,
+    poseEstimator = new SwerveDrivePoseEstimator(RobotMap.DriveConstants.kDriveKinematics,
             new Rotation2d(0), getModulePositions(), new Pose2d());
     AutoBuilder.configureHolonomic(
             this::getPose, // Robot pose supplier
@@ -304,7 +304,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     //add offset for blue and red
     if(isAutoAlign.get() || commandAlign){
-      rotDelivered = -(0.1 * alignTx); //+ Math.toRadians(5); //fix offset
+      rotDelivered = -(0.1 * alignTx) + Math.toRadians(15); //fix offset
     }
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
@@ -441,6 +441,10 @@ public void driveRobotRelative(ChassisSpeeds speeds){
           new Translation2d(-TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0),
           new Translation2d(-TRACK_WIDTH_X / 2.0, -TRACK_WIDTH_Y / 2.0)
         };
+      }
+
+      public ChassisSpeeds getChassisSpeeds(){
+        return this.kinematics.toChassisSpeeds(getModuleStates());
       }
 
 }

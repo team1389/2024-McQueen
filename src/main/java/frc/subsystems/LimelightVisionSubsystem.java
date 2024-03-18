@@ -101,9 +101,7 @@ public class LimelightVisionSubsystem extends SubsystemBase{
             rpm = 3750;
         } else if (distance < 14){
             rpm = 4000;
-        } else if (distance <= 16){
-            rpm = 4250;
-        } else if (distance > 16) {
+        } else if (distance >= 14){
             rpm = 4250;
         }
         return rpm;

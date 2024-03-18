@@ -143,14 +143,14 @@ public class RobotMap {
     public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 5.74; //10, //4.8
+    public static final double kMaxSpeedMetersPerSecond = 7; //10, //4.8, 5.74
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     public static final double kDirectionSlewRate = 10000; // radians per second //1.2, 10000
-    public static final double kMagnitudeSlewRate = 10000; // percent per second (1 = 100%) //1.8, 10000
+    public static final double kMagnitudeSlewRate = 2.0; // percent per second (1 = 100%) //1.8, 10000
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
-    
+    public static final double kTrackRadius = Units.inchesToMeters(19.6 * Math.sqrt(2)/2);
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(19.625);
