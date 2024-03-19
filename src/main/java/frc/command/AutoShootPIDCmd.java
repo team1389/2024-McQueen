@@ -51,8 +51,8 @@ public class AutoShootPIDCmd extends Command{
         shooterSubsytem.stop();
     }
 
-    @Override
-    public boolean isFinished(){
-        return shooterSubsytem.isAtTargetRPM(rpm);
-    }
+    // @Override
+    // public boolean isFinished(){
+    //     return shooterSubsytem.isAtTargetRPM(rpm);
+    // }
 }

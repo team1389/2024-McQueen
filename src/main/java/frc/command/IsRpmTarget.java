@@ -17,6 +17,6 @@ public class IsRpmTarget extends Command{
 
     @Override
     public boolean isFinished(){
-        return ((Math.abs(shooterSubsystem.getTopSpeedRPM()-limelightVisionSubsystem.rpmTableForShoot())<500)&&(Math.abs(shooterSubsystem.getBottomSpeedRPM()-limelightVisionSubsystem.rpmTableForShoot())<500));
+        return ((Math.abs(shooterSubsystem.getBottomSpeedRPM()-limelightVisionSubsystem.rpmTableForShoot())<500));
     }
 }

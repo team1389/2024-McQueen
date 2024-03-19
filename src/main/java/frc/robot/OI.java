@@ -18,6 +18,7 @@ import frc.util.DPadButton;
 import frc.util.DPadButton.Direction;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -90,11 +91,11 @@ public class OI {
 
         initControllers();
 
-        manipBButton.whileTrue(new OverridePreShootCmd(indexerSubsystem,intakeSubsystem));
+        manipAButton.whileTrue(new ShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         manipBButton.whileTrue(new OverridePreShootCmd(indexerSubsystem,intakeSubsystem));
 
-        manipRightBumper.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
+        manipRightBumper.onTrue(new PreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem));
 
         manipXButton.whileTrue(new AutoSetWristCmd(shooterSubsystem, limeLightVisionSubsystem.calculateShooterAngle(), limeLightVisionSubsystem));
 
@@ -102,7 +103,7 @@ public class OI {
       //  .onFalse(new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
 
         manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem));
-        manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
+        manipRightTrigger.whileTrue(new AmpCmd(intakeSubsystem, indexerSubsystem));
 
       //  manipStadia.onTrue(new HoldElevator(elevatorSubsystem));
         manipStadia.whileTrue(new ShootSeq(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
@@ -136,11 +137,9 @@ public class OI {
 
         driveYButton.onTrue(new InstantCommand(() -> {lightSubsystem.isRainbowing = true;}));
 
-        // NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
-        // NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
-        // NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
-        // NamedCommands.registerCommand("Align & Shoot", new AutonomousAlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
-
+        NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
+        NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
+        NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
         
         // autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -235,6 +234,7 @@ public class OI {
    * @return the command to run in autonomous
    */
     public Command getAutonomousCommand() {
+        return new PathPlannerAuto("3 middle close piece");
       //  return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
@@ -243,6 +243,7 @@ public class OI {
 
         // Create a path following command using AutoBuilder. This will also trigger event markers.
         // return AutoBuilder.followPath(path);
-        return autoSelector.getSelected();
+        // return autoSelector.getSelected();
   }
+
 }
