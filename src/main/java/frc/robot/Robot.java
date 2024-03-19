@@ -21,7 +21,7 @@ public class Robot extends TimedRobot {
      * Initialize all systems here as public & static.
      * Ex: public static System system = new System();
      */
-    private OI oi;
+    public static OI oi = new OI();
     private Command autoCommand;
     private DriveSubsystem drivetrain;
     // SwerveTelemetry frontLeftTelemetry;
@@ -32,12 +32,9 @@ public class Robot extends TimedRobot {
 
 
 
-  //  public static OI;
-
 
     @Override
     public void robotInit() {
-        oi = new OI();
         oi.lightSubsystem.rainbow();
 
 
