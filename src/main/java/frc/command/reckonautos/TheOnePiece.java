@@ -1,21 +1,24 @@
-package frc.command;
+package frc.command.reckonautos;
 
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.command.AutoSetWristCmd;
+import frc.command.AutoShootPIDCmd;
+import frc.command.PreShootCmd;
 import frc.subsystems.DriveSubsystem;
 import frc.subsystems.IndexerSubsystem;
 import frc.subsystems.IntakeSubsystem;
 import frc.subsystems.LimelightVisionSubsystem;
 import frc.subsystems.ShooterSubsystem;
 
-public class RightSideRedAuto extends SequentialCommandGroup{
+public class TheOnePiece extends SequentialCommandGroup{
     private IntakeSubsystem intakeSubsystem;
     private IndexerSubsystem indexerSubsystem;
     private ShooterSubsystem shooterSubsystem;
     private LimelightVisionSubsystem limelight;
     private DriveSubsystem driveSubsystem;
 
-    public RightSideRedAuto(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, LimelightVisionSubsystem limelight, DriveSubsystem driveSubsystem){
+    public TheOnePiece(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, LimelightVisionSubsystem limelight, DriveSubsystem driveSubsystem){
         this.intakeSubsystem = intakeSubsystem;
         this.indexerSubsystem = indexerSubsystem;
         this.shooterSubsystem = shooterSubsystem;
@@ -24,17 +27,7 @@ public class RightSideRedAuto extends SequentialCommandGroup{
             new AutoSetWristCmd(shooterSubsystem, .95, limelight),
             new AutoShootPIDCmd(shooterSubsystem, limelight.rpmTableForShoot(),limelight),
             new PreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem),
-            new DriveBackFromSideCmdPartOne(driveSubsystem),
-            new RedRightRotateAwayAuto(driveSubsystem),
-            Commands.parallel(
-                new DriveBackFromSideCmdPartTwo(driveSubsystem),
-                new IntakeCmd(intakeSubsystem)
-            ),
-            new DriveTowardSideCmdPartOne(driveSubsystem),
-            new RedRightRotateTowardAuto(driveSubsystem),
-            new DriveTowardSideCmdPartTwo(driveSubsystem),
-            new AutoShootPIDCmd(shooterSubsystem, limelight.rpmTableForShoot(),limelight),
-            new PreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem)
+            new DriveBackFromSpeakerCmd(driveSubsystem)
         );
     }
 }

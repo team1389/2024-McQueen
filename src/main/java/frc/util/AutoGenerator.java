@@ -66,6 +66,16 @@ public class AutoGenerator {
       .alongWith(new InstantCommand(()->intake.runIntake()));
     }
 
+    public Command shootingSeq(double setpoint, int rpm){
+      return new SequentialCommandGroup(
+        new InstantCommand(()->shooter.setWrist(setpoint)),
+        new WaitCommand(.25),
+        new RunCommand(()->shooter.runShoot(rpm), shooter)
+      .until(()->shooter.isAtTargetRPM(rpm-500))
+      .andThen(new PreShootCmd(indexer, intake, shooter))
+      ); 
+    }
+
     public Command scoringSequence(double setpoint, int rpm){
       return new SequentialCommandGroup(
         new InstantCommand(()->shooter.setWrist(setpoint)),

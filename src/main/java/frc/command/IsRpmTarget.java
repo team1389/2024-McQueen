@@ -7,7 +7,7 @@ import frc.subsystems.ShooterSubsystem;
 public class IsRpmTarget extends Command{
     
     private ShooterSubsystem shooterSubsystem;
-    private         LimelightVisionSubsystem limelightVisionSubsystem;
+    private LimelightVisionSubsystem limelightVisionSubsystem;
 
 
     public IsRpmTarget(ShooterSubsystem shooterSubsystem, LimelightVisionSubsystem limelightVisionSubsystem){

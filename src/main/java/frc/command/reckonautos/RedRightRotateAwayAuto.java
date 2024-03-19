@@ -1,15 +1,15 @@
-package frc.command;
+package frc.command.reckonautos;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.DriveSubsystem;
 
-public class BlueRightRotateTowardAuto extends Command {
+public class RedRightRotateAwayAuto extends Command {
     private final DriveSubsystem drivetrain;
     private final Timer timer;
 
-    public BlueRightRotateTowardAuto(DriveSubsystem drivetrain) {
+    public RedRightRotateAwayAuto(DriveSubsystem drivetrain) {
         this.drivetrain = drivetrain;
         timer = new Timer();
         addRequirements(drivetrain);

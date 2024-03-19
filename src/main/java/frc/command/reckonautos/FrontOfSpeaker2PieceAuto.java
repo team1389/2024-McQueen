@@ -1,7 +1,11 @@
-package frc.command;
+package frc.command.reckonautos;
 
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.command.AutoSetWristCmd;
+import frc.command.AutoShootPIDCmd;
+import frc.command.IntakeCmd;
+import frc.command.PreShootCmd;
 import frc.subsystems.DriveSubsystem;
 import frc.subsystems.IndexerSubsystem;
 import frc.subsystems.IntakeSubsystem;

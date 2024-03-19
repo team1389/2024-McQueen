@@ -7,13 +7,14 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.util.AutoGenerator;
+import frc.util.PathPlannerBase;
 
 /** Add your docs here. */
 public class Top2PAuto extends AutoPaths{
 
     @Override
     public Command load(AutoGenerator autos) {
-        String p1Name = "close top piece 1";
+        String p1Name = "close_top_piece_1";
         PathPlannerPath p1 = PathPlannerPath.fromPathFile(p1Name);
         var alliance = DriverStation.getAlliance();
     
@@ -30,7 +31,8 @@ public class Top2PAuto extends AutoPaths{
             autos.scoringSequence(.95, 3000),   
             autos.resetOdometry(startingPose),
             autos.pathIntake(p1Name),
-            autos.scoringSequence(.9, 3500)
+            autos.scoringSequence(.9, 3500),
+            PathPlannerBase.followTrajectory(p1Name)
         );
     }
     

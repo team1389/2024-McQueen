@@ -242,7 +242,7 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    * @param rateLimit     Whether to enable rate limiting for smoother control.
    */
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit, boolean isAutoAlign) {
+  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit, Supplier<Boolean> isAutoAlign) {
     
     double xSpeedCommanded;
     double ySpeedCommanded;
@@ -304,7 +304,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     //add offset for blue and red
     if(isAutoAlign.get() || commandAlign){
-      rotDelivered = -(0.1 * alignTx) + Math.toRadians(50); //fix offset
+      rotDelivered = -(0.1 * alignTx) + Math.toRadians(50); 
     }
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(

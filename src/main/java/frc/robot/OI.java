@@ -8,6 +8,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import frc.command.*;
+import frc.command.reckonautos.FrontOfSpeaker2PieceAuto;
 import frc.robot.RobotMap.AutoConstants;
 import frc.robot.RobotMap.OIConstants;
 import frc.robot.RobotMap.ShooterConstants;
@@ -89,15 +90,9 @@ public class OI {
 
         initControllers();
 
-    //    manipAButton.whileTrue(new AutoAlignCmd(drivetrainSubsystem, limeLightVisionSubsystem));
-
         manipBButton.whileTrue(new OverridePreShootCmd(indexerSubsystem,intakeSubsystem));
 
         manipBButton.whileTrue(new OverridePreShootCmd(indexerSubsystem,intakeSubsystem));
-
-      //  manipBButton.onTrue(new IntakeCmd(intakeSubsystem));
-
-       // manipLeftBumper.onTrue(new AlignShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem, drivetrainSubsystem,limeLightVisionSubsystem));
 
         manipRightBumper.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
 
@@ -105,7 +100,6 @@ public class OI {
 
         manipLeftBumper.whileTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
       //  .onFalse(new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
-        manipLeftBumper.whileTrue(new ShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem));
         manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
@@ -113,40 +107,8 @@ public class OI {
       //  manipStadia.onTrue(new HoldElevator(elevatorSubsystem));
         manipStadia.whileTrue(new ShootSeq(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
-        // manipXButton.whileTrue(new SetPowerCmd(shooterSubsystem));
-
-        // manipMenuButton.whileTrue(new RunElevatorDownCmd(elevatorSubsystem));
-        // manipEllipsisButton.whileTrue(new RunElevatorUpCmd(elevatorSubsystem));
-
-
-
         manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
-        manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));
-        
-
-        // manipLeftTrigger.whileTrue(new RunIntakeCmd(intakeSubsystem).andThen(new PreAmpCmd(indexerSubsystem,intakeSubsystem)));
-
-       // manipBButton.whileTrue(new RunIndexer(indexerSubsystem, false));
-       // manipYButton.whileTrue(new IndexAndShoot(indexerSubsystem, intakeSubsystem));
-        //  manipYButton.whileTrue(new ShootToSpeaker(shooter, indexerSubsystem, intakeSubsystem));
-       //  manipYButton.onTrue(new ContinueIntake(intakeSubsystem).alongWith(new RunIndexer(indexerSubsystem, true).alongWith(new Shoot(shooter, intakeSubsystem)))); //TODO
-        // manipEllipsisButton.whileTrue(new RunIndexer(indexerSubsystem, true)); // indexerSubsystem to amp
-        // manipXButton.onTrue(new RunElevatorUpCmd(elevatorSubsystem).andThen(new RunIntakeCmd(intakeSubsystem)).alongWith(new RunIndexerCmd(indexerSubsystem, false)));
-        // manipLeftTrigger.whileTrue(new RunIntakeCmd(intakeSubsystem));
-        //  manipLeftTrigger.onTrue(new SetElevatorCmd(elevatorSubsystem, 2, true)); //.605 //TODO
-        //  manipRightTrigger.onTrue(new SetElevatorCmd(elevatorSubsystem, 1.2, true)); //.511 //TODO
-       // manipLeftTrigger.onTrue(new RunIntake(intakeSubsystem));
-        // manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
-        // manipMenuButton.whileTrue(new RunOuttake(intakeSubsystem));
-        // manipLeftBumper.whileTrue(new ShootPIDCmd(shooterSubsystem, ShooterConstants.kTopRPM).alongWith(new HoldPositionCmd(shooterSubsystem)));
-        // manipRightBumper.whileTrue(new RunIntakeCmd(intakeSubsystem).alongWith(new RunIndexerCmd(indexerSubsystem, true)));
-        // manipYButton.whileTrue(new AlignShooter(shooter, shooter));
-       // manipGoogle.onTrue(new InstantCommand(() -> shooter.setTargetAngle(shooter.getWristPos())).alongWith(new InstantCommand(() -> shooter.holdPosition())));
-        // manipFullscreen.whileTrue(new SetShoot(shooter));
-        
-        // manipStadia.whileTrue(new AutoAlign(drivetrainSubsystem, limeLightVisionSubsystem));
-
-        
+        manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));     
 
  
         shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
@@ -163,7 +125,7 @@ public class OI {
                 -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
-                true, true, true),
+                true, true, () -> manipLeftBumper.getAsBoolean()),
             drivetrainSubsystem));
 
         // Press A button -> zero gyro headingq
@@ -183,8 +145,6 @@ public class OI {
         // autoChooser = AutoBuilder.buildAutoChooser();
 
         // SmartDashboard.putData("Auto Chooser", autoChooser);
-
-        // m_chooser.addOption("Complex Auto", m_complexAuto);
 
         final Command frontSpeaker2P = new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
       //  final Command quickBalanceCone = new QuickBalanceCone(drivetrain, arm, intake, autoMap);
@@ -275,7 +235,7 @@ public class OI {
    * @return the command to run in autonomous
    */
     public Command getAutonomousCommand() {
-        return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+      //  return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new TheOnePiece(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
@@ -283,5 +243,6 @@ public class OI {
 
         // Create a path following command using AutoBuilder. This will also trigger event markers.
         // return AutoBuilder.followPath(path);
+        return autoSelector.getSelected();
   }
 }

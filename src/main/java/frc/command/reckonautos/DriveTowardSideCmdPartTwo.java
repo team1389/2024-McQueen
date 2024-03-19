@@ -1,15 +1,15 @@
-package frc.command;
+package frc.command.reckonautos;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.DriveSubsystem;
 
-public class PleaseJustGoPastTheWhiteLineInAutoWeHaveHadItUpToHere extends Command {
+public class DriveTowardSideCmdPartTwo extends Command {
     private final DriveSubsystem drivetrain;
     private final Timer timer;
 
-    public PleaseJustGoPastTheWhiteLineInAutoWeHaveHadItUpToHere(DriveSubsystem drivetrain) {
+    public DriveTowardSideCmdPartTwo(DriveSubsystem drivetrain) {
         this.drivetrain = drivetrain;
         timer = new Timer();
         addRequirements(drivetrain);
@@ -18,7 +18,8 @@ public class PleaseJustGoPastTheWhiteLineInAutoWeHaveHadItUpToHere extends Comma
     @Override
     public void initialize() {
         // just go forward for one second with no regard for orientation (it's auto, we make the robot start at a known-good pose)
-        drivetrain.driveRobotRelative(new ChassisSpeeds(3, 0, 0));
+        //1.0472
+        drivetrain.driveRobotRelative(new ChassisSpeeds(-2, 0, 0));
         timer.start();
     }
 
@@ -35,6 +36,6 @@ public class PleaseJustGoPastTheWhiteLineInAutoWeHaveHadItUpToHere extends Comma
 
     @Override
     public boolean isFinished() {
-        return timer.hasElapsed(1);
+        return timer.hasElapsed(.25);
     }
 }
