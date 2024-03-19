@@ -242,7 +242,7 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    * @param rateLimit     Whether to enable rate limiting for smoother control.
    */
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit, Supplier<Boolean> isAutoAlign) {
+  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit, boolean isAutoAlign) {
     
     double xSpeedCommanded;
     double ySpeedCommanded;
@@ -356,19 +356,6 @@ public class DriveSubsystem extends SubsystemBase {
     pigeon.reset();
     pigeon.setYaw(0);
   }
-//MIRA Recommends only configuring using phoenix tuner app
-  // public void PigeonConfig(){
-  //           Pigeon2Configuration configs = new Pigeon2Configuration();
-  //           // mount X-up
-  //           configs.MountPose.MountPoseYaw = 0;
-  //           configs.MountPose.MountPosePitch = 90;
-  //           configs.MountPose.MountPoseRoll = 0;
-  //           configs.Pigeon2Features.DisableNoMotionCalibration = false;
-  //           configs.Pigeon2Features.DisableTemperatureCompensation = false;
-  //           configs.Pigeon2Features.EnableCompass = false;
-  //           pigeon.setYaw(0);
-  //           pigeon.getConfigurator().apply(configs);
-  //       }
 
   /**
    * Returns the heading of the robot.

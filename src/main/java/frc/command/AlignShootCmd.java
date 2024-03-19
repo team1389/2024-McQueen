@@ -13,7 +13,6 @@ import frc.subsystems.ShooterSubsystem;
 import frc.util.LimelightHelpers;
 
 public class AlignShootCmd extends SequentialCommandGroup{
-
     public AlignShootCmd(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, LimelightVisionSubsystem limelightVisionSubsystem){
         addCommands(
             Commands.parallel(

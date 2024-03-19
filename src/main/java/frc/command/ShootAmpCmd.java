@@ -31,7 +31,7 @@ public class ShootAmpCmd extends Command{
 
     @Override
     public boolean isFinished(){
-        return (timer>25);
+        return (timer>50);
         // return !intakeSubsystem.hitSensor();
     }
 

@@ -8,12 +8,12 @@ import frc.subsystems.ShooterSubsystem;
 import frc.subsystems.IndexerSubsystem;
 import frc.subsystems.IntakeSubsystem;
 
-public class PreShootCmd extends Command{
+public class OverridePreShootCmd extends Command{
      private ShooterSubsystem shooterSubsystem;
      private IndexerSubsystem indexerSubsystem;
      private IntakeSubsystem intakeSubsystem;
      int timer = 0;
-    public PreShootCmd(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem){
+    public OverridePreShootCmd(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem){
         this.indexerSubsystem = indexerSubsystem;
         this.intakeSubsystem = intakeSubsystem;
         this.shooterSubsystem = shooterSubsystem;
@@ -33,15 +33,7 @@ public class PreShootCmd extends Command{
     public void end(boolean interrupted){
         indexerSubsystem.stop();
         intakeSubsystem.stop();
-        // shooterSubsystem.stop();
         // timer = 0;
-    }
-
-    @Override
-    public boolean isFinished(){
-        // return (timer>20);
-        SmartDashboard.putBoolean("IsFinished PreeShoot", true);
-        return !(intakeSubsystem.hitSensor());
     }
 
 }
