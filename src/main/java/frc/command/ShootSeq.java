@@ -12,14 +12,13 @@ import frc.subsystems.LimelightVisionSubsystem;
 import frc.subsystems.ShooterSubsystem;
 import frc.util.LimelightHelpers;
 
-public class AlignShootCmd extends SequentialCommandGroup{
+public class ShootSeq extends SequentialCommandGroup{
 
-    public AlignShootCmd(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, LimelightVisionSubsystem limelightVisionSubsystem){
+    public ShootSeq(IntakeSubsystem intakeSubsystem, IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, DriveSubsystem driveSubsystem, LimelightVisionSubsystem limelightVisionSubsystem){
         addCommands(
             Commands.parallel(
-             // new SetWristCmd(shooterSubsystem, limelightVisionSubsystem.calculateShooterAngle(), limelightVisionSubsystem),
                     Commands.sequence(
-                        new AutoShootPIDCmd(shooterSubsystem, 3750, limelightVisionSubsystem),//, //limelightVisionSubsystem.rpmTableForShoot()
+                        new RunShoot(shooterSubsystem),
                         new PreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem)
             )
             )

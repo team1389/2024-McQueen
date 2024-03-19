@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.9,
-  "robotLength": 0.9,
+  "robotWidth": 0.775,
+  "robotLength": 0.775,
   "holonomicMode": true,
   "pathFolders": [
     "close piece auto paths"

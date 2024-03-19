@@ -10,7 +10,7 @@ import com.revrobotics.CANSparkMax;
 import frc.robot.RobotMap;
 
 public class IndexerSubsystem extends SubsystemBase{
-    double indexerMotorSpeed = 0.2;
+    double indexerMotorSpeed = .2; //.2
     private CANSparkFlex indexerMotor;
 
     public IndexerSubsystem(){

@@ -97,7 +97,6 @@ public class AutoGenerator {
     }
 
 
-    // //TODO: Test CMD
     // public Command runIntake(){
     //   return new ParallelCommandGroup(
     //     new InstantCommand(()->pivot.goToAngle(75)),
@@ -111,20 +110,20 @@ public class AutoGenerator {
     //   );
     // }
 
-    public Command stopIntake(){
-      return new ParallelCommandGroup(
-        new InstantCommand(()->indexer.stop()),
-        new InstantCommand(()->intake.stop())
-      );
-    }
+    // public Command stopIntake(){
+    //   return new ParallelCommandGroup(
+    //     new InstantCommand(()->indexer.stop()),
+    //     new InstantCommand(()->intake.stop())
+    //   );
+    // }
 
-    public Command stopAll(){
-      return new ParallelCommandGroup(
-        new InstantCommand(()->indexer.stop()),
-        new InstantCommand(()->intake.stop()),
-        new InstantCommand(()->shooter.stop())
-      );
-    }
+    // public Command stopAll(){
+    //   return new ParallelCommandGroup(
+    //     new InstantCommand(()->indexer.stop()),
+    //     new InstantCommand(()->intake.stop()),
+    //     new InstantCommand(()->shooter.stop())
+    //   );
+    // }
 
     // public Command setPivotSetpoint(double setpoint){
     //   return new InstantCommand(()->pivot.setPivotSetpoint(setpoint));

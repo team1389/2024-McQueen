@@ -97,11 +97,11 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        // m_autonomousCommand = oi.getAutonomousCommand();
-        // schedule the autonomous command (example)
-        // if (m_autonomousCommand != null) {
-        //     m_autonomousCommand.schedule();
-        // }
+        m_autonomousCommand = oi.getAutonomousCommand();
+       // schedule the autonomous command (example)
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.schedule();
+        }
     }
 
     /**
@@ -109,7 +109,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousPeriodic() {
-        CommandScheduler.getInstance().run();
+        // CommandScheduler.getInstance().run();
 
     }
 

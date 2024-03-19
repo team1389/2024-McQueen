@@ -24,8 +24,6 @@ public class LimelightVisionSubsystem extends SubsystemBase{
 
     double botXPose = botPose.getX();
     double botYPose = botPose.getY();
-
-   // double botPose = li
     
     double tx = LimelightHelpers.getTX("");
     double ty = LimelightHelpers.getTY("") * (Math.PI/180);
@@ -48,6 +46,7 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     double angle = .87;
     double zachAngle = .87;
 
+    //measure tx from different angles and make a formula
 
 
     public LimelightVisionSubsystem(){
@@ -57,6 +56,10 @@ public class LimelightVisionSubsystem extends SubsystemBase{
         LimelightHelpers.getTX("");
         
     }
+
+    // public double getAngle(){
+    //     return angle;
+    // }
 
     public double getRobotPoseX(){
         return blueBotPose.getX();
@@ -121,7 +124,7 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     }
     
     public double getDistanceSpeaker(){
-        return Math.sqrt(Math.pow(getXPoseSpeaker(),2) + Math.pow(getYPoseSpeaker(), 2)) + 1;
+        return Math.sqrt(Math.pow(getXPoseSpeaker(),2) + Math.pow(getYPoseSpeaker(), 2));
     }
     
 

@@ -78,7 +78,6 @@ public class OI {
     public final DriveSubsystem drivetrainSubsystem = new DriveSubsystem(limeLightVisionSubsystem);
     public final PhotonVisionSubsystem photonVisionSubsystem = new PhotonVisionSubsystem();
     private final SendableChooser<Command> m_chooser = new SendableChooser<>();
-    private final SendableChooser<Command> autoChooser;
 
     public AutoSelector autoSelector = new AutoSelector(drivetrainSubsystem, indexerSubsystem, intakeSubsystem, shooterSubsystem);
     
@@ -87,7 +86,7 @@ public class OI {
 
         initControllers();
 
-        manipAButton.whileTrue(new AutoAlignCmd(drivetrainSubsystem, limeLightVisionSubsystem));
+    //    manipAButton.whileTrue(new AutoAlignCmd(drivetrainSubsystem, limeLightVisionSubsystem));
 
       //  manipBButton.onTrue(new IntakeCmd(intakeSubsystem));
 
@@ -97,13 +96,14 @@ public class OI {
 
         manipXButton.whileTrue(new SetWristCmd(shooterSubsystem, limeLightVisionSubsystem.calculateShooterAngle(), limeLightVisionSubsystem));
 
-        manipLeftBumper.onTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+        manipLeftBumper.whileTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
       //  .onFalse(new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
 
         manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem));
         manipRightTrigger.whileTrue(new RunOuttakeCmd(intakeSubsystem));
 
-        manipStadia.onTrue(new HoldElevator(elevatorSubsystem));
+      //  manipStadia.onTrue(new HoldElevator(elevatorSubsystem));
+        manipStadia.whileTrue(new ShootSeq(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         // manipXButton.whileTrue(new SetPowerCmd(shooterSubsystem));
 
@@ -168,15 +168,15 @@ public class OI {
 
         driveYButton.onTrue(new InstantCommand(() -> {lightSubsystem.isRainbowing = true;}));
 
-        NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
-        NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
-        NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
-        NamedCommands.registerCommand("Align & Shoot", new AutonomousAlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+        // NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
+        // NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
+        // NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
+        // NamedCommands.registerCommand("Align & Shoot", new AutonomousAlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         
-        autoChooser = AutoBuilder.buildAutoChooser();
+        // autoChooser = AutoBuilder.buildAutoChooser();
 
-        SmartDashboard.putData("Auto Chooser", autoChooser);
+        // SmartDashboard.putData("Auto Chooser", autoChooser);
 
         // m_chooser.addOption("Complex Auto", m_complexAuto);
     }
@@ -202,6 +202,8 @@ public class OI {
         manipFullscreen = new JoystickButton(manipController, 15);
         manipGoogle = new JoystickButton(manipController, 14);
         manipEllipsisButton = new JoystickButton(manipController, 9);
+
+        manipStadia = new JoystickButton(manipController, 11);
 
         driveRightBumper = new JoystickButton(driveController, 6);
         driveRightTrigger = new JoystickButton(driveController, 12);

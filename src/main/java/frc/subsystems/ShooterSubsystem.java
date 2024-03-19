@@ -107,10 +107,12 @@ public class ShooterSubsystem extends SubsystemBase{
         // SmartDashboard.putNumber("P Bottom Shooter", 0.1);
         // SmartDashboard.putNumber("I Bottom Shooter", 0.0);
         // SmartDashboard.putNumber("D Bottom Shooter", 0.000);
+        SmartDashboard.putNumber("FF Bottom Shooter", 1.75);
 
         // SmartDashboard.putNumber("P Top Shooter", 0.1);
         // SmartDashboard.putNumber("I Top Shooter", 0.0);
         // SmartDashboard.putNumber("D Top Shooter", 0.000);
+        SmartDashboard.putNumber("FF Top Shooter", 1.75);
 
         //correct value
         wristAbsEncoder = new DutyCycleEncoder(8); // this is a through bore encoder
@@ -134,6 +136,11 @@ public class ShooterSubsystem extends SubsystemBase{
         topPidController.setReference(desiredRPM, CANSparkMax.ControlType.kVelocity);
         bottomPidController.setReference(desiredRPM, CANSparkMax.ControlType.kVelocity);
     }
+
+    public void runShootSpeed(){
+        shootBottomController.set(shootSpeed);
+        shootTopController.set(shootSpeed);
+    }
     
     public void runWristUp(){
         wristController.set(wristSpeed);
@@ -141,7 +148,8 @@ public class ShooterSubsystem extends SubsystemBase{
 
     public boolean isAtTargetRPM(double setpoint){
         this.setpoint = setpoint;
-        return ((Math.abs(getTopSpeedRPM()-setpoint)<50)&&(Math.abs(getBottomSpeedRPM()-setpoint)<50));
+        return getTopSpeedRPM() > (setpoint - 500);
+        // return ((getTopSpeedRPM()-setpoint)<50)&&((getBottomSpeedRPM()-setpoint)<50);
     }
 
     public void runWristDown(){
@@ -212,10 +220,12 @@ public class ShooterSubsystem extends SubsystemBase{
         // bottomPidController.setP(SmartDashboard.getNumber("P Bottom Shooter", 0.1));
         // bottomPidController.setI(SmartDashboard.getNumber("I Bottom Shooter", 0));
         // bottomPidController.setD(SmartDashboard.getNumber("D Bottom Shooter", 0.000));
+            bottomPidController.setFF(SmartDashboard.getNumber("FF Bottom Shooter", 0.000));
 
         // topPidController.setP(SmartDashboard.getNumber("P Top Shooter", 0.1));
         // topPidController.setI(SmartDashboard.getNumber("I Top Shooter", 0));
         // topPidController.setD(SmartDashboard.getNumber("D Top Shooter", 0.000));
+            topPidController.setFF(SmartDashboard.getNumber("FF Top Shooter", 0.000));
 
         SmartDashboard.putNumber("Shoot Bottom Encoder CPR", shootEncoderBottom.getCountsPerRevolution());
         SmartDashboard.putNumber("Shoot Bottom RPM", getBottomSpeedRPM());

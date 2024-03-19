@@ -7,11 +7,11 @@ public class HoldElevator extends Command{
     private ElevatorSubsystem elevator;
 
     public HoldElevator(ElevatorSubsystem elevator){
-        this.elevator = elevator  ;
+        this.elevator = elevator;
     }
 
     @Override
-    public void execute(){
+    public void initialize(){
         elevator.HoldElevator();
     }
 
