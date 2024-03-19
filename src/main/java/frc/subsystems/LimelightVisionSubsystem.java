@@ -45,6 +45,7 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     double distance = 0;
     double angle = .87;
     double zachAngle = .87;
+    double encoderVal;
 
     //measure tx from different angles and make a formula
 
@@ -79,7 +80,8 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     }
 
     public double toEncoderVal(){
-        return .98-((1.39-getAngleToShoot())/1.39)*(.98-.803);
+        return encoderVal;
+      //  return .98-((1.39-getAngleToShoot())/1.39)*(.98-.803);
     }
 
     public double calculateShooterAngle(){
@@ -131,10 +133,12 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     @Override
     public void periodic() {
         //zachAngle =  0.984*Math.pow(Math.E, (-0.0125 * (getDistanceSpeaker()-dis_LL_to_bumpers)));
-       // zachAngle =  0.981*Math.pow(Math.E, (-0.0121 * (getDistanceSpeaker()-dis_LL_to_bumpers)));
+        encoderVal =  .97 - ((63.21-getAngleToShoot())/(63.21-5.075)) * (.97-.8);
         zachAngle = 1.09 - .0877 * Math.log(getDistanceSpeaker());
 
-        angle = Math.atan((tagToSpeakerHeight+aprilTagHeight-limelightHeight)/getDistanceSpeaker());
+        angle = LimelightHelpers.getTY("") + RobotMap.ShooterConstants.LimelightAngle;
+
+       // angle = Math.atan((tagToSpeakerHeight+aprilTagHeight-limelightHeight)/getDistanceSpeaker());
         botPose = LimelightHelpers.getBotPose3d("");
         botXPose = botPose.getX();
         botYPose = botPose.getY();
@@ -155,12 +159,12 @@ public class LimelightVisionSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Zach Shooter Angle", calculateShooterAngle());
 
 
-        ty = LimelightHelpers.getTY("") * (Math.PI/180);
+        ty = LimelightHelpers.getTY("");
 
         // //post to smart dashboard periodically
         SmartDashboard.putNumber("RPM for vision", rpm);
         SmartDashboard.putNumber("X Distance from AprilTag", distance);
-        SmartDashboard.putNumber("Angle to shoot (rad)", angle);
+        SmartDashboard.putNumber("Angle to shoot (deg)", angle);
 
         SmartDashboard.putNumber("Shooter Equation Angle", shooterEquation());
         SmartDashboard.putNumber("Encoder Val", toEncoderVal());

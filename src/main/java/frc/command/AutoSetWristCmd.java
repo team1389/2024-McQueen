@@ -23,7 +23,7 @@ public class AutoSetWristCmd extends Command{
         timer++;
         // angle = limelight.calculateShooterAngle();
         // angle = SmartDashboard.getNumber("Target Angle for SetWrist", angle);
-        shooterSubsystem.setWrist(angle);
+        shooterSubsystem.setWrist(limelight.toEncoderVal());
     }
 
     @Override
