@@ -92,8 +92,6 @@ public class OI {
 
         manipBButton.whileTrue(new OverridePreShootCmd(indexerSubsystem,intakeSubsystem));
 
-        manipBButton.whileTrue(new OverridePreShootCmd(indexerSubsystem,intakeSubsystem));
-
         manipRightBumper.onTrue(new AmpCmd(intakeSubsystem,indexerSubsystem));
 
         manipXButton.whileTrue(new AutoSetWristCmd(shooterSubsystem, limeLightVisionSubsystem.calculateShooterAngle(), limeLightVisionSubsystem));
@@ -125,7 +123,8 @@ public class OI {
                 -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
-                true, true, () -> manipLeftBumper.getAsBoolean()),
+                true, true, () -> manipLeftBumper.getAsBoolean(),
+                () -> driveLeftBumper.getAsBoolean(), () -> driveRightBumper.getAsBoolean()),
             drivetrainSubsystem));
 
         // Press A button -> zero gyro headingq
