@@ -99,7 +99,7 @@ public class OI {
 
         manipXButton.whileTrue(new AutoSetWristCmd(shooterSubsystem, limeLightVisionSubsystem.calculateShooterAngle(), limeLightVisionSubsystem));
 
-        manipLeftBumper.whileTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+        manipLeftBumper.whileTrue(new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
       //  .onFalse(new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
 
         manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem));
@@ -130,7 +130,7 @@ public class OI {
                 () -> driveLeftTrigger.getAsBoolean(), () -> driveRightTrigger.getAsBoolean()),
             drivetrainSubsystem));
 
-        // Press A button -> zero gyro headingq
+        // Press A button -> zero gyro heading
         driveAButton.onTrue(new InstantCommand(() -> drivetrainSubsystem.zeroHeading()));
 
         // Press X button -> set X to not slide
