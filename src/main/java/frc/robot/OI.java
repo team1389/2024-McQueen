@@ -126,8 +126,8 @@ public class OI {
                 -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
-                true, true, () -> manipLeftBumper.getAsBoolean(),
-                () -> driveLeftBumper.getAsBoolean(), () -> driveRightBumper.getAsBoolean()),
+                () -> driveLeftBumper.getAsBoolean(), true, () -> manipLeftBumper.getAsBoolean(),
+                () -> driveLeftTrigger.getAsBoolean(), () -> driveRightTrigger.getAsBoolean()),
             drivetrainSubsystem));
 
         // Press A button -> zero gyro headingq

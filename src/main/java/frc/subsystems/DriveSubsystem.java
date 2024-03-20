@@ -257,7 +257,7 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    * @param rateLimit     Whether to enable rate limiting for smoother control.
    */
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit, Supplier<Boolean> isAutoAlign, Supplier<Boolean> slow, Supplier<Boolean> BOOST) {
+  public void drive(double xSpeed, double ySpeed, double rot, Supplier<Boolean> fieldRelative, boolean rateLimit, Supplier<Boolean> isAutoAlign, Supplier<Boolean> slow, Supplier<Boolean> BOOST) {
     
     double xSpeedCommanded;
     double ySpeedCommanded;
@@ -339,7 +339,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
-        fieldRelative
+        fieldRelative.get()
             ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(-pigeon.getAngle()))
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered)
              );
