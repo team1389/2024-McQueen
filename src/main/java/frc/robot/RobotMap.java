@@ -59,14 +59,14 @@ public class RobotMap {
         public static final double kBottomRPM = 3000; //bottom
         
         public static final double kTop_P = .1;
-        public static final double kTop_I = 0;
+        public static final double kTop_I = 0;//change
         public static final double kTop_D = 0;
         public static final double kTop_FF = 1.75;
         public static final double kTop_MIN_OUTPUT = 0.3;
         public static final double kTop_MAX_OUTPUT = 1;
 
         public static final double kBottom_P = .1;
-        public static final double kBottom_I = 0;
+        public static final double kBottom_I = 0;//change
         public static final double kBottom_D = 0;
         public static final double kBottom_FF = 1.75;
         public static final double kBottom_MIN_OUTPUT = 0.3;

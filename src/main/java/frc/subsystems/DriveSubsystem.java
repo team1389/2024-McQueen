@@ -126,8 +126,8 @@ public class DriveSubsystem extends SubsystemBase {
           backLeft.getPosition(),
           backRight.getPosition()
       },
-      // new Pose2d(x, y, theta));
-      new Pose2d(1.38,5.57,new Rotation2d(0)));
+      new Pose2d(x, y, theta));
+      // new Pose2d(1.38,5.57,new Rotation2d(0)));
 
     commandAlign = false;
     poseEstimator = new SwerveDrivePoseEstimator(RobotMap.DriveConstants.kDriveKinematics,
@@ -461,18 +461,21 @@ public void driveRobotRelative(ChassisSpeeds speeds){
         return this.kinematics.toChassisSpeeds(getModuleStates());
       }
 
-      private Pose2d getAutoStart(){
-        return PathPlannerAuto.getStaringPoseFromAutoFile("3 middle close piece");
-      }
-      
-      //  private Pose2d getAutoStart(){
-      //   PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("3 middle close piece").get(0);
-      //   var alliance = DriverStation.getAlliance();
-      //         if (alliance.get()==DriverStation.Alliance.Red) {
-      //           return jerry.flipPath().getPreviewStartingHolonomicPose();
-      //         }
-      //         return jerry.getPreviewStartingHolonomicPose();
+      // private Pose2d getAutoStart(){
+      //   return PathPlannerAuto.getStaringPoseFromAutoFile("3 middle close piece");
       // }
+      
+       private Pose2d getAutoStart(){
+        // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("3 middle close piece").get(0);
+        PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("4 piece close").get(0);
+        var alliance = DriverStation.getAlliance();
+              if (alliance.get()==DriverStation.Alliance.Red) {
+                return jerry.flipPath().getPreviewStartingHolonomicPose();
+              }
+              else {
+                return jerry.getPreviewStartingHolonomicPose();
+              }
+      }
 }
 /*
  * four hundred lines!
