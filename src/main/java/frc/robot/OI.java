@@ -132,7 +132,7 @@ public class OI {
                 () -> driveLeftTrigger.getAsBoolean(), () -> driveRightTrigger.getAsBoolean()),
             drivetrainSubsystem));
 
-        // Press A button -> zero gyro headingq
+        // Press A button -> zero gyro heading
         driveAButton.onTrue(new InstantCommand(() -> drivetrainSubsystem.zeroHeading()));
 
         // Press X button -> set X to not slide
