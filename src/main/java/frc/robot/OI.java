@@ -128,8 +128,8 @@ public class OI {
                 -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
-                true, true, () -> manipLeftBumper.getAsBoolean(),
-                () -> driveLeftBumper.getAsBoolean(), () -> driveRightBumper.getAsBoolean()),
+                () -> driveLeftBumper.getAsBoolean(), true, () -> manipLeftBumper.getAsBoolean(),
+                () -> driveLeftTrigger.getAsBoolean(), () -> driveRightTrigger.getAsBoolean()),
             drivetrainSubsystem));
 
         // Press A button -> zero gyro headingq
@@ -143,16 +143,19 @@ public class OI {
         NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
         NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
+        NamedCommands.registerCommand("RampShoot", new RunShoot(shooterSubsystem));
+        NamedCommands.registerCommand("SetWrist:.95", new ManualSetWrist(shooterSubsystem, .95));
+        NamedCommands.registerCommand("SetWrist:.9", new ManualSetWrist(shooterSubsystem, .9));
         NamedCommands.registerCommand("AutoAlignShoot", new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
         
         // autoChooser = AutoBuilder.buildAutoChooser();
 
         // SmartDashboard.putData("Auto Chooser", autoChooser);
 
-        final Command frontSpeaker2P = new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+      //  final Command frontSpeaker2P = new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
       //  final Command quickBalanceCone = new QuickBalanceCone(drivetrain, arm, intake, autoMap);
 
-        chooser.addOption("front speaker 2P", frontSpeaker2P);
+       // chooser.addOption("front speaker 2P", frontSpeaker2P);
        // chooser.addOption("right blue", quickBalanceCone);
 
        SmartDashboard.putData("Auto choices", chooser);
@@ -237,6 +240,7 @@ public class OI {
    *
    * @return the command to run in autonomous
    */
+  // WHEN CHANGING THE AUTO NAME HERE, REMEMBER TO CHANGE THE AUTO NAME IN DRIVESUBSYSTEM (BOTTOM LINES)
     public Command getAutonomousCommand() {
         return new PathPlannerAuto("4 piece close");
         // return new PathPlannerAuto("3 middle close piece");

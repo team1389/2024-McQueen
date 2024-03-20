@@ -257,7 +257,7 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    * @param rateLimit     Whether to enable rate limiting for smoother control.
    */
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit, Supplier<Boolean> isAutoAlign, Supplier<Boolean> slow, Supplier<Boolean> BOOST) {
+  public void drive(double xSpeed, double ySpeed, double rot, Supplier<Boolean> fieldRelative, boolean rateLimit, Supplier<Boolean> isAutoAlign, Supplier<Boolean> slow, Supplier<Boolean> BOOST) {
     
     double xSpeedCommanded;
     double ySpeedCommanded;
@@ -320,10 +320,17 @@ public class DriveSubsystem extends SubsystemBase {
     if(slow.get()){
       xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .3;
       ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .3;
+      rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed * .3;
     }
     if(BOOST.get()){
       xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * 1.3;
       ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * 1.3;
+      rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed * 1.3;
+    }
+    if(isAutoAlign.get()){
+      xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .5;
+      ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .5;
+      rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed * .5;
     }
 
     //add offset for blue and red
@@ -332,7 +339,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
-        fieldRelative
+        fieldRelative.get()
             ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(-pigeon.getAngle()))
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered)
              );
@@ -464,7 +471,7 @@ public void driveRobotRelative(ChassisSpeeds speeds){
       // private Pose2d getAutoStart(){
       //   return PathPlannerAuto.getStaringPoseFromAutoFile("3 middle close piece");
       // }
-      
+      //WHEN CHANGING THE AUTO NAME, REMEMBER TO CHANGE THE NAME IN OI AS WELL (DON'T BE ZACH)
        private Pose2d getAutoStart(){
         // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("3 middle close piece").get(0);
         PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("4 piece close").get(0);

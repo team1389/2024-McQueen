@@ -128,6 +128,18 @@ public class LimelightVisionSubsystem extends SubsystemBase{
     public double getDistanceSpeaker(){
         return Math.sqrt(Math.pow(getXPoseSpeaker(),2) + Math.pow(getYPoseSpeaker(), 2));
     }
+
+    public void blink(){
+        LimelightHelpers.setLEDMode_ForceBlink("");
+    }
+
+    public void on(){
+        LimelightHelpers.setLEDMode_ForceOn("");
+    }
+
+    public void off(){
+        LimelightHelpers.setLEDMode_ForceOff("");
+    }
     
 
     @Override

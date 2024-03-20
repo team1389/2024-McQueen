@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.1734895937694858,
-      "y": 7.014791090923124
+      "x": 0.7494236794294902,
+      "y": 6.617900395870608
     },
-    "rotation": 0.0
+    "rotation": 59.26456038222014
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Align & Shoot"
+            "name": "SetWrist:.95"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
           }
         },
         {
@@ -24,7 +30,44 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "close_top_piece_1"
+                  "pathName": "top far piece 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RampShoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SetWrist:.9"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "top far piece 2"
                 }
               },
               {
@@ -37,25 +80,19 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Align & Shoot"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "close top piece 2"
+                  "pathName": "top far piece 3"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intake"
+                  "name": "RampShoot"
                 }
               }
             ]
@@ -64,7 +101,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Align & Shoot"
+            "name": "Shoot"
           }
         }
       ]

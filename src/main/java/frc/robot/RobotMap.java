@@ -12,7 +12,6 @@ import edu.wpi.first.math.util.Units;
  */
 public class RobotMap {
 
-    // public static final class DriveConstants {
 
         // Distance between right and left wheels (meters)
         public static final double ROBOT_WIDTH = 0.498475;//19 5/8 in

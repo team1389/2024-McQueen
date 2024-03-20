@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2901018146619552,
-      "y": 5.562647359246215
+      "x": 0.7476459755912954,
+      "y": 4.505392585971936
     },
-    "rotation": 0
+    "rotation": -61.587338556927435
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,19 @@
         {
           "type": "named",
           "data": {
+            "name": "SetWrist:.95"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "bottom far piece 1"
           }
         },
         {
@@ -24,13 +36,19 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "close middle piece 1"
+                  "pathName": "bottom far piece 2"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intake"
+                  "name": "RampShoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SetWrist:.9"
                 }
               }
             ]
@@ -43,19 +61,25 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "bottom far piece 3"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "close middle piece 2"
+                  "pathName": "bottom far piece 4"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intake"
+                  "name": "RampShoot"
                 }
               }
             ]

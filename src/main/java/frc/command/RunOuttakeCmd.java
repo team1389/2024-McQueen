@@ -2,12 +2,15 @@ package frc.command;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.IntakeSubsystem;
+import frc.subsystems.LimelightVisionSubsystem;
 
 public class RunOuttakeCmd extends Command{
     private IntakeSubsystem intakeSubsystem;
+    private LimelightVisionSubsystem limelight;
     // private double timer = 0;
-    public RunOuttakeCmd(IntakeSubsystem intakeSubsystem){
+    public RunOuttakeCmd(IntakeSubsystem intakeSubsystem, LimelightVisionSubsystem limelight){
         this.intakeSubsystem = intakeSubsystem;
+        this.limelight = limelight;
 
         // addRequirements(intakeSubsystem);
     }
@@ -25,6 +28,7 @@ public class RunOuttakeCmd extends Command{
 
     @Override
     public boolean isFinished(){
+        limelight.off();
         return (!intakeSubsystem.hitSensor());
     }
 }
