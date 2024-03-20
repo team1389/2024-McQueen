@@ -33,6 +33,7 @@ public class AutoShootPIDCmd extends Command{
     public void initialize(){
         timer.reset();
         timer.start();
+        limelightSubsystem.blink();
     }
 
 
@@ -53,6 +54,7 @@ public class AutoShootPIDCmd extends Command{
 
     @Override
     public boolean isFinished(){
+        limelightSubsystem.off();
         return shooterSubsytem.isAtTargetRPM(rpm);
     }
 }
