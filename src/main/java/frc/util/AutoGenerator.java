@@ -101,7 +101,7 @@ public class AutoGenerator {
     //TODO: Test
     public Command pathIntake(String path){
       return new ParallelCommandGroup(
-        new IntakeCmd(intake), //runIntake(),
+        new IntakeCmd(intake,limelight), //runIntake(),
         PathPlannerBase.followTrajectory(path)
       );
     }

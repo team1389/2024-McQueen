@@ -12,7 +12,7 @@ public class IntakeCmd extends SequentialCommandGroup{
     IndexerSubsystem indexerSubsystem;
     LimelightVisionSubsystem limelight;
 
-    public IntakeCmd(IntakeSubsystem intakeSubsystem){
+    public IntakeCmd(IntakeSubsystem intakeSubsystem, LimelightVisionSubsystem limelight){
         addCommands(
             new RunIntakeCmd(intakeSubsystem, limelight),
             new RunOuttakeCmd(intakeSubsystem, limelight) //moves the note into the pre amp or shoot position

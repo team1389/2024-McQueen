@@ -30,7 +30,7 @@ public class FrontOfSpeaker2PieceAuto extends SequentialCommandGroup{
             new PreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem),
             Commands.parallel(
                 new DriveBackFromSpeakerCmd(driveSubsystem),
-                new IntakeCmd(intakeSubsystem)
+                new IntakeCmd(intakeSubsystem,limelight)
             ),
             new DriveTowardsSpeakerCmd(driveSubsystem),
             new AutoShootPIDCmd(shooterSubsystem, limelight.rpmTableForShoot(),limelight),

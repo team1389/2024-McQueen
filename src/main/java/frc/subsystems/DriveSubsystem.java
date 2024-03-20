@@ -334,11 +334,9 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     //add offset for blue and red
-    if(alignTx != 0){
-      if(isAutoAlign.get() || commandAlign){
-        rotDelivered = -(0.1 * alignTx) + Math.toRadians(50); 
-      }
-  }
+    if(isAutoAlign.get() || commandAlign){
+      rotDelivered = -(0.1 * alignTx) + Math.toRadians( 15); 
+    }
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative.get()
@@ -473,7 +471,7 @@ public void driveRobotRelative(ChassisSpeeds speeds){
       // private Pose2d getAutoStart(){
       //   return PathPlannerAuto.getStaringPoseFromAutoFile("3 middle close piece");
       // }
-      
+      //WHEN CHANGING THE AUTO NAME, REMEMBER TO CHANGE THE NAME IN OI AS WELL (DON'T BE ZACH)
        private Pose2d getAutoStart(){
         // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("3 middle close piece").get(0);
         PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("4 piece close").get(0);
@@ -487,5 +485,5 @@ public void driveRobotRelative(ChassisSpeeds speeds){
       }
 }
 /*
- * four hundred lines!
+ * four hundred lines!s
  */
