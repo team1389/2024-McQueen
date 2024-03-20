@@ -32,7 +32,7 @@ public class RightSideBlueAuto extends SequentialCommandGroup{
             new BlueRightRotateAwayAuto(driveSubsystem),
             Commands.parallel(
                 new DriveBackFromSideCmdPartTwo(driveSubsystem),
-                new IntakeCmd(intakeSubsystem)
+                new IntakeCmd(intakeSubsystem,limelight)
             ),
             new DriveTowardSideCmdPartOne(driveSubsystem),
             new BlueRightRotateTowardAuto(driveSubsystem),

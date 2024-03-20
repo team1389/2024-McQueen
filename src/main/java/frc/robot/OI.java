@@ -99,10 +99,10 @@ public class OI {
 
         manipXButton.whileTrue(new AutoSetWristCmd(shooterSubsystem, limeLightVisionSubsystem.calculateShooterAngle(), limeLightVisionSubsystem));
 
-        manipLeftBumper.whileTrue(new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+        manipLeftBumper.whileTrue(new TeleopAlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
       //  .onFalse(new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
 
-        manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem));
+        manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem, limeLightVisionSubsystem));
         manipRightTrigger.whileTrue(new AmpCmd(intakeSubsystem, indexerSubsystem));
 
       //  manipStadia.onTrue(new HoldElevator(elevatorSubsystem));
@@ -128,7 +128,7 @@ public class OI {
                 -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
-                () -> driveLeftBumper.getAsBoolean(), true, () -> manipLeftBumper.getAsBoolean(),
+                () -> !driveLeftBumper.getAsBoolean(), true, () -> manipLeftBumper.getAsBoolean(),
                 () -> driveLeftTrigger.getAsBoolean(), () -> driveRightTrigger.getAsBoolean()),
             drivetrainSubsystem));
 
@@ -142,7 +142,7 @@ public class OI {
 
         NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
         NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
-        NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
+        NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem, limeLightVisionSubsystem));
         NamedCommands.registerCommand("RampShoot", new RunShoot(shooterSubsystem));
         NamedCommands.registerCommand("SetWrist:.95", new ManualSetWrist(shooterSubsystem, .95));
         NamedCommands.registerCommand("SetWrist:.9", new ManualSetWrist(shooterSubsystem, .9));
