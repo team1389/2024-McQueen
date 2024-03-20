@@ -257,7 +257,7 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    * @param rateLimit     Whether to enable rate limiting for smoother control.
    */
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit, Supplier<Boolean> isAutoAlign) {
+  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit, Supplier<Boolean> isAutoAlign, Supplier<Boolean> slow, Supplier<Boolean> BOOST) {
     
     double xSpeedCommanded;
     double ySpeedCommanded;
@@ -317,6 +317,15 @@ public class DriveSubsystem extends SubsystemBase {
     double ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond;
     double rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed;
 
+    if(slow.get()){
+      xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .3;
+      ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .3;
+    }
+    if(BOOST.get()){
+      xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * 1.3;
+      ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * 1.3;
+    }
+
     //add offset for blue and red
     if(isAutoAlign.get() || commandAlign){
       rotDelivered = -(0.1 * alignTx) + Math.toRadians(50); 
@@ -325,8 +334,11 @@ public class DriveSubsystem extends SubsystemBase {
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
             ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(-pigeon.getAngle()))
-            : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
-    SwerveDriveKinematics.desaturateWheelSpeeds(
+            : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered)
+             );
+            
+   
+            SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
     frontLeft.setDesiredState(swerveModuleStates[0]);
     frontRight.setDesiredState(swerveModuleStates[1]);

@@ -59,14 +59,14 @@ public class RobotMap {
         public static final double kBottomRPM = 3000; //bottom
         
         public static final double kTop_P = .1;
-        public static final double kTop_I = 0;
+        public static final double kTop_I = 0;//change
         public static final double kTop_D = 0;
         public static final double kTop_FF = 1.75;
         public static final double kTop_MIN_OUTPUT = 0.3;
         public static final double kTop_MAX_OUTPUT = 1;
 
         public static final double kBottom_P = .1;
-        public static final double kBottom_I = 0;
+        public static final double kBottom_I = 0;//change
         public static final double kBottom_D = 0;
         public static final double kBottom_FF = 1.75;
         public static final double kBottom_MIN_OUTPUT = 0.3;
@@ -107,7 +107,7 @@ public class RobotMap {
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
     public static final double kDirectionSlewRate = 10000; // radians per second //1.2, 10000
-    public static final double kMagnitudeSlewRate = 2; // percent per second (1 = 100%) //1.8, 10000
+    public static final double kMagnitudeSlewRate = 1.5; // percent per second (1 = 100%) //1.8, 10000
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
     public static final double kTrackRadius = Units.inchesToMeters(19.6 * Math.sqrt(2)/2);
