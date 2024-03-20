@@ -196,7 +196,8 @@ public class ShooterSubsystem extends SubsystemBase{
     public void holdPosition(){
         // calculated line of best fit from tested points
         if(getAbsWristPosition()<0.95 && getAbsWristPosition()>0.8){
-            moveWrist(-0.075*getAbsWristPosition() + 0.0914);
+            moveWrist(-0.132*getAbsWristPosition() + 0.133);
+            // moveWrist(-0.075*getAbsWristPosition() + 0.0914);
         }
         else {
             stopWrist();

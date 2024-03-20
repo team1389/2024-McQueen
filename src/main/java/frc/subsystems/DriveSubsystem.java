@@ -328,7 +328,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     //add offset for blue and red
     if(isAutoAlign.get() || commandAlign){
-      rotDelivered = -(0.1 * alignTx) + Math.toRadians(50); 
+      rotDelivered = -(0.1 * alignTx) + Math.toRadians(45); 
     }
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
@@ -478,5 +478,5 @@ public void driveRobotRelative(ChassisSpeeds speeds){
       }
 }
 /*
- * four hundred lines!
+ * four hundred lines!s
  */

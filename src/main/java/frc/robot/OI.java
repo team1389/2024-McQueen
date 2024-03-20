@@ -111,6 +111,8 @@ public class OI {
         manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
         manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));     
 
+        // manipYButton.whileTrue(new SetPowerCmd(shooterSubsystem));
+
  
         shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
@@ -141,6 +143,7 @@ public class OI {
         NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
         NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
+        NamedCommands.registerCommand("AutoAlignShoot", new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
         
         // autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -235,7 +238,8 @@ public class OI {
    * @return the command to run in autonomous
    */
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("3 middle close piece");
+        return new PathPlannerAuto("4 piece close");
+        // return new PathPlannerAuto("3 middle close piece");
       //  return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);

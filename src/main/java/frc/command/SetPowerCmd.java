@@ -9,6 +9,7 @@ public class SetPowerCmd extends Command{
     ShooterSubsystem shooter;
     double power;
     public SetPowerCmd(ShooterSubsystem shooter){
+        power = .1;
         this.shooter = shooter;
         SmartDashboard.putNumber("Power for twunitng", power);
     }
