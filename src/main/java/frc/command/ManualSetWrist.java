@@ -9,9 +9,10 @@ public class ManualSetWrist extends Command{
     ShooterSubsystem shooterSubsystem;
     double angle = 0.95;
     LimelightVisionSubsystem limelight;
-    public ManualSetWrist(ShooterSubsystem shooterSubsystem){
+    public ManualSetWrist(ShooterSubsystem shooterSubsystem, double angle){
+        this.angle = angle;
         this.shooterSubsystem = shooterSubsystem;
-        SmartDashboard.putNumber("Target Angle for SetWrist", angle);
+       // SmartDashboard.putNumber("Target Angle for SetWrist", angle);
         //addRequirements(shooterSubsystem);
     }
 

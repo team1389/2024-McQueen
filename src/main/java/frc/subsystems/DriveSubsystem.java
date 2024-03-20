@@ -320,10 +320,17 @@ public class DriveSubsystem extends SubsystemBase {
     if(slow.get()){
       xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .3;
       ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .3;
+      rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed * .3;
     }
     if(BOOST.get()){
       xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * 1.3;
       ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * 1.3;
+      rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed * 1.3;
+    }
+    if(isAutoAlign.get()){
+      xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .5;
+      ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .5;
+      rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed * .5;
     }
 
     //add offset for blue and red

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7494236794294902,
-      "y": 6.617900395870608
+      "x": 0.7476459755912954,
+      "y": 4.505392585971936
     },
-    "rotation": -60.0
+    "rotation": -61.587338556927435
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,19 @@
         {
           "type": "named",
           "data": {
+            "name": "SetWrist:.95"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "bottom far piece 1"
           }
         },
         {
@@ -24,13 +36,19 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "close bottom piece 1"
+                  "pathName": "bottom far piece 2"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intake"
+                  "name": "RampShoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SetWrist:.9"
                 }
               }
             ]
@@ -43,28 +61,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "close bottom piece 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
+            "pathName": "bottom far piece 3"
           }
         },
         {
@@ -74,13 +73,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "close bottom piece 3"
+                  "pathName": "bottom far piece 4"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intake"
+                  "name": "RampShoot"
                 }
               }
             ]

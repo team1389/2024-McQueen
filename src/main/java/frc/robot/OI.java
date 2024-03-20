@@ -141,15 +141,18 @@ public class OI {
         NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
         NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem));
+        NamedCommands.registerCommand("RampShoot", new RunShoot(shooterSubsystem));
+        NamedCommands.registerCommand("SetWrist:.95", new ManualSetWrist(shooterSubsystem, .95));
+        NamedCommands.registerCommand("SetWrist:.9", new ManualSetWrist(shooterSubsystem, .9));
         
         // autoChooser = AutoBuilder.buildAutoChooser();
 
         // SmartDashboard.putData("Auto Chooser", autoChooser);
 
-        final Command frontSpeaker2P = new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
+      //  final Command frontSpeaker2P = new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
       //  final Command quickBalanceCone = new QuickBalanceCone(drivetrain, arm, intake, autoMap);
 
-        chooser.addOption("front speaker 2P", frontSpeaker2P);
+       // chooser.addOption("front speaker 2P", frontSpeaker2P);
        // chooser.addOption("right blue", quickBalanceCone);
 
        SmartDashboard.putData("Auto choices", chooser);
