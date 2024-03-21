@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.subsystems.DriveSubsystem;
+import frc.subsystems.ShooterSubsystem;
 
 /**
  * Don't change the name of this class since the VM is set up to run this
@@ -24,6 +25,7 @@ public class Robot extends TimedRobot {
     public static OI oi = new OI();
     private Command autoCommand;
     private DriveSubsystem drivetrain;
+    private ShooterSubsystem shooter;
     // SwerveTelemetry frontLeftTelemetry;
     // SwerveTelemetry backLeftTelemetry;
     // SwerveTelemetry frontRightTelemetry;
@@ -81,6 +83,8 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("BR Turn Current", pdh.getCurrent(0));
 
         SmartDashboard.putNumber("Total Current", pdh.getTotalCurrent());
+
+     //   SmartDashboard.putNumber("Shooter voltage", pdh.);
 
     }
 
