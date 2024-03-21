@@ -2,7 +2,7 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.26,
+      "x": 1.29,
       "y": 5.56
     },
     "rotation": 0.0
@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "AutoAlignShoot.95"
           }
         },
         {
@@ -37,9 +37,15 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "close bottom piece 1.5"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "AutoAlignShoot.92"
           }
         },
         {
@@ -64,7 +70,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "AutoAlignShoot.905"
           }
         },
         {
@@ -89,7 +95,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "AutoAlignShoot.94"
           }
         }
       ]

@@ -114,7 +114,7 @@ public class OI {
         // manipYButton.whileTrue(new SetPowerCmd(shooterSubsystem));
 
  
-        shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
+        // shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
         
        // shooterSubsystem.setDefaultCommand(new ManualWristCmd(shooterSubsystem, () -> -getManipLeftY()));
@@ -145,8 +145,12 @@ public class OI {
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem, limeLightVisionSubsystem));
         NamedCommands.registerCommand("RampShoot", new RunShoot(shooterSubsystem));
         NamedCommands.registerCommand("SetWrist:.95", new ManualSetWrist(shooterSubsystem, .95));
-        NamedCommands.registerCommand("SetWrist:.9", new ManualSetWrist(shooterSubsystem, .9));
-        NamedCommands.registerCommand("AutoAlignShoot", new AlignShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+        NamedCommands.registerCommand("SetWrist:.9", new ManualSetWrist(shooterSubsystem, .91));
+        NamedCommands.registerCommand("AutoAlignShoot.95", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .95));
+        NamedCommands.registerCommand("AutoAlignShoot.90", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .9));
+        NamedCommands.registerCommand("AutoAlignShoot.94", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .94));
+        NamedCommands.registerCommand("AutoAlignShoot.93", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .93));
+
         
         // autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -243,7 +247,7 @@ public class OI {
   // WHEN CHANGING THE AUTO NAME HERE, REMEMBER TO CHANGE THE AUTO NAME IN DRIVESUBSYSTEM (BOTTOM LINES)
     public Command getAutonomousCommand() {
         return new PathPlannerAuto("4 piece close");
-        // return new PathPlannerAuto("3 middle close piece");
+        // return new PathPlannerAuto("Quick 4 piece close");
       //  return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
