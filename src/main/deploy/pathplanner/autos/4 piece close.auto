@@ -37,15 +37,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "close bottom piece 1.5"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "close bottom piece 1.5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RampShoot"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "AutoAlignShoot.92"
+            "name": "AutoAlignShoot.94"
           }
         },
         {
@@ -63,6 +76,12 @@
                 "data": {
                   "name": "Intake"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RampShoot"
+                }
               }
             ]
           }
@@ -70,7 +89,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoAlignShoot.905"
+            "name": "AutoAlignShoot.93"
           }
         },
         {
@@ -88,6 +107,12 @@
                 "data": {
                   "name": "Intake"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RampShoot"
+                }
               }
             ]
           }
@@ -95,7 +120,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoAlignShoot.94"
+            "name": "AutoAlignShoot.93"
           }
         }
       ]

@@ -32,7 +32,7 @@ public class IntakeSubsystem extends SubsystemBase{
     }
 
     public void runOuttake(){
-        intakeMotor.set(.05);
+        intakeMotor.set(.2);
     }
 
     public boolean hitSensor(){ 

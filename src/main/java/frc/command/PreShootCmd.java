@@ -25,7 +25,7 @@ public class PreShootCmd extends Command{
     public void execute(){
         indexerSubsystem.moveToShoot();
         intakeSubsystem.runIntake();
-        // timer += 1;
+        timer += 1;
         //addCommand(new WaitCommand(5));        
     }
 
@@ -34,14 +34,14 @@ public class PreShootCmd extends Command{
         indexerSubsystem.stop();
         intakeSubsystem.stop();
         // shooterSubsystem.stop();
-        // timer = 0;
+        timer = 0;
     }
 
     @Override
     public boolean isFinished(){
-        // return (timer>20);
-        SmartDashboard.putBoolean("IsFinished PreeShoot", true);
-        return !(intakeSubsystem.hitSensor());
+        return (timer>25);
+        // SmartDashboard.putBoolean("IsFinished PreeShoot", true);
+        // return !(intakeSubsystem.hitSensor());
     }
 
 }

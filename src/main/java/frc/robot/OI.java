@@ -146,7 +146,9 @@ public class OI {
         NamedCommands.registerCommand("RampShoot", new RunShoot(shooterSubsystem));
         NamedCommands.registerCommand("SetWrist:.95", new ManualSetWrist(shooterSubsystem, .95));
         NamedCommands.registerCommand("SetWrist:.9", new ManualSetWrist(shooterSubsystem, .91));
-        NamedCommands.registerCommand("AutoAlignShoot.95", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .95));
+        NamedCommands.registerCommand("PreShoot", new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
+        NamedCommands.registerCommand("OverridePreShoot", new OverridePreShootCmd(indexerSubsystem, intakeSubsystem));
+        NamedCommands.registerCommand("AutoAlignShoot.95", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .98));
         NamedCommands.registerCommand("AutoAlignShoot.90", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .9));
         NamedCommands.registerCommand("AutoAlignShoot.94", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .94));
         NamedCommands.registerCommand("AutoAlignShoot.93", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .93));
