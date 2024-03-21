@@ -114,10 +114,10 @@ public class OI {
         // manipYButton.whileTrue(new SetPowerCmd(shooterSubsystem));
 
  
-        // shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
+        shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
         
-       // shooterSubsystem.setDefaultCommand(new ManualWristCmd(shooterSubsystem, () -> -getManipLeftY()));
+      //  shooterSubsystem.setDefaultCommand(new ManualWristCmd(shooterSubsystem, () -> -getManipLeftY()));
 
 
         drivetrainSubsystem.setDefaultCommand(

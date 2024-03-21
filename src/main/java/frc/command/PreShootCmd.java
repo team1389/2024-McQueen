@@ -13,12 +13,19 @@ public class PreShootCmd extends Command{
      private IndexerSubsystem indexerSubsystem;
      private IntakeSubsystem intakeSubsystem;
      int timer = 0;
+     Timer time = new Timer();
     public PreShootCmd(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem){
         this.indexerSubsystem = indexerSubsystem;
         this.intakeSubsystem = intakeSubsystem;
         this.shooterSubsystem = shooterSubsystem;
 
         // addRequirements(intakeSubsystem, indexerSubsystem, shooterSubsystem);
+    }
+
+    @Override
+    public void initialize(){
+        time.reset();
+        time.start();
     }
 
     @Override
@@ -39,7 +46,7 @@ public class PreShootCmd extends Command{
 
     @Override
     public boolean isFinished(){
-        return (timer>25);
+        return (time.get()>1);
         // SmartDashboard.putBoolean("IsFinished PreeShoot", true);
         // return !(intakeSubsystem.hitSensor());
     }

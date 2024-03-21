@@ -148,8 +148,8 @@ public class ShooterSubsystem extends SubsystemBase{
 
     public boolean isAtTargetRPM(double setpoint){
         this.setpoint = setpoint;
-        // return getTopSpeedRPM() > (setpoint - 500);
-         return (Math.abs(getTopSpeedRPM()-setpoint)<1000);//&&((getBottomSpeedRPM()-setpoint)<100);
+         return getTopSpeedRPM() > (setpoint - 500);
+         // return (Math.abs(getTopSpeedRPM()-setpoint)<1000);//&&((getBottomSpeedRPM()-setpoint)<100);
     }
 
     public void runWristDown(){
@@ -195,7 +195,7 @@ public class ShooterSubsystem extends SubsystemBase{
 
     public void holdPosition(){
         // calculated line of best fit from tested points
-        if(getAbsWristPosition()<0.95 && getAbsWristPosition()>0.8){
+        if(getAbsWristPosition()<0.98 && getAbsWristPosition()>0.8){
             moveWrist(-0.132*getAbsWristPosition() + 0.133);
             // moveWrist(-0.075*getAbsWristPosition() + 0.0914);
         }
