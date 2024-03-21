@@ -236,6 +236,9 @@ public class DriveSubsystem extends SubsystemBase {
    * @param pose The pose to which to set the odometry.
    */
   public void resetOdometry(Pose2d pose) {
+    double x = getAutoStart().getX();
+    double y = getAutoStart().getY();
+    Rotation2d theta = getAutoStart().getRotation();
     m_odometry.resetPosition(
         Rotation2d.fromDegrees(-pigeon.getAngle()),
         new SwerveModulePosition[] {
@@ -244,7 +247,7 @@ public class DriveSubsystem extends SubsystemBase {
             backLeft.getPosition(),
             backRight.getPosition()
         },
-        pose);
+        new Pose2d(x, y, theta));
   }
 
   /**
@@ -472,8 +475,10 @@ public void driveRobotRelative(ChassisSpeeds speeds){
       // }
       //WHEN CHANGING THE AUTO NAME, REMEMBER TO CHANGE THE NAME IN OI AS WELL (DON'T BE ZACH)
        private Pose2d getAutoStart(){
+          // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("Quick 4 piece close").get(0);
         // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("3 middle close piece").get(0);
         PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("4 piece close").get(0);
+        // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("1 m back").get(0);
         var alliance = DriverStation.getAlliance();
               if (alliance.get()==DriverStation.Alliance.Red) {
                 return jerry.flipPath().getPreviewStartingHolonomicPose();
