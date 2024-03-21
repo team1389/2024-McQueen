@@ -148,8 +148,8 @@ public class ShooterSubsystem extends SubsystemBase{
 
     public boolean isAtTargetRPM(double setpoint){
         this.setpoint = setpoint;
-        return getTopSpeedRPM() > (setpoint - 500);
-        // return ((getTopSpeedRPM()-setpoint)<50)&&((getBottomSpeedRPM()-setpoint)<50);
+        // return getTopSpeedRPM() > (setpoint - 500);
+         return (Math.abs(getTopSpeedRPM()-setpoint)<1000);//&&((getBottomSpeedRPM()-setpoint)<100);
     }
 
     public void runWristDown(){
@@ -235,5 +235,11 @@ public class ShooterSubsystem extends SubsystemBase{
         SmartDashboard.putNumber("Shoot Top Encoder CPR", shootEncoderTop.getCountsPerRevolution());
         SmartDashboard.putNumber("Shoot Top RPM", getTopSpeedRPM());
         SmartDashboard.putNumber("Shoot Top Encoder Position", shootEncoderTop.getPosition());
+
+        SmartDashboard.putNumber("shooter bottom voltage", shootBottomController.getBusVoltage());
+        SmartDashboard.putNumber("shooter top voltage", shootTopController.getBusVoltage());
+        SmartDashboard.putNumber("shooter bottom voltage", shootBottomController.getAppliedOutput());
+        SmartDashboard.putNumber("shooter top voltage", shootTopController.getAppliedOutput());
+
     }
 }
