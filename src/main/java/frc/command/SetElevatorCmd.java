@@ -18,7 +18,7 @@ public class SetElevatorCmd extends Command{
 
     @Override
     public void initialize(){
-        SmartDashboard.putBoolean("check", check);
+     //   SmartDashboard.putBoolean("check", check);
       //  elevatorSubsystem.controllerInterrupt = false;
      //   elevatorSubsystem.setElevator(pos);
         
@@ -32,15 +32,15 @@ public class SetElevatorCmd extends Command{
        if (check){
         if(elevatorSubsystem.getRelEncoderPos() < elevatorSubsystem.high/2){
             
-            SmartDashboard.putNumber("elevatorSubsystem height", elevatorSubsystem.getRelEncoderPos());
+          //  SmartDashboard.putNumber("elevatorSubsystem height", elevatorSubsystem.getRelEncoderPos());
             elevatorSubsystem.moveElevator(.1);
-            SmartDashboard.putBoolean("check", check);
+          //  SmartDashboard.putBoolean("check", check);
 
 
        } else{
-        SmartDashboard.putNumber("elevatorSubsystem height", 0);
+      //  SmartDashboard.putNumber("elevatorSubsystem height", 0);
         check = false;
-        SmartDashboard.putBoolean("check", check);
+      //  SmartDashboard.putBoolean("check", check);
         elevatorSubsystem.stop();
        }
     }
@@ -48,7 +48,7 @@ public class SetElevatorCmd extends Command{
 
     @Override
     public void end(boolean interrupted){
-        SmartDashboard.putBoolean("check", check);
+      //  SmartDashboard.putBoolean("check", check);
         elevatorSubsystem.stop();
     }
 

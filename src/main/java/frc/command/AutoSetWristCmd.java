@@ -16,7 +16,7 @@ public class AutoSetWristCmd extends Command{
         this.angle = angle;
         this.shooterSubsystem = shooterSubsystem;
         this.limelight = limelight;
-        SmartDashboard.putNumber("Target Angle for SetWrist", angle);
+      //  SmartDashboard.putNumber("Target Angle for SetWrist", angle);
         //addRequirements(shooterSubsystem);
     }
 

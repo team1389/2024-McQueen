@@ -159,37 +159,37 @@ public class LimelightVisionSubsystem extends SubsystemBase{
         double y = ty1.getDouble(0.0);
         double area = ta1.getDouble(0.0);
 
-        SmartDashboard.putNumber("Bot Pose X", botPose.getX());
-        SmartDashboard.putNumber("Bot Pose Y", botPose.getY());
-        SmartDashboard.putNumber("Bot Pose Z", botPose.getZ());
+        // SmartDashboard.putNumber("Bot Pose X", botPose.getX());
+        // SmartDashboard.putNumber("Bot Pose Y", botPose.getY());
+        // SmartDashboard.putNumber("Bot Pose Z", botPose.getZ());
     //    SmartDashboard.putNumber("Bot Pose Rotation", botPose.getRotation());
 
-        SmartDashboard.putNumber("X Pose Speaker", getXPoseSpeaker());
-        SmartDashboard.putNumber("Y Pose Speaker", getYPoseSpeaker());
-        SmartDashboard.putNumber("Dist Pose Speaker", getDistanceSpeaker());
+        // SmartDashboard.putNumber("X Pose Speaker", getXPoseSpeaker());
+        // SmartDashboard.putNumber("Y Pose Speaker", getYPoseSpeaker());
+        // SmartDashboard.putNumber("Dist Pose Speaker", getDistanceSpeaker());
 
-        SmartDashboard.putNumber("Zach Shooter Angle", calculateShooterAngle());
+        // SmartDashboard.putNumber("Zach Shooter Angle", calculateShooterAngle());
 
 
         ty = LimelightHelpers.getTY("");
 
         // //post to smart dashboard periodically
-        SmartDashboard.putNumber("RPM for vision", rpm);
-        SmartDashboard.putNumber("X Distance from AprilTag", distance);
-        SmartDashboard.putNumber("Angle to shoot (deg)", angle);
+        // SmartDashboard.putNumber("RPM for vision", rpm);
+        // SmartDashboard.putNumber("X Distance from AprilTag", distance);
+        // SmartDashboard.putNumber("Angle to shoot (deg)", angle);
 
-        SmartDashboard.putNumber("Shooter Equation Angle", shooterEquation());
+        // SmartDashboard.putNumber("Shooter Equation Angle", shooterEquation());
         SmartDashboard.putNumber("Encoder Val", toEncoderVal());
 
-        SmartDashboard.putNumber("LimelightX1", x);
-        SmartDashboard.putNumber("LimelightY2", y);
-        SmartDashboard.putNumber("LimelightArea3", area);
+        // SmartDashboard.putNumber("LimelightX1", x);
+        // SmartDashboard.putNumber("LimelightY2", y);
+        // SmartDashboard.putNumber("LimelightArea3", area);
         //SmartDashboard.putNumber("Calculated Distance From April Tag (Formula)", getDist(y));
         
-        SmartDashboard.putNumber("LimelightX", LimelightHelpers.getTX(""));
-        SmartDashboard.putString("InsideAutoAlign", "success");
-        SmartDashboard.putNumber("LimelightY", LimelightHelpers.getTY(""));
-        SmartDashboard.putNumber("LimelightArea", LimelightHelpers.getTA(""));
+        // SmartDashboard.putNumber("LimelightX", LimelightHelpers.getTX(""));
+        // SmartDashboard.putString("InsideAutoAlign", "success");
+        // SmartDashboard.putNumber("LimelightY", LimelightHelpers.getTY(""));
+        // SmartDashboard.putNumber("LimelightArea", LimelightHelpers.getTA(""));
     }
 
     

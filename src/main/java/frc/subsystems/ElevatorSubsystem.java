@@ -67,9 +67,9 @@ public class ElevatorSubsystem extends SubsystemBase{
      //   elevatorRelativeEncoder.reset();
        // elevatorMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
-        SmartDashboard.putNumber("Elevator P", 1.7);
-        SmartDashboard.putNumber("Elevator I", 0.005);
-        SmartDashboard.putNumber("Elevator D", 0.000);
+        // SmartDashboard.putNumber("Elevator P", 1.7);
+        // SmartDashboard.putNumber("Elevator I", 0.005);
+        // SmartDashboard.putNumber("Elevator D", 0.000);
 
       elevatorRelativeEncoder.setPosition(elevatorEncoder.getAbsolutePosition());
         
@@ -81,7 +81,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     public double setTarget(double pos) {
         var temp = pos;
         target = pos;
-        SmartDashboard.putNumber("Elevator Target", target);
+        // SmartDashboard.putNumber("Elevator Target", target);
         return temp;
     }
 
@@ -159,30 +159,30 @@ public class ElevatorSubsystem extends SubsystemBase{
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("high", high/2);
-            SmartDashboard.putNumber("low", low/2);
+        // SmartDashboard.putNumber("high", high/2);
+        //     SmartDashboard.putNumber("low", low/2);
 
         if(!controllerInterrupt){
             elevatorMotor.set(elevatorPid.calculate(getRelEncoderPos(), target));
         }
 
-        SmartDashboard.putNumber("Elevator Rel Encoder", elevatorRelativeEncoder.getPosition());
-        SmartDashboard.putNumber("Elevator Abs Encoder", elevatorEncoder.getAbsolutePosition());
-        SmartDashboard.putNumber("Elevator Encoder Distance", elevatorEncoder.getDistance());
+        // SmartDashboard.putNumber("Elevator Rel Encoder", elevatorRelativeEncoder.getPosition());
+        // SmartDashboard.putNumber("Elevator Abs Encoder", elevatorEncoder.getAbsolutePosition());
+        // SmartDashboard.putNumber("Elevator Encoder Distance", elevatorEncoder.getDistance());
 
       //  SmartDashboard.putNumber("Elevator Encoder Abs Pos", getAbsElevatorPosition());
-        SmartDashboard.putNumber("Elevator Encoder position", getElevatorPosition());
+        // SmartDashboard.putNumber("Elevator Encoder position", getElevatorPosition());
 
-        SmartDashboard.putNumber("Elevator Pos Offset", elevatorEncoder.getPositionOffset());
+        // SmartDashboard.putNumber("Elevator Pos Offset", elevatorEncoder.getPositionOffset());
 
-        SmartDashboard.putNumber("elevator speed", Math.cos(1/2));
-        SmartDashboard.putNumber("Elevator Encoder Count", getElevatorEncoderCount());
+        // SmartDashboard.putNumber("elevator speed", Math.cos(1/2));
+        // SmartDashboard.putNumber("Elevator Encoder Count", getElevatorEncoderCount());
 
-        SmartDashboard.putNumber("Elevator Pos", getRelEncoderPos());
+        // SmartDashboard.putNumber("Elevator Pos", getRelEncoderPos());
 
-        elevatorPid.setP(SmartDashboard.getNumber("Elevator P", .12));
-        elevatorPid.setI(SmartDashboard.getNumber("Elevator I", 0.005));
-        elevatorPid.setD(SmartDashboard.getNumber("Elevator D", 0.000));
+        // elevatorPid.setP(SmartDashboard.getNumber("Elevator P", .12));
+        // elevatorPid.setI(SmartDashboard.getNumber("Elevator I", 0.005));
+        // elevatorPid.setD(SmartDashboard.getNumber("Elevator D", 0.000));
 
         // if (lastPos < FourBarConstants.SHOULDER_FLIP_MIN.getRadians() + 0.1 &&
         //     absoluteEncoder.getPosition() > FourBarConstants.SHOULDER_FLIP_MAX.getRadians() - 0.1) {

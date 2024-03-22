@@ -121,9 +121,9 @@ public class MAXSwerveModuleSubsystem {
     m_drivingSparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 65535);
     m_turningSparkMax.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 65535);
 
-    SmartDashboard.putNumber("Turning P", ModuleConstants.kDrivingP);
-    SmartDashboard.putNumber("Turning I", ModuleConstants.kDrivingI);
-    SmartDashboard.putNumber("Turning D", ModuleConstants.kDrivingD);
+    // SmartDashboard.putNumber("Turning P", ModuleConstants.kDrivingP);
+    // SmartDashboard.putNumber("Turning I", ModuleConstants.kDrivingI);
+    // SmartDashboard.putNumber("Turning D", ModuleConstants.kDrivingD);
 
   }
 

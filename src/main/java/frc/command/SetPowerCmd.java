@@ -11,12 +11,12 @@ public class SetPowerCmd extends Command{
     public SetPowerCmd(ShooterSubsystem shooter){
         power = .1;
         this.shooter = shooter;
-        SmartDashboard.putNumber("Power for twunitng", power);
+      //  SmartDashboard.putNumber("Power for twunitng", power);
     }
 
     @Override
     public void execute(){
-        power = SmartDashboard.getNumber("Power for twunitng", power);
+       // power = SmartDashboard.getNumber("Power for twunitng", power);
         shooter.moveWrist(power);
     }
 

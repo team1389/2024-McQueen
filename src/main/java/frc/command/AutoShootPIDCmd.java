@@ -26,7 +26,7 @@ public class AutoShootPIDCmd extends Command{
         this.limelightSubsystem = limelightSubsystem;
         this.rpm = rpm;
         // this.intakeSubsytem = intakeSubsytem;
-        SmartDashboard.putNumber("Shooting RPM for Tuning", shootingRPM);
+      //  SmartDashboard.putNumber("Shooting RPM for Tuning", shootingRPM);
         // addRequirements(shooterSubsystem);
     }
 
@@ -36,7 +36,7 @@ public class AutoShootPIDCmd extends Command{
         this.rpm = rpm;
         this.timeout = timeout;
         // this.intakeSubsytem = intakeSubsytem;
-        SmartDashboard.putNumber("Shooting RPM for Tuning", shootingRPM);
+     //   SmartDashboard.putNumber("Shooting RPM for Tuning", shootingRPM);
         // addRequirements(shooterSubsystem);
     }
 
@@ -50,7 +50,7 @@ public class AutoShootPIDCmd extends Command{
 
     @Override
     public void execute(){
-        SmartDashboard.putNumber("Shooter time", timer.get());
+      //  SmartDashboard.putNumber("Shooter time", timer.get());
         // shootingRPM = SmartDashboard.getNumber("Shooting RPM for Tuning", shootingRPM);
       //  shootingRPM = rpm;
         // shooterSubsytem.runShoot(shootingRPM);

@@ -178,38 +178,38 @@ public class DriveSubsystem extends SubsystemBase {
     modules = new MAXSwerveModuleSubsystem[]{frontLeft, frontRight, backLeft, backRight};
 
 
-    SmartDashboard.putNumber("Robot Speed", modules[0].getVelocityDrive());
-    SmartDashboard.putNumber("Robot Heading", getHeading());
-    SmartDashboard.putNumber("Pigeon Angle", -pigeon.getAngle());
-    SmartDashboard.putNumber("Pigeon yaw", pigeon.getYaw().getValueAsDouble());
-    SmartDashboard.putNumber("Pigeon pitch", pigeon.getPitch().getValueAsDouble());
-    SmartDashboard.putNumber("Pigeon roll", pigeon.getRoll().getValueAsDouble());
-    SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
-    SmartDashboard.putNumber("Turn rate", getTurnRate());
+    // SmartDashboard.putNumber("Robot Speed", modules[0].getVelocityDrive());
+    // SmartDashboard.putNumber("Robot Heading", getHeading());
+    // SmartDashboard.putNumber("Pigeon Angle", -pigeon.getAngle());
+    // SmartDashboard.putNumber("Pigeon yaw", pigeon.getYaw().getValueAsDouble());
+    // SmartDashboard.putNumber("Pigeon pitch", pigeon.getPitch().getValueAsDouble());
+    // SmartDashboard.putNumber("Pigeon roll", pigeon.getRoll().getValueAsDouble());
+    // SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+    // SmartDashboard.putNumber("Turn rate", getTurnRate());
 
     m_field.setRobotPose(getPose());
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("rotation", getPose().getRotation().getDegrees());
+    // SmartDashboard.putNumber("rotation", getPose().getRotation().getDegrees());
 
-    SmartDashboard.putNumber("robot pose X", getPose().getX());
-    SmartDashboard.putNumber("robot pose Y", getPose().getY());
+    // SmartDashboard.putNumber("robot pose X", getPose().getX());
+    // SmartDashboard.putNumber("robot pose Y", getPose().getY());
 
     //SmartDashboard.putNumber("Speed", m_poseEstimator);
-    SmartDashboard.putData("Field", m_field);
-    SmartDashboard.putNumberArray(
-        "Odometry",
-        new double[] {getPose().getX(), getPose().getY(), getPose().getRotation().getDegrees()});
+    // SmartDashboard.putData("Field", m_field);
+    // SmartDashboard.putNumberArray(
+    //     "Odometry",
+    //     new double[] {getPose().getX(), getPose().getY(), getPose().getRotation().getDegrees()});
 
-    SmartDashboard.putNumber("Robot Speed", modules[0].getVelocityDrive());
-    SmartDashboard.putNumber("FL Speed", modules[0].getVelocityDrive());
-    SmartDashboard.putNumber("FR Speed", modules[1].getVelocityDrive());
-    SmartDashboard.putNumber("BL Speed", modules[2].getVelocityDrive());
-    SmartDashboard.putNumber("BR Speed", modules[3].getVelocityDrive());
+    // SmartDashboard.putNumber("Robot Speed", modules[0].getVelocityDrive());
+    // SmartDashboard.putNumber("FL Speed", modules[0].getVelocityDrive());
+    // SmartDashboard.putNumber("FR Speed", modules[1].getVelocityDrive());
+    // SmartDashboard.putNumber("BL Speed", modules[2].getVelocityDrive());
+    // SmartDashboard.putNumber("BR Speed", modules[3].getVelocityDrive());
     
-    SmartDashboard.putNumber("FL angle velocity", modules[0].getVelocitySteer());
-    SmartDashboard.putNumber("FR angle velocity", modules[1].getVelocitySteer());
-    SmartDashboard.putNumber("BL angle velocity", modules[2].getVelocitySteer());
-    SmartDashboard.putNumber("BR angle velocity", modules[3].getVelocitySteer());
+    // SmartDashboard.putNumber("FL angle velocity", modules[0].getVelocitySteer());
+    // SmartDashboard.putNumber("FR angle velocity", modules[1].getVelocitySteer());
+    // SmartDashboard.putNumber("BL angle velocity", modules[2].getVelocitySteer());
+    // SmartDashboard.putNumber("BR angle velocity", modules[3].getVelocitySteer());
 
    // SmartDashboard.putNumber("State", modules[0].getState());
 
@@ -337,9 +337,12 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     //add offset for blue and red
-    if(isAutoAlign.get() || commandAlign){
-      rotDelivered = -(0.1 * alignTx) + Math.toRadians( 15); 
+    if(alignTx != 0){
+      if(isAutoAlign.get() || commandAlign){
+        rotDelivered = -(0.1 * alignTx) + Math.toRadians( 15); 
+      }
     }
+    
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative.get()

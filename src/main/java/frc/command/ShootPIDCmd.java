@@ -17,13 +17,13 @@ public class ShootPIDCmd extends Command{
         this.shooterSubsytem = shooterSubsytem;
         this.driveSubsystem = driveSubsystem;
         shootingRPM = setpoint;
-        SmartDashboard.putNumber("Shooting RPM for Tuning", shootingRPM);
+      //  SmartDashboard.putNumber("Shooting RPM for Tuning", shootingRPM);
     }
 
 
     @Override
     public void execute(){
-        shootingRPM = SmartDashboard.getNumber("Shooting RPM for Tuning", shootingRPM);
+      //  shootingRPM = SmartDashboard.getNumber("Shooting RPM for Tuning", shootingRPM);
         driveSubsystem.commandAlign = true;
         shooterSubsytem.runShoot(shootingRPM);        
     }

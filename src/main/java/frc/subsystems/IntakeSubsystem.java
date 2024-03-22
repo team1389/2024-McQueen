@@ -23,8 +23,8 @@ public class IntakeSubsystem extends SubsystemBase{
     intakeMotor.burnFlash();
     //The type of distance sensor we have in the intake, a 2m rev IR Distance Sensor, must be declared as an analog potentiometer
     intakeDistanceSensor = new AnalogPotentiometer(0, 100, 30); 
-    SmartDashboard.putNumber("Intake Distance Sensor", intakeDistanceSensor.get());
-    SmartDashboard.putBoolean("isNoteIn", isNoteIn);
+    // SmartDashboard.putNumber("Intake Distance Sensor", intakeDistanceSensor.get());
+    // SmartDashboard.putBoolean("isNoteIn", isNoteIn);
     }
     
     public void runIntake(){
@@ -46,7 +46,7 @@ public class IntakeSubsystem extends SubsystemBase{
     @Override
     public void periodic(){
         isNoteIn = intakeDistanceSensor.get() > (IntakeConstants.kDistanceWithoutNode + 5);
-        SmartDashboard.putNumber("Intake Distance Sensor", intakeDistanceSensor.get());
-        SmartDashboard.putBoolean("isNoteIn", hitSensor());
+        // SmartDashboard.putNumber("Intake Distance Sensor", intakeDistanceSensor.get());
+        // SmartDashboard.putBoolean("isNoteIn", hitSensor());
     }
 }

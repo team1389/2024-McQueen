@@ -41,7 +41,7 @@ public class ShooterSubsystem extends SubsystemBase{
     private final SparkPIDController topPidController;
 
     public ShooterSubsystem(){
-        SmartDashboard.putBoolean("Is setting wrist", false);
+        // SmartDashboard.putBoolean("Is setting wrist", false);
         shootBottomController = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_BOTTOM, MotorType.kBrushless);
         shootTopController = new CANSparkFlex(RobotMap.MotorPorts.SHOOT_TOP, MotorType.kBrushless);
         wristController = new CANSparkFlex(RobotMap.MotorPorts.WRIST_MOTOR, MotorType.kBrushless);
@@ -107,19 +107,19 @@ public class ShooterSubsystem extends SubsystemBase{
         // SmartDashboard.putNumber("P Bottom Shooter", 0.1);
         // SmartDashboard.putNumber("I Bottom Shooter", 0.0);
         // SmartDashboard.putNumber("D Bottom Shooter", 0.000);
-        SmartDashboard.putNumber("FF Bottom Shooter", 1.75);
+        // SmartDashboard.putNumber("FF Bottom Shooter", 1.75);
 
         // SmartDashboard.putNumber("P Top Shooter", 0.1);
         // SmartDashboard.putNumber("I Top Shooter", 0.0);
         // SmartDashboard.putNumber("D Top Shooter", 0.000);
-        SmartDashboard.putNumber("FF Top Shooter", 1.75);
+        // SmartDashboard.putNumber("FF Top Shooter", 1.75);
 
         //correct value
         wristAbsEncoder = new DutyCycleEncoder(8); // this is a through bore encoder
     }
 
     public void setWrist(double desiredAngle){
-        SmartDashboard.putBoolean("Is setting wrist", true);
+        // SmartDashboard.putBoolean("Is setting wrist", true);
         desiredAngle = MathUtil.clamp(desiredAngle, ShooterConstants.kMinWristAngle, ShooterConstants.kMaxWristAngle);
         //needs to be multiplied by 100 otherwise the pidloop cancels as the difference between two value is quite small
         double wristPower = pidWristController.calculate(getAbsWristPosition()*100, desiredAngle*100);
@@ -209,7 +209,7 @@ public class ShooterSubsystem extends SubsystemBase{
     @Override
     public void periodic(){
 
-        SmartDashboard.putNumber("wristController Encoder ABS Position", getAbsWristPosition()); 
+        SmartDashboard.putNumber("wrist Encoder ABS Position", getAbsWristPosition()); 
 
         SmartDashboard.putBoolean("Is at Target RPM", isAtTargetRPM(setpoint));
 
@@ -221,25 +221,25 @@ public class ShooterSubsystem extends SubsystemBase{
         // bottomPidController.setP(SmartDashboard.getNumber("P Bottom Shooter", 0.1));
         // bottomPidController.setI(SmartDashboard.getNumber("I Bottom Shooter", 0));
         // bottomPidController.setD(SmartDashboard.getNumber("D Bottom Shooter", 0.000));
-            bottomPidController.setFF(SmartDashboard.getNumber("FF Bottom Shooter", 0.000));
+            // bottomPidController.setFF(SmartDashboard.getNumber("FF Bottom Shooter", 0.000));
 
         // topPidController.setP(SmartDashboard.getNumber("P Top Shooter", 0.1));
         // topPidController.setI(SmartDashboard.getNumber("I Top Shooter", 0));
         // topPidController.setD(SmartDashboard.getNumber("D Top Shooter", 0.000));
-            topPidController.setFF(SmartDashboard.getNumber("FF Top Shooter", 0.000));
+            // topPidController.setFF(SmartDashboard.getNumber("FF Top Shooter", 0.000));
 
-        SmartDashboard.putNumber("Shoot Bottom Encoder CPR", shootEncoderBottom.getCountsPerRevolution());
+        // SmartDashboard.putNumber("Shoot Bottom Encoder CPR", shootEncoderBottom.getCountsPerRevolution());
         SmartDashboard.putNumber("Shoot Bottom RPM", getBottomSpeedRPM());
-        SmartDashboard.putNumber("Shoot Bottom Encoder Position", shootEncoderBottom.getPosition());
+        // SmartDashboard.putNumber("Shoot Bottom Encoder Position", shootEncoderBottom.getPosition());
 
-        SmartDashboard.putNumber("Shoot Top Encoder CPR", shootEncoderTop.getCountsPerRevolution());
+        // SmartDashboard.putNumber("Shoot Top Encoder CPR", shootEncoderTop.getCountsPerRevolution());
         SmartDashboard.putNumber("Shoot Top RPM", getTopSpeedRPM());
-        SmartDashboard.putNumber("Shoot Top Encoder Position", shootEncoderTop.getPosition());
+        // SmartDashboard.putNumber("Shoot Top Encoder Position", shootEncoderTop.getPosition());
 
-        SmartDashboard.putNumber("shooter bottom voltage", shootBottomController.getBusVoltage());
-        SmartDashboard.putNumber("shooter top voltage", shootTopController.getBusVoltage());
-        SmartDashboard.putNumber("shooter bottom voltage", shootBottomController.getAppliedOutput());
-        SmartDashboard.putNumber("shooter top voltage", shootTopController.getAppliedOutput());
+        // SmartDashboard.putNumber("shooter bottom voltage", shootBottomController.getBusVoltage());
+        // SmartDashboard.putNumber("shooter top voltage", shootTopController.getBusVoltage());
+        // SmartDashboard.putNumber("shooter bottom voltage", shootBottomController.getAppliedOutput());
+        // SmartDashboard.putNumber("shooter top voltage", shootTopController.getAppliedOutput());
 
     }
 }
