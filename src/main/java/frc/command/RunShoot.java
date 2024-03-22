@@ -33,6 +33,6 @@ public class RunShoot extends Command{
 
     @Override
     public boolean isFinished(){
-        return timer.get() > 3.5;
+        return timer.get() > .05;
     }
 }
