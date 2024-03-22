@@ -37,7 +37,8 @@ public class AutoSetWristCmd extends Command{
     @Override
     public void end(boolean interrupted){
         timer = 0;
-        shooterSubsystem.stopWrist();
+        shooterSubsystem.holdPosition();
+       // shooterSubsystem.stopWrist();
     }
 
     @Override

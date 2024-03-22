@@ -114,7 +114,7 @@ public class OI {
         // manipYButton.whileTrue(new SetPowerCmd(shooterSubsystem));
 
  
-        shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
+      //  shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
         
       //  shooterSubsystem.setDefaultCommand(new ManualWristCmd(shooterSubsystem, () -> -getManipLeftY()));
@@ -148,7 +148,7 @@ public class OI {
         NamedCommands.registerCommand("SetWrist:.9", new ManualSetWrist(shooterSubsystem, .91));
         NamedCommands.registerCommand("PreShoot", new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
         NamedCommands.registerCommand("OverridePreShoot", new OverridePreShootCmd(indexerSubsystem, intakeSubsystem));
-        NamedCommands.registerCommand("AutoAlignShoot.95", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .98));
+        NamedCommands.registerCommand("AutoAlignShoot.95", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .97));
         NamedCommands.registerCommand("AutoAlignShoot.90", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .9));
         NamedCommands.registerCommand("AutoAlignShoot.94", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .94));
         NamedCommands.registerCommand("AutoAlignShoot.93", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .93));
