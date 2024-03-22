@@ -1,24 +1,13 @@
 package frc.robot;
 
-import java.util.HashMap;
-
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerPath;
 
 import frc.command.*;
-import frc.command.reckonautos.FrontOfSpeaker2PieceAuto;
-import frc.robot.RobotMap.AutoConstants;
 import frc.robot.RobotMap.OIConstants;
-import frc.robot.RobotMap.ShooterConstants;
 import frc.subsystems.*;
 import frc.util.AutoSelector;
-import frc.util.DPadButton;
-import frc.util.DPadButton.Direction;
-import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -27,10 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
-import com.revrobotics.CANSparkBase.IdleMode;
 
 
 public class OI {
@@ -105,8 +91,8 @@ public class OI {
         manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem, limeLightVisionSubsystem));
         manipRightTrigger.whileTrue(new AmpCmd(intakeSubsystem, indexerSubsystem));
 
-      //  manipStadia.onTrue(new HoldElevator(elevatorSubsystem));
-        manipStadia.whileTrue(new ShootSeq(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
+        manipStadia.onTrue(new HoldElevator(elevatorSubsystem));
+      //  manipStadia.whileTrue(new ShootSeq(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         manipEllipsisButton.whileTrue(new MoveShooterCmd(shooterSubsystem));
         manipMenuButton.whileTrue(new MoveShooterDownCmd(shooterSubsystem));     

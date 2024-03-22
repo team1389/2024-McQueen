@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7476459755912954,
-      "y": 6.600647307735428
+      "x": 1.29,
+      "y": 5.562647359246215
     },
-    "rotation": 59.26456038222014
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -14,50 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SetWrist:.95"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "top far piece 1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "RampShoot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "SetWrist:.9"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
+            "name": "AlignShoot.95"
           }
         },
         {
@@ -67,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "top far piece 2"
+                  "pathName": "testing close bottom piece 1"
                 }
               },
               {
@@ -86,7 +43,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "top far piece 3"
+                  "pathName": "close bottom piece 1.5"
                 }
               },
               {
@@ -101,7 +58,69 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "AutoAlignShoot.94"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "close bottom piece 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RampShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAlignShoot.93"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "close bottom piece 3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RampShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAlignShoot.93"
           }
         }
       ]

@@ -2,9 +2,7 @@ package frc.command;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotMap.ShooterConstants;
 import frc.subsystems.DriveSubsystem;
-import frc.subsystems.IntakeSubsystem;
 import frc.subsystems.ShooterSubsystem;
 
 public class ShootPIDCmd extends Command{
