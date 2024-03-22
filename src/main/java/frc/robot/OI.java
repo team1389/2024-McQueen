@@ -236,7 +236,7 @@ public class OI {
    */
   // WHEN CHANGING THE AUTO NAME HERE, REMEMBER TO CHANGE THE AUTO NAME IN DRIVESUBSYSTEM (BOTTOM LINES)
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("4 piece close");
+        return new PathPlannerAuto("4 piece close center");
         // return new PathPlannerAuto("Quick 4 piece close");
       //  return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);

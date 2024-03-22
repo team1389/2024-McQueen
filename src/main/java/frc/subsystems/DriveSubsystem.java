@@ -470,7 +470,7 @@ public void driveRobotRelative(ChassisSpeeds speeds){
        private Pose2d getAutoStart(){
           // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("Quick 4 piece close").get(0);
         // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("3 middle close piece").get(0);
-        PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("4 piece close").get(0);
+        PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("4 piece close center").get(0);
         // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("1 m back").get(0);
         var alliance = DriverStation.getAlliance();
               if (alliance.get()==DriverStation.Alliance.Red) {
