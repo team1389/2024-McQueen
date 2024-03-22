@@ -49,16 +49,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RampShoot"
+                  "name": "AutoAlignShoot.94"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoAlignShoot.94"
           }
         },
         {
@@ -80,16 +74,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RampShoot"
+                  "name": "AutoAlignShoot.93"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoAlignShoot.93"
           }
         },
         {
@@ -109,18 +97,19 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "RampShoot"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AutoAlignShoot.93"
+                      }
+                    }
+                  ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoAlignShoot.93"
           }
         }
       ]

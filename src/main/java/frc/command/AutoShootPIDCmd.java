@@ -19,11 +19,22 @@ public class AutoShootPIDCmd extends Command{
     //double time;
     //  private Intake intakeSubsytem; TBD
      private double shootingRPM;
+     private double timeout = 100000;
 
     public AutoShootPIDCmd(ShooterSubsystem shooterSubsytem, double rpm, LimelightVisionSubsystem limelightSubsystem){
         this.shooterSubsytem = shooterSubsytem;
         this.limelightSubsystem = limelightSubsystem;
         this.rpm = rpm;
+        // this.intakeSubsytem = intakeSubsytem;
+        SmartDashboard.putNumber("Shooting RPM for Tuning", shootingRPM);
+        // addRequirements(shooterSubsystem);
+    }
+
+    public AutoShootPIDCmd(ShooterSubsystem shooterSubsytem, double rpm, LimelightVisionSubsystem limelightSubsystem, double timeout){
+        this.shooterSubsytem = shooterSubsytem;
+        this.limelightSubsystem = limelightSubsystem;
+        this.rpm = rpm;
+        this.timeout = timeout;
         // this.intakeSubsytem = intakeSubsytem;
         SmartDashboard.putNumber("Shooting RPM for Tuning", shootingRPM);
         // addRequirements(shooterSubsystem);
@@ -55,6 +66,6 @@ public class AutoShootPIDCmd extends Command{
     @Override
     public boolean isFinished(){
         limelightSubsystem.off();
-        return shooterSubsytem.isAtTargetRPM(rpm);
+        return shooterSubsytem.isAtTargetRPM(rpm) || timer.hasElapsed(timeout);
     }
 }
