@@ -1,5 +1,6 @@
 package frc.command;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.subsystems.IndexerSubsystem;
 import frc.subsystems.IntakeSubsystem;
@@ -7,6 +8,7 @@ import frc.subsystems.IntakeSubsystem;
 public class PreAmpCmd extends Command{
     private IndexerSubsystem indexerSubsystem;
     private IntakeSubsystem intakeSubsystem;
+    Timer timer = new Timer();
 
 
     public PreAmpCmd(IndexerSubsystem indexerSubsystem){
@@ -18,6 +20,12 @@ public class PreAmpCmd extends Command{
         this.indexerSubsystem = indexerSubsystem;
         this.intakeSubsystem = intakeSubsystem;
         // addRequirements(indexerSubsystem);
+    }
+
+    @Override
+    public void initialize(){
+        timer.reset();
+        timer.start();
     }
 
     @Override
@@ -34,7 +42,7 @@ public class PreAmpCmd extends Command{
 
     @Override
     public boolean isFinished(){
-        return !intakeSubsystem.hitSensor();
+        return timer.hasElapsed(.5); //!intakeSubsystem.hitSensor() timer.hasElapsed(.5);
     }
 
 }

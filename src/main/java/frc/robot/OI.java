@@ -79,9 +79,14 @@ public class OI {
 
         manipAButton.whileTrue(new ShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
-        manipBButton.whileTrue(new OverridePreShootCmd(indexerSubsystem,intakeSubsystem));
+        manipBButton.whileTrue(new OverridePreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem));
 
-        manipRightBumper.onTrue(new PreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem));
+        manipRightBumper.whileTrue(new AmpCmd(intakeSubsystem, indexerSubsystem));
+
+        manipFullscreen.whileTrue(new PreAmpCmd(indexerSubsystem, intakeSubsystem));
+        manipGoogle.whileTrue(new ShootAmpCmd(indexerSubsystem, intakeSubsystem));
+
+        manipXButton.whileTrue(new HoldPositionCmd(shooterSubsystem));
 
         manipXButton.whileTrue(new AutoSetWristCmd(shooterSubsystem, limeLightVisionSubsystem.calculateShooterAngle(), limeLightVisionSubsystem));
 
@@ -89,7 +94,7 @@ public class OI {
       //  .onFalse(new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
 
         manipLeftTrigger.onTrue(new IntakeCmd(intakeSubsystem, limeLightVisionSubsystem));
-        manipRightTrigger.whileTrue(new AmpCmd(intakeSubsystem, indexerSubsystem));
+        manipRightTrigger.whileTrue(new Outtake(intakeSubsystem));
 
         manipStadia.onTrue(new HoldElevator(elevatorSubsystem));
       //  manipStadia.whileTrue(new ShootSeq(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
@@ -134,12 +139,12 @@ public class OI {
         NamedCommands.registerCommand("SetWrist:.92", new ManualSetWrist(shooterSubsystem, .92));
         NamedCommands.registerCommand("SetWrist:.9", new ManualSetWrist(shooterSubsystem, .9));
         NamedCommands.registerCommand("PreShoot", new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
-        NamedCommands.registerCommand("OverridePreShoot", new OverridePreShootCmd(indexerSubsystem, intakeSubsystem));
+        NamedCommands.registerCommand("OverridePreShoot", new OverridePreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem));
         NamedCommands.registerCommand("AutoAlignShoot.95", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .95));
         NamedCommands.registerCommand("AutoAlignShoot.90", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .9));
         NamedCommands.registerCommand("AutoAlignShoot.94", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .92));
         NamedCommands.registerCommand("AutoAlignShoot.93", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .905));
-        NamedCommands.registerCommand("AlignShoot.95", new AlignShootCmd3(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .95));
+        NamedCommands.registerCommand("AlignShoot.95", new AlignShootCmd3(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .96));
 
 
         
@@ -237,7 +242,7 @@ public class OI {
    */
   // WHEN CHANGING THE AUTO NAME HERE, REMEMBER TO CHANGE THE AUTO NAME IN DRIVESUBSYSTEM (BOTTOM LINES)
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("4 piece close center");
+        return new PathPlannerAuto("2 top far piece");
         // return new PathPlannerAuto("Quick 4 piece close");
       //  return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);

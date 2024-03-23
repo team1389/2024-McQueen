@@ -18,10 +18,10 @@ public class AlignShootCmdTwo extends SequentialCommandGroup{
         addCommands(
             Commands.parallel(
               new AutoSetWristCmd(shooterSubsystem, angle, limelightVisionSubsystem),
-           //         Commands.sequence(
+                    Commands.sequence(
                         new AutoShootPIDCmd(shooterSubsystem, 3000, limelightVisionSubsystem, 1),//, //limelightVisionSubsystem.rpmTableForShoot()
                         new PreShootCmd(indexerSubsystem, intakeSubsystem, shooterSubsystem)
-          //  )
+            )
             )
         );
     }

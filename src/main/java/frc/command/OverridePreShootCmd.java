@@ -13,7 +13,7 @@ public class OverridePreShootCmd extends Command{
      private IndexerSubsystem indexerSubsystem;
      private IntakeSubsystem intakeSubsystem;
      int timer = 0;
-    public OverridePreShootCmd(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem){
+    public OverridePreShootCmd(IndexerSubsystem indexerSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem){
         this.indexerSubsystem = indexerSubsystem;
         this.intakeSubsystem = intakeSubsystem;
         this.shooterSubsystem = shooterSubsystem;
@@ -23,7 +23,7 @@ public class OverridePreShootCmd extends Command{
 
     @Override
     public void execute(){
-        if(shooterSubsystem.isAtTargetRPM(3750)){
+        if(shooterSubsystem.isAtTargetRPM(3000)){
             indexerSubsystem.moveToShoot();
             intakeSubsystem.runIntake();
         }

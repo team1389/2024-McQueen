@@ -316,9 +316,9 @@ public class DriveSubsystem extends SubsystemBase {
       rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed * .3;
     }
     if(BOOST.get()){
-      xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * 1.3;
-      ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * 1.3;
-      rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed * 1.3;
+      xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * 1.5;
+      ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * 1.5;
+      rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed * 1.5;
     }
     if(isAutoAlign.get()){
       xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .5;
@@ -329,7 +329,7 @@ public class DriveSubsystem extends SubsystemBase {
     //add offset for blue and red
     if(alignTx != 0){
       if(isAutoAlign.get() || commandAlign){
-        rotDelivered = -(0.1 * alignTx) + Math.toRadians( 15); 
+        rotDelivered = -(0.1 * alignTx) + Math.toRadians( 25); 
       }
     }
     
@@ -470,15 +470,24 @@ public void driveRobotRelative(ChassisSpeeds speeds){
        private Pose2d getAutoStart(){
           // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("Quick 4 piece close").get(0);
         // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("3 middle close piece").get(0);
-        PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("4 piece close center").get(0);
+        PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("2 top far piece").get(0);
         // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("1 m back").get(0);
         var alliance = DriverStation.getAlliance();
-              if (alliance.get()==DriverStation.Alliance.Red) {
+        if(alliance.isPresent()){
+          SmartDashboard.putBoolean("in isPresent", true);
+          if (alliance.get()==DriverStation.Alliance.Red) {
+            SmartDashboard.putBoolean("in get red", true);
                 return jerry.flipPath().getPreviewStartingHolonomicPose();
               }
               else {
+                SmartDashboard.putBoolean("in get blue", true);
                 return jerry.getPreviewStartingHolonomicPose();
-              }
+              } 
+        } else {
+          SmartDashboard.putBoolean("in isPresent", false);
+          return jerry.getPreviewStartingHolonomicPose();
+        }
+              
       }
 }
 /*

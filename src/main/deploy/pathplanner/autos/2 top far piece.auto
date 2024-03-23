@@ -14,19 +14,26 @@
         {
           "type": "named",
           "data": {
-            "name": "SetWrist:.95"
+            "name": "AlignShoot.95"
           }
         },
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "bottom far piece 1"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "bottom far piece 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
           }
         },
         {
@@ -44,12 +51,6 @@
                 "data": {
                   "name": "RampShoot"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "SetWrist:.9"
-                }
               }
             ]
           }
@@ -57,13 +58,26 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "AutoAlignShoot.94"
           }
         },
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "bottom far piece 3"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "bottom far piece 3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
           }
         },
         {
@@ -88,7 +102,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "AutoAlignShoot.94"
           }
         }
       ]
