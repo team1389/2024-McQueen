@@ -23,8 +23,10 @@ public class OverridePreShootCmd extends Command{
 
     @Override
     public void execute(){
-        indexerSubsystem.moveToShoot();
-        intakeSubsystem.runIntake();
+        if(shooterSubsystem.isAtTargetRPM(3750)){
+            indexerSubsystem.moveToShoot();
+            intakeSubsystem.runIntake();
+        }
         // timer += 1;
         //addCommand(new WaitCommand(5));        
     }
