@@ -148,7 +148,7 @@ public class ShooterSubsystem extends SubsystemBase{
 
     public boolean isAtTargetRPM(double setpoint){
         this.setpoint = setpoint;
-         return getTopSpeedRPM() > (setpoint - 1100); //TODO change back to 100
+         return getTopSpeedRPM() > (setpoint - 100); //TODO change back to 100
          // return (Math.abs(getTopSpeedRPM()-setpoint)<1000);//&&((getBottomSpeedRPM()-setpoint)<100);
     }
 
