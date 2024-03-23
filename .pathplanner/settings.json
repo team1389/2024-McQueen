@@ -7,7 +7,8 @@
     "close piece auto paths"
   ],
   "autoFolders": [
-    "1-2 piece"
+    "1-2 piece",
+    "Far Piece"
   ],
   "defaultMaxVel": 3.5,
   "defaultMaxAccel": 1.5,

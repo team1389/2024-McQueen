@@ -6,7 +6,6 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import frc.command.*;
 import frc.robot.RobotMap.OIConstants;
 import frc.subsystems.*;
-import frc.util.AutoSelector;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -67,11 +66,8 @@ public class OI {
     public final LimelightVisionSubsystem limeLightVisionSubsystem = new LimelightVisionSubsystem();
     public final DriveSubsystem drivetrainSubsystem = new DriveSubsystem(limeLightVisionSubsystem);
     public final PhotonVisionSubsystem photonVisionSubsystem = new PhotonVisionSubsystem();
-    private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-    public AutoSelector autoSelector = new AutoSelector(drivetrainSubsystem, indexerSubsystem, intakeSubsystem, shooterSubsystem);
-    
-    SendableChooser<Command> chooser = new SendableChooser<>();
+    public SendableChooser<String> chooser = new SendableChooser<>();
 
     public OI() {
 
@@ -127,8 +123,10 @@ public class OI {
         driveYButton.onTrue(new InstantCommand(() -> {lightSubsystem.isRainbowing = true;}));
 
         NamedCommands.registerCommand("Shoot", new ShootCmd(intakeSubsystem,indexerSubsystem,shooterSubsystem,drivetrainSubsystem,limeLightVisionSubsystem));
+        NamedCommands.registerCommand("RampShoot 2500", new RampShoot2500(shooterSubsystem));
         NamedCommands.registerCommand("Amp", new AmpCmd(intakeSubsystem,indexerSubsystem));
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSubsystem, limeLightVisionSubsystem));
+        NamedCommands.registerCommand("Infinite Intake", new InfiniteIntake(intakeSubsystem, indexerSubsystem));
         NamedCommands.registerCommand("RampShoot", new RunShoot(shooterSubsystem));
         NamedCommands.registerCommand("SetWrist:.95", new ManualSetWrist(shooterSubsystem, .95));
         NamedCommands.registerCommand("SetWrist:.9", new ManualSetWrist(shooterSubsystem, .91));
@@ -140,19 +138,18 @@ public class OI {
         NamedCommands.registerCommand("AutoAlignShoot.93", new AlignShootCmdTwo(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .905));
         NamedCommands.registerCommand("AlignShoot.95", new AlignShootCmd3(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem, .95));
 
+        SmartDashboard.putData(chooser);
 
-        
-        // autoChooser = AutoBuilder.buildAutoChooser();
+        chooser.setDefaultOption("1 m back (default option)", "1 m back");
+        chooser.addOption("4 piece close center", "4 piece close center");
+        chooser.addOption("2 middle close piece", "2 middle close piece");
+        chooser.addOption("4 piece close right", "4 piece close right");
+        chooser.addOption("middle menace (untested plz dont run)", "middle jj crazy auto");
+        chooser.addOption("3 middle close piece", "3 middle close piece");
+        chooser.addOption("3 top far piece (untested)", "3 top far piece");
 
-        // SmartDashboard.putData("Auto Chooser", autoChooser);
 
-      //  final Command frontSpeaker2P = new FrontOfSpeaker2PieceAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
-      //  final Command quickBalanceCone = new QuickBalanceCone(drivetrain, arm, intake, autoMap);
-
-       // chooser.addOption("front speaker 2P", frontSpeaker2P);
-       // chooser.addOption("right blue", quickBalanceCone);
-
-       SmartDashboard.putData("Auto choices", chooser);
+    //    SmartDashboard.putData("Auto choices", chooser);
     }
 
     /**
@@ -236,7 +233,8 @@ public class OI {
    */
   // WHEN CHANGING THE AUTO NAME HERE, REMEMBER TO CHANGE THE AUTO NAME IN DRIVESUBSYSTEM (BOTTOM LINES)
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("4 piece close center");
+        return new PathPlannerAuto(chooser.getSelected());
+        // return new PathPlannerAuto("4 piece close center");
         // return new PathPlannerAuto("Quick 4 piece close");
       //  return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
