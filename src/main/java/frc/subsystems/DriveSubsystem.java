@@ -250,7 +250,7 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    * @param rateLimit     Whether to enable rate limiting for smoother control.
    */
-  public void drive(double xSpeed, double ySpeed, double rot, Supplier<Boolean> fieldRelative, boolean rateLimit, Supplier<Boolean> isAutoAlign, Supplier<Boolean> slow, Supplier<Boolean> BOOST) {
+  public void drive(double xSpeed, double ySpeed, double rot, Supplier<Boolean> fieldRelative, boolean rateLimit, Supplier<Boolean> isAutoAlign, Supplier<Boolean> slow, Supplier<Boolean> BOOST, Supplier<Boolean> IsMadyannThrowing) {
     
     double xSpeedCommanded;
     double ySpeedCommanded;
@@ -320,7 +320,7 @@ public class DriveSubsystem extends SubsystemBase {
       ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * 1.5;
       rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed * 1.5;
     }
-    if(isAutoAlign.get()){
+    if(isAutoAlign.get() || IsMadyannThrowing.get()){
       xSpeedDelivered = xSpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .5;
       ySpeedDelivered = ySpeedCommanded * DriveConstants.kMaxSpeedMetersPerSecond * .5;
       rotDelivered = m_currentRotation * DriveConstants.kMaxAngularSpeed * .5;
@@ -470,7 +470,8 @@ public void driveRobotRelative(ChassisSpeeds speeds){
        private Pose2d getAutoStart(){
           // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("Quick 4 piece close").get(0);
         // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("3 middle close piece").get(0);
-        PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("2 top far piece").get(0);
+        // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("4 piece close center").get(0);
+        PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("bottom clear").get(0);
         // PathPlannerPath jerry = PathPlannerAuto.getPathGroupFromAutoFile("1 m back").get(0);
         var alliance = DriverStation.getAlliance();
         if(alliance.isPresent()){
@@ -485,7 +486,7 @@ public void driveRobotRelative(ChassisSpeeds speeds){
               } 
         } else {
           SmartDashboard.putBoolean("in isPresent", false);
-          return jerry.getPreviewStartingHolonomicPose();
+          return jerry.flipPath().getPreviewStartingHolonomicPose();
         }
               
       }

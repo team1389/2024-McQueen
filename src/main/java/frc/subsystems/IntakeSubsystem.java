@@ -18,6 +18,7 @@ public class IntakeSubsystem extends SubsystemBase{
     private boolean isNoteIn = true;
 
     public IntakeSubsystem(){
+    SmartDashboard.putBoolean("Note in Intake", false);
     intakeMotor = new CANSparkFlex(RobotMap.MotorPorts.INTAKE_MOTOR, MotorType.kBrushless);
     intakeMotor.setSmartCurrentLimit(40);
     intakeMotor.burnFlash();
@@ -36,6 +37,7 @@ public class IntakeSubsystem extends SubsystemBase{
     }
 
     public boolean hitSensor(){ 
+        SmartDashboard.putBoolean("Note in Intake", isNoteIn);
         return isNoteIn;
     }
 

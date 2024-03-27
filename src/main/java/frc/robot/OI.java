@@ -77,16 +77,18 @@ public class OI {
 
         initControllers();
 
+        
+
         manipAButton.whileTrue(new ShootCmd(intakeSubsystem, indexerSubsystem, shooterSubsystem, drivetrainSubsystem, limeLightVisionSubsystem));
 
         manipBButton.whileTrue(new OverridePreShootCmd(indexerSubsystem,intakeSubsystem, shooterSubsystem));
 
-        manipRightBumper.whileTrue(new AmpCmd(intakeSubsystem, indexerSubsystem));
+        manipRightBumper.onTrue(new AmpCmd(intakeSubsystem, indexerSubsystem));
 
         manipFullscreen.whileTrue(new PreAmpCmd(indexerSubsystem, intakeSubsystem));
-        manipGoogle.whileTrue(new ShootAmpCmd(indexerSubsystem, intakeSubsystem));
+        // manipGoogle.whileTrue(new ShootAmpCmd(indexerSubsystem, intakeSubsystem));
 
-        manipXButton.whileTrue(new HoldPositionCmd(shooterSubsystem));
+        // manipXButton.whileTrue(new HoldPositionCmd(shooterSubsystem));
 
         manipXButton.whileTrue(new AutoSetWristCmd(shooterSubsystem, limeLightVisionSubsystem.calculateShooterAngle(), limeLightVisionSubsystem));
 
@@ -119,8 +121,8 @@ public class OI {
                 -MathUtil.applyDeadband(driveController.getRawAxis(1), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(0), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(driveController.getRawAxis(3), OIConstants.kDriveDeadband),
-                () -> !driveLeftBumper.getAsBoolean(), true, () -> manipLeftBumper.getAsBoolean(),
-                () -> driveLeftTrigger.getAsBoolean(), () -> driveRightTrigger.getAsBoolean()),
+                () -> !driveLeftBumper.getAsBoolean(), true, () -> manipGoogle.getAsBoolean(),
+                () -> driveLeftTrigger.getAsBoolean(), () -> driveRightTrigger.getAsBoolean(), () -> manipLeftBumper.getAsBoolean()),
             drivetrainSubsystem));
 
         // Press A button -> zero gyro heading
@@ -242,7 +244,8 @@ public class OI {
    */
   // WHEN CHANGING THE AUTO NAME HERE, REMEMBER TO CHANGE THE AUTO NAME IN DRIVESUBSYSTEM (BOTTOM LINES)
     public Command getAutonomousCommand() {
-        return new PathPlannerAuto("2 top far piece");
+       return new PathPlannerAuto("bottom clear");
+        // return new PathPlannerAuto("4 piece close center");
         // return new PathPlannerAuto("Quick 4 piece close");
       //  return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
