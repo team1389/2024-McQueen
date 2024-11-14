@@ -106,7 +106,7 @@ public class OI {
 
         // manipYButton.whileTrue(new SetPowerCmd(shooterSubsystem));
 
- 
+        
       //  shooterSubsystem.setDefaultCommand(new HoldPositionCmd(shooterSubsystem));
         elevatorSubsystem.setDefaultCommand(new ManualElevatorCmd(elevatorSubsystem, () -> -getManipRightY()));
         
@@ -244,8 +244,9 @@ public class OI {
    */
   // WHEN CHANGING THE AUTO NAME HERE, REMEMBER TO CHANGE THE AUTO NAME IN DRIVESUBSYSTEM (BOTTOM LINES)
     public Command getAutonomousCommand() {
-       return new PathPlannerAuto("bottom clear");
-        // return new PathPlannerAuto("4 piece close center");
+       return new PathPlannerAuto("feeder close 1 piece");
+        // return new PathPlannerAuto("2 bottom far piece");
+        // return new PathPlannerAuto("2 bottom far piece");
         // return new PathPlannerAuto("Quick 4 piece close");
       //  return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);
         // return new RightSideRedAuto(intakeSubsystem, indexerSubsystem, shooterSubsystem, limeLightVisionSubsystem, drivetrainSubsystem);

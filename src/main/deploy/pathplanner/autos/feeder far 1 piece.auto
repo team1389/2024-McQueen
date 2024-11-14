@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "close middle piece 1"
+                  "pathName": "feeder far"
                 }
               },
               {
@@ -34,12 +34,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoAlignShoot.93"
           }
         }
       ]

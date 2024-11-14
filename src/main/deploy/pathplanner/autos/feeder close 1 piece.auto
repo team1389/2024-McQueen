@@ -24,22 +24,10 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "close middle piece 1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
+                  "pathName": "feeder close"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoAlignShoot.93"
           }
         }
       ]
